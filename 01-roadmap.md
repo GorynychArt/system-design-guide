@@ -152,7 +152,7 @@ flowchart BT
 | T-068 | ✅ | Модели согласованности: linearizability, causal, eventual | ➕ |
 | T-069 | ✅ | Кворумы чтения и записи (R + W > N) | ➕ |
 | T-070 | ✅ | Консенсус: Raft, leader election | ➕ |
-| T-071 | ○ | Обнаружение отказов и мембершип: heartbeat, gossip, SWIM | ➕ |
+| T-071 | ✅ | Обнаружение отказов и мембершип: heartbeat, gossip, SWIM | ➕ |
 | T-072 | ✅ | Распределённые блокировки и аренда | ➕ |
 | T-073 | ✅ | Распределённые транзакции: 2PC, saga, TCC | ➕ |
 | T-074 | ✅ | Генерация уникальных ID: Snowflake, UUIDv7, ULID | ➕ |
@@ -187,11 +187,11 @@ flowchart BT
 |---|---|---|---|
 | T-090 | ✅ | Таймауты, ретраи, exponential backoff, jitter | ➕ |
 | T-091 | ✅ | Circuit breaker и bulkhead | ➕ |
-| T-092 | ○ | Load shedding и приоритизация запросов | ➕ |
+| T-092 | ✅ | Load shedding и приоритизация запросов | ➕ |
 | T-093 | ✅ | Graceful degradation, фича-флаги, kill switch | ➕ |
 | T-094 | ✅ | Health checks: liveness vs readiness | ➕ |
 | T-095 | ✅ | Проектирование отказоустойчивости: обзор | 🎬 #90 |
-| T-096 | ○ | Ячеистая архитектура и радиус поражения | ➕ |
+| T-096 | ✅ | Ячеистая архитектура и радиус поражения | ➕ |
 | T-097 | ✅ | Multi-AZ, multi-region, failover | ➕ |
 | T-098 | ✅ | Бэкапы, DR, RPO и RTO | ➕ |
 | T-099 | ✅ | Chaos engineering и game days | ➕ |
@@ -279,6 +279,6 @@ flowchart BT
 ---
 
 **Итого 151 тем:** 65 опираются на видео плейлиста, 86 добавлены сверх него.
-Написано 74, запланировано 77.
+Написано 77, запланировано 74.
 
 Соответствие «видео → тема»: [`93-playlist-map.md`](93-playlist-map.md) · обоснование добавленных тем: [`94-gaps.md`](94-gaps.md) · очередь работ: [`96-backlog.md`](96-backlog.md).
