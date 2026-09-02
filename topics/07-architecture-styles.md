@@ -27,7 +27,7 @@
 | Транзакции | Локальные | Локальные | Распределённые |
 | Отказ модуля | Валит всё | Валит всё | Изолирован (если предусмотрено) |
 | Масштабирование | Целиком | Целиком | По частям |
-| Отладка | Стек вызовов | Стек вызовов | Трассировка ([T-117](10-delivery-and-ops.md#observability)) |
+| Отладка | Стек вызовов | Стек вызовов | Трассировка ([T-118](10-delivery-and-ops.md#observability)) |
 | Стоимость эксплуатации | Низкая | Низкая | Высокая |
 
 **Модульный монолит** — недооценённый вариант: модули с явными интерфейсами, запрет прямых обращений в чужие таблицы, проверка зависимостей на сборке. Даёт дисциплину границ без сети между ними и, что важнее, **оставляет право на ошибку**: неверную границу внутри процесса переносят за день, между сервисами — за квартал.
@@ -262,7 +262,7 @@
 
 **Что мерить.** Факт и время каждого запуска против ожидаемого, длительность относительно интервала, число обработанных элементов, доля неуспешных запусков, возраст самой старой невыполненной отложенной задачи.
 
-**Связано:** [T-081 workflow-движки](#workflow-engines) · [T-072 распределённые блокировки](06-distributed-systems.md#distributed-locks) · [T-056 очередь vs лог](05-async-and-messaging.md#queue-vs-log) · [T-120 алертинг](10-delivery-and-ops.md#alerting)
+**Связано:** [T-081 workflow-движки](#workflow-engines) · [T-072 распределённые блокировки](06-distributed-systems.md#distributed-locks) · [T-056 очередь vs лог](05-async-and-messaging.md#queue-vs-log) · [T-121 алертинг](10-delivery-and-ops.md#alerting)
 
 **Источники:** [Kubernetes — CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) · [Google SRE Book, гл. 24 «Distributed Periodic Scheduling with Cron»](https://sre.google/sre-book/distributed-periodic-scheduling/) · [Sidekiq — Best practices](https://github.com/sidekiq/sidekiq/wiki/Best-Practices)
 
@@ -367,8 +367,8 @@
 **Свойства, которые за этим стоят.**
 - **Отсутствие состояния в процессе.** Всё состояние — во внешних хранилищах, поэтому экземпляр можно убить и создать заново в любой момент ([T-066](06-distributed-systems.md#scaling)).
 - **Одноразовость.** Быстрый старт, корректное завершение по сигналу с дозавершением текущих запросов. Это условие любой безостановочной выкатки ([T-113](10-delivery-and-ops.md#deploy)).
-- **Конфигурация снаружи**, а не в сборке: один и тот же образ проходит все окружения ([T-125](10-delivery-and-ops.md#config)).
-- **Логи в поток вывода**, а не в файлы; метрики и трассировка встроены ([T-117](10-delivery-and-ops.md#observability)).
+- **Конфигурация снаружи**, а не в сборке: один и тот же образ проходит все окружения ([T-117](10-delivery-and-ops.md#config)).
+- **Логи в поток вывода**, а не в файлы; метрики и трассировка встроены ([T-118](10-delivery-and-ops.md#observability)).
 - **Явные зависимости и порт** для приёма трафика.
 - **Устойчивость по умолчанию**: таймауты, повторы, деградация ([T-090](08-reliability.md#timeouts-retries)) — потому что в облаке экземпляры исчезают штатно, а не в аварийном режиме.
 - **Проверки готовности и жизнеспособности** ([T-094](08-reliability.md#health-checks)) как часть контракта с платформой.
@@ -379,7 +379,7 @@
 
 **Что мерить.** Время старта до готовности, корректность завершения (доля запросов, оборванных при остановке), число отличий конфигурации между окружениями, доля состояния, хранимого вне процесса.
 
-**Связано:** [T-085 serverless](#serverless) · [T-121 Kubernetes](10-delivery-and-ops.md#kubernetes) · [T-125 конфигурация и IaC](10-delivery-and-ops.md#config) · [T-094 health checks](08-reliability.md#health-checks)
+**Связано:** [T-085 serverless](#serverless) · [T-116 Kubernetes](10-delivery-and-ops.md#kubernetes) · [T-117 конфигурация и IaC](10-delivery-and-ops.md#config) · [T-094 health checks](08-reliability.md#health-checks)
 
 **Источники:** видео [#8](https://www.youtube.com/watch?v=p-88GN1WVs8) · [The Twelve-Factor App](https://12factor.net/) · [CNCF — Cloud Native Definition](https://github.com/cncf/toc/blob/main/DEFINITION.md)
 

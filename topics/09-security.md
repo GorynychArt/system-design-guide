@@ -299,7 +299,7 @@ RBAC разрастается комбинаторно, как только пр
 
 **Что мерить.** Время от публикации уязвимости до выката исправления, доля сборок с ведомостью и подписью, число прямых и транзитивных зависимостей, возраст базовых образов, доля пакетов из внутреннего зеркала.
 
-**Связано:** [T-112 CI/CD](10-delivery-and-ops.md#cicd) · [T-110 threat modeling](#threat-modeling) · [T-125 конфигурация и IaC](10-delivery-and-ops.md#config)
+**Связано:** [T-112 CI/CD](10-delivery-and-ops.md#cicd) · [T-110 threat modeling](#threat-modeling) · [T-117 конфигурация и IaC](10-delivery-and-ops.md#config)
 
 **Источники:** [SLSA — Supply-chain Levels for Software Artifacts](https://slsa.dev/) · [CISA/NTIA — Software Bill of Materials](https://www.cisa.gov/sbom) · [OWASP — Dependency-Check и Top 10 CI/CD Security Risks](https://owasp.org/www-project-top-10-ci-cd-security-risks/) · [Sigstore](https://www.sigstore.dev/)
 
@@ -355,7 +355,7 @@ RBAC разрастается комбинаторно, как только пр
 | Изменяемость | Свободно | Только добавление, изменение запрещено |
 | Полнота | По усмотрению разработчика | По списку событий, обязательному к покрытию |
 
-**Что записывать.** Кто (пользователь или сервис, роль, от чьего имени действовал при делегировании), что (действие, объект, значения до и после), когда (время с зоной), откуда (адрес, клиент, идентификатор запроса — тот же, что в трассировке, [T-117](10-delivery-and-ops.md#observability)), и результат — включая **отказы**: неудачные попытки доступа информативнее успешных.
+**Что записывать.** Кто (пользователь или сервис, роль, от чьего имени действовал при делегировании), что (действие, объект, значения до и после), когда (время с зоной), откуда (адрес, клиент, идентификатор запроса — тот же, что в трассировке, [T-118](10-delivery-and-ops.md#observability)), и результат — включая **отказы**: неудачные попытки доступа информативнее успешных.
 
 **Как хранить.** Отдельно от боевой базы, только на добавление, с правами, отличными от прав приложения: учётная запись сервиса не должна иметь возможности изменить журнал. Для повышенных требований — цепочка контрольных сумм, делающая незаметное изменение невозможным. Персональные данные в журнале подпадают под те же правила удаления, что и везде, — их либо не пишут, либо предусматривают обезличивание.
 
@@ -363,6 +363,6 @@ RBAC разрастается комбинаторно, как только пр
 
 **Что мерить.** Покрытие обязательных событий, задержка появления записи, число обращений к журналу при расследованиях, доля событий с полным контекстом (кто, что, до/после), соответствие срока хранения политике.
 
-**Связано:** [T-103 авторизация](#authorization) · [T-117 observability](10-delivery-and-ops.md#observability) · [T-049 retention](03-storage-and-data.md#retention) · [T-046 целостность данных](03-storage-and-data.md#data-integrity)
+**Связано:** [T-103 авторизация](#authorization) · [T-118 observability](10-delivery-and-ops.md#observability) · [T-049 retention](03-storage-and-data.md#retention) · [T-046 целостность данных](03-storage-and-data.md#data-integrity)
 
 **Источники:** [OWASP — Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) · [NIST SP 800-92 — Guide to Computer Security Log Management](https://csrc.nist.gov/pubs/sp/800/92/final) · [Google SRE Book, гл. 26 «Data Integrity»](https://sre.google/sre-book/data-integrity/)
