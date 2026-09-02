@@ -4,13 +4,13 @@
 
 В плейлисте блок покрыт двумя обзорными видео (CAP и список паттернов) — семь из десяти карточек добавлены.
 
-Навигация: [T-052](#scaling) · [T-053](#cap) · [T-054](#consistency-models) · [T-055](#quorum) · [T-056](#consensus) · [T-057](#distributed-locks) · [T-058](#distributed-transactions) · [T-059](#unique-ids) · [T-060](#conflicts) · [T-061](#patterns)
+Навигация: [T-055](#scaling) · [T-056](#cap) · [T-057](#consistency-models) · [T-058](#quorum) · [T-059](#consensus) · [T-060](#distributed-locks) · [T-061](#distributed-transactions) · [T-062](#unique-ids) · [T-063](#conflicts) · [T-064](#patterns)
 
 ---
 
 <a id="scaling"></a>
 
-## T-052 · Вертикальное vs горизонтальное масштабирование
+## T-055 · Вертикальное vs горизонтальное масштабирование
 
 🎬 [#50](https://www.youtube.com/watch?v=dvRFHG2-uYs), [#79](https://www.youtube.com/watch?v=EWS_CIxttVw) · шаг [W5](../00-workflow.md#w5)
 
@@ -34,11 +34,11 @@
 | Оптимизация кода и запросов | Узкое место — алгоритм, а не железо | Требует профилирования |
 | Разгрузка на CDN/кэш | Читающая нагрузка | Устаревание данных |
 
-**Trade-offs и режимы отказа.** Горизонтальное масштабирование добавляет сетевые вызовы — задержка растёт, даже если пропускная способность улучшилась. Липкие сессии частично возвращают состояние на узлы и мешают равномерности. Автоскейлинг реагирует минутами и бесполезен против секундного всплеска; кроме того, при аварии управляющая плоскость может быть недоступна (см. статическую стабильность в [T-076](08-reliability.md#fault-tolerance-overview)).
+**Trade-offs и режимы отказа.** Горизонтальное масштабирование добавляет сетевые вызовы — задержка растёт, даже если пропускная способность улучшилась. Липкие сессии частично возвращают состояние на узлы и мешают равномерности. Автоскейлинг реагирует минутами и бесполезен против секундного всплеска; кроме того, при аварии управляющая плоскость может быть недоступна (см. статическую стабильность в [T-079](08-reliability.md#fault-tolerance-overview)).
 
-**Что мерить.** Утилизация и насыщенность ресурсов (USE), пропускная способность на экземпляр, стоимость единицы нагрузки, эффективность масштабирования (прирост RPS на добавленный экземпляр — она всегда меньше линейной, см. [T-109](11-performance-and-cost.md#queueing)).
+**Что мерить.** Утилизация и насыщенность ресурсов (USE), пропускная способность на экземпляр, стоимость единицы нагрузки, эффективность масштабирования (прирост RPS на добавленный экземпляр — она всегда меньше линейной, см. [T-112](11-performance-and-cost.md#queueing)).
 
-**Связано:** [T-030 репликация](03-storage-and-data.md#replication) · [T-031 шардирование](03-storage-and-data.md#sharding) · [T-017 балансировка](02-traffic-and-edge.md#load-balancing) · [T-109 закон Литтла](11-performance-and-cost.md#queueing)
+**Связано:** [T-030 репликация](03-storage-and-data.md#replication) · [T-031 шардирование](03-storage-and-data.md#sharding) · [T-017 балансировка](02-traffic-and-edge.md#load-balancing) · [T-112 закон Литтла](11-performance-and-cost.md#queueing)
 
 **Источники:** видео [#50](https://www.youtube.com/watch?v=dvRFHG2-uYs), [#79](https://www.youtube.com/watch?v=EWS_CIxttVw) · [Кleppmann, DDIA, гл. 1](https://dataintensive.net/) · [AWS Well-Architected — Performance Efficiency Pillar](https://docs.aws.amazon.com/wellarchitected/latest/performance-efficiency-pillar/welcome.html)
 
@@ -46,7 +46,7 @@
 
 <a id="cap"></a>
 
-## T-053 · CAP и PACELC
+## T-056 · CAP и PACELC
 
 🎬 [#13](https://www.youtube.com/watch?v=BHqjEjzAicA) · шаг [W6](../00-workflow.md#w6)
 
@@ -66,14 +66,14 @@
 | Модель | Что добавляет |
 |---|---|
 | PACELC | Компромисс задержка/согласованность в штатном режиме |
-| Модели согласованности ([T-054](#consistency-models)) | Спектр вместо бинарного «C или не C» |
+| Модели согласованности ([T-057](#consistency-models)) | Спектр вместо бинарного «C или не C» |
 | Harvest & Yield (Fox, Brewer) | Деградация полноты ответа вместо отказа |
 
 **Trade-offs и режимы отказа.** «A» в CAP — это гарантия ответа **каждого** живого узла, а не бытовая доступность: система с 99.99 % аптайма может быть CP. «C» — это линеаризуемость, а не ACID-согласованность, хотя буква та же. Из CAP не следует ни одного конкретного архитектурного решения — она лишь запрещает невозможное.
 
-**Что мерить.** Поведение при искусственном разрыве (см. [T-079](08-reliability.md#chaos)), доля чтений, требующих строгой согласованности, разница p99 строгих и обычных чтений.
+**Что мерить.** Поведение при искусственном разрыве (см. [T-082](08-reliability.md#chaos)), доля чтений, требующих строгой согласованности, разница p99 строгих и обычных чтений.
 
-**Связано:** [T-054 модели согласованности](#consistency-models) · [T-055 кворумы](#quorum) · [T-030 репликация](03-storage-and-data.md#replication)
+**Связано:** [T-057 модели согласованности](#consistency-models) · [T-058 кворумы](#quorum) · [T-030 репликация](03-storage-and-data.md#replication)
 
 **Источники:** видео [#13](https://www.youtube.com/watch?v=BHqjEjzAicA) · [Gilbert & Lynch — Brewer's Conjecture (2002)](https://dl.acm.org/doi/10.1145/564585.564601) · [Eric Brewer — CAP Twelve Years Later](https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed/) · [Daniel Abadi — Consistency Tradeoffs in Modern Distributed Database System Design (PACELC)](https://www.cs.umd.edu/~abadi/papers/abadi-pacelc.pdf)
 
@@ -81,7 +81,7 @@
 
 <a id="consistency-models"></a>
 
-## T-054 · Модели согласованности
+## T-057 · Модели согласованности
 
 ➕ добавлено · шаг [W6](../00-workflow.md#w6)
 
@@ -109,11 +109,11 @@
 | Гарантии сессии | Низкая | Большинство пользовательских экранов |
 | Eventual | Минимальная | Счётчики, рекомендации, аналитика |
 
-**Trade-offs и режимы отказа.** Строгая согласованность стоит задержки и доступности при разрыве ([T-053](#cap)). Слабая — стоит сложности в приложении: конфликты и «странные» состояния UI приходится обрабатывать вручную. Смешение гарантий в одном экране даёт наблюдаемые аномалии: одна панель обновилась, соседняя нет.
+**Trade-offs и режимы отказа.** Строгая согласованность стоит задержки и доступности при разрыве ([T-056](#cap)). Слабая — стоит сложности в приложении: конфликты и «странные» состояния UI приходится обрабатывать вручную. Смешение гарантий в одном экране даёт наблюдаемые аномалии: одна панель обновилась, соседняя нет.
 
 **Что мерить.** Лаг репликации (p50/p99), доля чтений с лидера, число обращений в поддержку с формулировкой «данные не обновились».
 
-**Связано:** [T-053 CAP и PACELC](#cap) · [T-030 репликация](03-storage-and-data.md#replication) · [T-060 разрешение конфликтов](#conflicts) · [T-029 уровни изоляции](03-storage-and-data.md#isolation)
+**Связано:** [T-056 CAP и PACELC](#cap) · [T-030 репликация](03-storage-and-data.md#replication) · [T-063 разрешение конфликтов](#conflicts) · [T-029 уровни изоляции](03-storage-and-data.md#isolation)
 
 **Источники:** [Jepsen — Consistency Models](https://jepsen.io/consistency) · [Kleppmann, DDIA, гл. 5 и 9](https://dataintensive.net/) · [Highly Available Transactions: Virtues and Limitations (Bailis et al.)](https://www.vldb.org/pvldb/vol7/p181-bailis.pdf)
 
@@ -121,7 +121,7 @@
 
 <a id="quorum"></a>
 
-## T-055 · Кворумы чтения и записи
+## T-058 · Кворумы чтения и записи
 
 ➕ добавлено · шаг [W6](../00-workflow.md#w6)
 
@@ -133,7 +133,7 @@
 - Типичная конфигурация: `N = 3, W = 2, R = 2`. Запись успешна, когда ответили 2 из 3; чтение опрашивает 2 из 3 и берёт версию с максимальным номером/меткой.
 - Перекос настраивается под нагрузку: `W = 1, R = N` — быстрые записи, медленные чтения; `W = N, R = 1` — наоборот.
 - **Read repair** и **anti-entropy** доводят отставшие реплики до актуального состояния.
-- Кворум применим и в консенсусных системах ([T-056](#consensus)), где большинство (`⌊N/2⌋ + 1`) требуется для выбора лидера и фиксации записи в журнал.
+- Кворум применим и в консенсусных системах ([T-059](#consensus)), где большинство (`⌊N/2⌋ + 1`) требуется для выбора лидера и фиксации записи в журнал.
 
 **Когда применять.** В хранилищах без единого лидера (Dynamo-подобные: Cassandra, Riak, ScyllaDB), где нужен явный контроль компромисса «свежесть против задержки». **Когда нет:** если требуется линеаризуемость, кворума самого по себе недостаточно — нужен консенсус.
 
@@ -146,11 +146,11 @@
 | Консенсус (Raft/Paxos) | Нужна линеаризуемость с автоматическим failover | Дороже по задержке, сложнее эксплуатация |
 | Асинхронная репликация | Максимальная скорость записи | Потеря данных при отказе лидера |
 
-**Trade-offs и режимы отказа.** `R + W > N` **не** даёт линеаризуемости: при параллельных записях возможны конфликтующие версии, которые придётся разрешать ([T-060](#conflicts)); при *sloppy quorum* с hinted handoff запись принимают узлы вне обычного набора реплик — доступность выше, гарантия пересечения теряется. Кворум не спасает от отката: если запись подтвердили W узлов и все они потеряны, данные исчезли. Реальная задержка кворума определяется самым медленным из необходимых ответов — то есть хвостом распределения.
+**Trade-offs и режимы отказа.** `R + W > N` **не** даёт линеаризуемости: при параллельных записях возможны конфликтующие версии, которые придётся разрешать ([T-063](#conflicts)); при *sloppy quorum* с hinted handoff запись принимают узлы вне обычного набора реплик — доступность выше, гарантия пересечения теряется. Кворум не спасает от отката: если запись подтвердили W узлов и все они потеряны, данные исчезли. Реальная задержка кворума определяется самым медленным из необходимых ответов — то есть хвостом распределения.
 
 **Что мерить.** Задержка чтения и записи по уровням консистентности, число конфликтующих версий, объём работы read repair, число hinted handoff.
 
-**Связано:** [T-056 консенсус](#consensus) · [T-030 репликация](03-storage-and-data.md#replication) · [T-060 конфликты](#conflicts) · [T-054 модели согласованности](#consistency-models)
+**Связано:** [T-059 консенсус](#consensus) · [T-030 репликация](03-storage-and-data.md#replication) · [T-063 конфликты](#conflicts) · [T-057 модели согласованности](#consistency-models)
 
 **Источники:** [Dynamo: Amazon's Highly Available Key-value Store (SOSP 2007)](https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf) · [Kleppmann, DDIA, гл. 5](https://dataintensive.net/) · [Apache Cassandra — Consistency levels](https://cassandra.apache.org/doc/latest/cassandra/architecture/dynamo.html)
 
@@ -158,7 +158,7 @@
 
 <a id="consensus"></a>
 
-## T-056 · Консенсус: Raft, leader election
+## T-059 · Консенсус: Raft, leader election
 
 ➕ добавлено · шаг [W6](../00-workflow.md#w6)
 
@@ -184,11 +184,11 @@
 | Аренда через внешний координатор | Нужны просто выборы лидера | Зависимость от координатора |
 | Детерминированный выбор (по хэшу, по конфигурации) | Кластер статичен | Не переживает отказ автоматически |
 
-**Trade-offs и режимы отказа.** Каждая запись стоит round-trip до большинства — это плохо переносится на межрегиональные кластеры (десятки миллисекунд на операцию). Потеря большинства останавливает запись целиком: консенсусные системы предпочитают недоступность расхождению (это CP по [T-053](#cap)). Частые перевыборы (флаппинг) при нестабильной сети деградируют кластер сильнее, чем честный отказ узла.
+**Trade-offs и режимы отказа.** Каждая запись стоит round-trip до большинства — это плохо переносится на межрегиональные кластеры (десятки миллисекунд на операцию). Потеря большинства останавливает запись целиком: консенсусные системы предпочитают недоступность расхождению (это CP по [T-056](#cap)). Частые перевыборы (флаппинг) при нестабильной сети деградируют кластер сильнее, чем честный отказ узла.
 
 **Что мерить.** Число смен лидера за период, задержка фиксации записи, отставание followers, доступность кворума.
 
-**Связано:** [T-055 кворумы](#quorum) · [T-057 распределённые блокировки](#distributed-locks) · [T-022 service discovery](02-traffic-and-edge.md#discovery) · [T-058 распределённые транзакции](#distributed-transactions)
+**Связано:** [T-058 кворумы](#quorum) · [T-060 распределённые блокировки](#distributed-locks) · [T-022 service discovery](02-traffic-and-edge.md#discovery) · [T-061 распределённые транзакции](#distributed-transactions)
 
 **Источники:** [In Search of an Understandable Consensus Algorithm (Raft), Ongaro & Ousterhout](https://raft.github.io/raft.pdf) · [raft.github.io — визуализация](https://raft.github.io/) · [Leslie Lamport — Paxos Made Simple](https://lamport.azurewebsites.net/pubs/paxos-simple.pdf) · [etcd — Learning: Data model and Raft](https://etcd.io/docs/latest/learning/)
 
@@ -196,7 +196,7 @@
 
 <a id="distributed-locks"></a>
 
-## T-057 · Распределённые блокировки и аренда
+## T-060 · Распределённые блокировки и аренда
 
 ➕ добавлено · шаг [W6](../00-workflow.md#w6)
 
@@ -226,7 +226,7 @@
 
 **Что мерить.** Время удержания блокировки, доля неудачных попыток захвата, число одновременных владельцев (должно быть 0), число операций, отвергнутых по устаревшему fencing token.
 
-**Связано:** [T-056 консенсус](#consensus) · [T-029 уровни изоляции](03-storage-and-data.md#isolation) · [T-046 гарантии доставки](05-async-and-messaging.md#delivery-guarantees) · [T-120 бронирование билетов](12-case-studies.md#booking)
+**Связано:** [T-059 консенсус](#consensus) · [T-029 уровни изоляции](03-storage-and-data.md#isolation) · [T-049 гарантии доставки](05-async-and-messaging.md#delivery-guarantees) · [T-123 бронирование билетов](12-case-studies.md#booking)
 
 **Источники:** [Martin Kleppmann — How to do distributed locking](https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html) · [Redis — Distributed Locks](https://redis.io/docs/latest/develop/use-cases/patterns/distributed-locks/) · [etcd — Distributed locks / lease](https://etcd.io/docs/latest/tutorials/how-to-create-locks/)
 
@@ -234,7 +234,7 @@
 
 <a id="distributed-transactions"></a>
 
-## T-058 · Распределённые транзакции: 2PC, saga, TCC
+## T-061 · Распределённые транзакции: 2PC, saga, TCC
 
 ➕ добавлено · шаг [W6](../00-workflow.md#w6)
 
@@ -252,7 +252,7 @@
 
 **Ключевое ограничение saga.** У неё нет изоляции: промежуточные состояния видны другим. Это лечится не техникой, а моделированием — статусами (`ожидает подтверждения`), семантическими блокировками, повторным чтением перед решением.
 
-**Когда применять.** Saga — по умолчанию для бизнес-процессов между сервисами. TCC — когда резервирование естественно для домена (билеты, склад, лимиты). 2PC — внутри одной инфраструктуры, поддерживающей XA, при коротких транзакциях. **Когда нет:** если сущности всегда меняются вместе — это признак неверных границ ([T-063](07-architecture-styles.md#boundaries)); объедините их в одну транзакцию и одно хранилище.
+**Когда применять.** Saga — по умолчанию для бизнес-процессов между сервисами. TCC — когда резервирование естественно для домена (билеты, склад, лимиты). 2PC — внутри одной инфраструктуры, поддерживающей XA, при коротких транзакциях. **Когда нет:** если сущности всегда меняются вместе — это признак неверных границ ([T-066](07-architecture-styles.md#boundaries)); объедините их в одну транзакцию и одно хранилище.
 
 **Альтернативы**
 
@@ -262,13 +262,13 @@
 | 2PC / XA | Полная | Есть (блокировки) | Блокировки, уязвимость к отказу координатора |
 | Saga | Через компенсации | Нет | Компенсации, видимые промежуточные состояния |
 | TCC | Через резерв | Частичная | Три операции на каждый шаг, модель с резервами |
-| Outbox + eventual ([T-047](05-async-and-messaging.md#outbox)) | Отложенная | Нет | Простая реализация, отложенная согласованность |
+| Outbox + eventual ([T-050](05-async-and-messaging.md#outbox)) | Отложенная | Нет | Простая реализация, отложенная согласованность |
 
 **Trade-offs и режимы отказа.** Компенсация не всегда возможна (письмо отправлено, SMS доставлена) — такие шаги ставят последними или делают отменяемыми на уровне домена. Компенсация сама может упасть, поэтому она обязана быть идемпотентной и повторяемой. Оркестратор становится критичным компонентом со своим состоянием и своей отказоустойчивостью.
 
 **Что мерить.** Доля саг, завершившихся компенсацией; число «зависших» саг и их возраст; время прохождения процесса; число ручных вмешательств.
 
-**Связано:** [T-047 outbox и CDC](05-async-and-messaging.md#outbox) · [T-012 идемпотентность](01-network-and-api.md#idempotency) · [T-064 хореография vs оркестрация](07-architecture-styles.md#event-driven) · [T-121 платёжный поток](12-case-studies.md#payments)
+**Связано:** [T-050 outbox и CDC](05-async-and-messaging.md#outbox) · [T-012 идемпотентность](01-network-and-api.md#idempotency) · [T-067 хореография vs оркестрация](07-architecture-styles.md#event-driven) · [T-124 платёжный поток](12-case-studies.md#payments)
 
 **Источники:** [microservices.io — Saga pattern](https://microservices.io/patterns/data/saga.html) · [Kleppmann, DDIA, гл. 9](https://dataintensive.net/) · [Pat Helland — Life beyond Distributed Transactions (CIDR 2007)](https://www.cidrdb.org/cidr2007/papers/cidr07p15.pdf) · [Garcia-Molina & Salem — Sagas (1987)](https://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf)
 
@@ -276,7 +276,7 @@
 
 <a id="unique-ids"></a>
 
-## T-059 · Генерация уникальных ID
+## T-062 · Генерация уникальных ID
 
 ➕ добавлено · шаг [W3](../00-workflow.md#w3)
 
@@ -307,7 +307,7 @@
 
 **Что мерить.** Коллизии (должны отсутствовать), отклонение часов между узлами, фрагментация индекса и скорость вставки, задержка выдачи ID при централизованной схеме.
 
-**Связано:** [T-031 шардирование](03-storage-and-data.md#sharding) · [T-026 индексы](03-storage-and-data.md#indexes) · [T-012 идемпотентность](01-network-and-api.md#idempotency) · [T-060 время и версии](#conflicts)
+**Связано:** [T-031 шардирование](03-storage-and-data.md#sharding) · [T-026 индексы](03-storage-and-data.md#indexes) · [T-012 идемпотентность](01-network-and-api.md#idempotency) · [T-063 время и версии](#conflicts)
 
 **Источники:** [RFC 9562 — Universally Unique IDentifiers (UUIDv7)](https://www.rfc-editor.org/rfc/rfc9562.html) · [Twitter Snowflake](https://github.com/twitter-archive/snowflake) · [ULID specification](https://github.com/ulid/spec)
 
@@ -315,7 +315,7 @@
 
 <a id="conflicts"></a>
 
-## T-060 · Время, версии и разрешение конфликтов
+## T-063 · Время, версии и разрешение конфликтов
 
 ➕ добавлено · шаг [W6](../00-workflow.md#w6)
 
@@ -346,7 +346,7 @@
 
 **Что мерить.** Число конфликтующих версий и время до их разрешения, отклонение часов между узлами, размер метаданных версий, доля LWW-разрешений.
 
-**Связано:** [T-055 кворумы](#quorum) · [T-054 модели согласованности](#consistency-models) · [T-077 multi-region](08-reliability.md#multi-region) · [T-059 уникальные ID](#unique-ids)
+**Связано:** [T-058 кворумы](#quorum) · [T-057 модели согласованности](#consistency-models) · [T-080 multi-region](08-reliability.md#multi-region) · [T-062 уникальные ID](#unique-ids)
 
 **Источники:** [Lamport — Time, Clocks, and the Ordering of Events (1978)](https://lamport.azurewebsites.net/pubs/time-clocks.pdf) · [Shapiro et al. — Conflict-free Replicated Data Types](https://inria.hal.science/inria-00609399/document) · [Spanner: Google's Globally-Distributed Database (OSDI 2012)](https://research.google/pubs/pub39966/) · [Kleppmann, DDIA, гл. 5 и 8](https://dataintensive.net/)
 
@@ -354,7 +354,7 @@
 
 <a id="patterns"></a>
 
-## T-061 · Паттерны распределённых систем: обзор
+## T-064 · Паттерны распределённых систем: обзор
 
 🎬 [#26](https://www.youtube.com/watch?v=nH4qjmP2KEE), [#65](https://www.youtube.com/watch?v=cTyZ_hbmbDw) · шаг [W4](../00-workflow.md#w4)
 
@@ -367,21 +367,21 @@
 | Задача | Паттерны | Подробно |
 |---|---|---|
 | Распределить нагрузку | Балансировка, шардирование, партиционирование, consistent hashing | [T-017](02-traffic-and-edge.md#load-balancing), [T-031](03-storage-and-data.md#sharding), [T-032](03-storage-and-data.md#consistent-hashing) |
-| Ускорить чтение | Кэш, реплики чтения, CDN, материализованные проекции | [T-039](04-caching.md#cache-levels), [T-030](03-storage-and-data.md#replication), [T-065](07-architecture-styles.md#cqrs) |
-| Развязать компоненты | Очередь, pub/sub, лог событий, outbox | [T-044](05-async-and-messaging.md#queue-vs-log), [T-047](05-async-and-messaging.md#outbox) |
-| Договориться о состоянии | Консенсус, выбор лидера, аренда, кворум | [T-056](#consensus), [T-055](#quorum), [T-057](#distributed-locks) |
-| Сохранить корректность | Идемпотентность, saga, TCC, оптимистическая блокировка | [T-012](01-network-and-api.md#idempotency), [T-058](#distributed-transactions) |
-| Пережить отказ | Таймауты и ретраи, circuit breaker, bulkhead, деградация | [T-072](08-reliability.md#timeouts-retries), [T-073](08-reliability.md#circuit-breaker) |
-| Вынести общую функциональность | Sidecar, ambassador, service mesh, BFF, gateway | [T-068](07-architecture-styles.md#mesh), [T-019](02-traffic-and-edge.md#api-gateway) |
-| Наблюдать за системой | Сквозная трассировка, агрегация метрик и логов | [T-095](10-delivery-and-ops.md#observability) |
+| Ускорить чтение | Кэш, реплики чтения, CDN, материализованные проекции | [T-039](04-caching.md#cache-levels), [T-030](03-storage-and-data.md#replication), [T-068](07-architecture-styles.md#cqrs) |
+| Развязать компоненты | Очередь, pub/sub, лог событий, outbox | [T-045](05-async-and-messaging.md#queue-vs-log), [T-050](05-async-and-messaging.md#outbox) |
+| Договориться о состоянии | Консенсус, выбор лидера, аренда, кворум | [T-059](#consensus), [T-058](#quorum), [T-060](#distributed-locks) |
+| Сохранить корректность | Идемпотентность, saga, TCC, оптимистическая блокировка | [T-012](01-network-and-api.md#idempotency), [T-061](#distributed-transactions) |
+| Пережить отказ | Таймауты и ретраи, circuit breaker, bulkhead, деградация | [T-075](08-reliability.md#timeouts-retries), [T-076](08-reliability.md#circuit-breaker) |
+| Вынести общую функциональность | Sidecar, ambassador, service mesh, BFF, gateway | [T-071](07-architecture-styles.md#mesh), [T-019](02-traffic-and-edge.md#api-gateway) |
+| Наблюдать за системой | Сквозная трассировка, агрегация метрик и логов | [T-098](10-delivery-and-ops.md#observability) |
 
 **Принципы, которые стоят за паттернами** (видео [#65](https://www.youtube.com/watch?v=cTyZ_hbmbDw) собирает их в один список):
-- **BASE** против ACID — для распределённых хранилищ доступность и мягкое состояние часто ценнее немедленной согласованности; выбор делается по операции, а не по системе ([T-054](#consistency-models)).
+- **BASE** против ACID — для распределённых хранилищ доступность и мягкое состояние часто ценнее немедленной согласованности; выбор делается по операции, а не по системе ([T-057](#consistency-models)).
 - **KISS** — в распределённых системах цена сложности выше, чем в монолите: каждый компонент нужно эксплуатировать, наблюдать и чинить ночью.
-- **Разделение ответственности** — работает и на уровне модулей, и на уровне сервисов; неверные границы дороже плохого кода ([T-063](07-architecture-styles.md#boundaries)).
+- **Разделение ответственности** — работает и на уровне модулей, и на уровне сервисов; неверные границы дороже плохого кода ([T-066](07-architecture-styles.md#boundaries)).
 
 **Как выбирать.** Сформулировать проблему числом (из [W1](../00-workflow.md#w1)) → взять из таблицы кандидатов → сравнить по осям [W10](../00-workflow.md#w10) → зафиксировать решение в ADR. Паттерн, введённый «потому что так делают в бигтехе», обычно решает чужую проблему за ваши деньги.
 
-**Связано:** весь блок B06 · [T-062 монолит vs микросервисы](07-architecture-styles.md#monolith-microservices) · [W4](../00-workflow.md#w4)
+**Связано:** весь блок B06 · [T-065 монолит vs микросервисы](07-architecture-styles.md#monolith-microservices) · [W4](../00-workflow.md#w4)
 
 **Источники:** видео [#26](https://www.youtube.com/watch?v=nH4qjmP2KEE), [#65](https://www.youtube.com/watch?v=cTyZ_hbmbDw) · [Azure Architecture — Cloud Design Patterns](https://learn.microsoft.com/en-us/azure/architecture/patterns/) · [microservices.io — Pattern language](https://microservices.io/patterns/) · [Kleppmann, DDIA](https://dataintensive.net/)

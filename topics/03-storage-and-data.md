@@ -37,7 +37,7 @@
 | Колоночная (ClickHouse, BigQuery) | Аналитика по миллиардам строк | Плохо для точечных обновлений |
 | Object storage (S3) | Дёшево, безгранично для файлов | Нет запросов по содержимому |
 
-**Trade-offs и режимы отказа.** Polyglot persistence умножает не только возможности, но и число мест, где данные расходятся: любые две копии требуют механизма синхронизации ([T-047](05-async-and-messaging.md#outbox)). Специализированное хранилище решает одну задачу отлично и мстит за все остальные запросы. Выбор «как в Netflix» переносит решение, принятое под чужие числа.
+**Trade-offs и режимы отказа.** Polyglot persistence умножает не только возможности, но и число мест, где данные расходятся: любые две копии требуют механизма синхронизации ([T-050](05-async-and-messaging.md#outbox)). Специализированное хранилище решает одну задачу отлично и мстит за все остальные запросы. Выбор «как в Netflix» переносит решение, принятое под чужие числа.
 
 **Что мерить.** Задержка и пропускная способность по каждому паттерну доступа, объём и его рост, доля запросов, не покрытых индексом, стоимость хранения и операций.
 
@@ -62,7 +62,7 @@
 2. **Ранжировать**: 2–3 запроса обычно дают 90 % нагрузки. Схема оптимизируется под них, остальные обслуживаются как получится.
 3. **Спроектировать ключи и индексы** под запросы из шага 1 ([T-026](#indexes)).
 4. **Решить про денормализацию точечно**: дублируем поле, если оно читается на порядок чаще, чем меняется, и рассогласование заметно не сразу.
-5. **Развести истину и проекции.** Источник истины нормализован; быстрые чтения обслуживают производные структуры — материализованные представления, поисковый индекс, кэш, отдельная модель чтения ([T-065](07-architecture-styles.md#cqrs)).
+5. **Развести истину и проекции.** Источник истины нормализован; быстрые чтения обслуживают производные структуры — материализованные представления, поисковый индекс, кэш, отдельная модель чтения ([T-068](07-architecture-styles.md#cqrs)).
 
 **Когда применять.** Всегда — но глубина проработки пропорциональна цене ошибки: для wide-column и документных хранилищ схема **полностью** определяется запросами, для реляционных остаётся пространство для манёвра.
 
@@ -79,7 +79,7 @@
 
 **Что мерить.** Доля запросов, обслуженных индексом; число строк, прочитанных на один возвращённый; частота изменения денормализованных полей; отставание проекций.
 
-**Связано:** [T-026 индексы](#indexes) · [T-065 CQRS](07-architecture-styles.md#cqrs) · [T-031 шардирование](#sharding) · [T-063 границы контекстов](07-architecture-styles.md#boundaries)
+**Связано:** [T-026 индексы](#indexes) · [T-068 CQRS](07-architecture-styles.md#cqrs) · [T-031 шардирование](#sharding) · [T-066 границы контекстов](07-architecture-styles.md#boundaries)
 
 **Источники:** [Kleppmann, DDIA, гл. 2](https://dataintensive.net/) · [DynamoDB — Best practices for designing and using partition keys](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html) · [Martin Fowler — Aggregate](https://martinfowler.com/bliki/DDD_Aggregate.html)
 
@@ -122,7 +122,7 @@
 
 **Что мерить.** Доля index-only сканов, число прочитанных строк на возвращённую, размер индексов относительно таблицы, неиспользуемые индексы, глубина уровней и объём compaction в LSM.
 
-**Связано:** [T-027 оптимизация SQL](#sql-optimization) · [T-025 моделирование](#data-modeling) · [T-059 упорядоченные ID](06-distributed-systems.md#unique-ids)
+**Связано:** [T-027 оптимизация SQL](#sql-optimization) · [T-025 моделирование](#data-modeling) · [T-062 упорядоченные ID](06-distributed-systems.md#unique-ids)
 
 **Источники:** видео [#5](https://www.youtube.com/watch?v=ouipSd_5ivQ) · [Kleppmann, DDIA, гл. 3](https://dataintensive.net/) · [Use The Index, Luke](https://use-the-index-luke.com/) · [PostgreSQL — Indexes](https://www.postgresql.org/docs/current/indexes.html)
 
@@ -152,7 +152,7 @@
 1. `EXPLAIN (ANALYZE, BUFFERS)` — смотреть фактические строки против оценочных: расхождение на порядки означает устаревшую статистику.
 2. Найти самый дорогой узел плана: Seq Scan по большой таблице, Nested Loop с большим числом итераций, внешняя сортировка на диске.
 3. Проверить, есть ли индекс, покрывающий условие ([T-026](#indexes)); проверить, не мешает ли функция над колонкой его использовать (`WHERE lower(email) = ...` не использует индекс по `email`).
-4. Проверить типовые ошибки приложения: **N+1 запросов** ([T-108](11-performance-and-cost.md#pooling)), выборка всех колонок вместо нужных, пагинация по большому `OFFSET` ([T-011](01-network-and-api.md#pagination)).
+4. Проверить типовые ошибки приложения: **N+1 запросов** ([T-111](11-performance-and-cost.md#pooling)), выборка всех колонок вместо нужных, пагинация по большому `OFFSET` ([T-011](01-network-and-api.md#pagination)).
 
 **Когда применять.** При любой деградации чтения — до того, как обсуждать кэш и реплики: неоптимальный запрос, размноженный кэшем, остаётся неоптимальным.
 
@@ -170,7 +170,7 @@
 
 **Что мерить.** Время выполнения по перцентилям, число прочитанных страниц/буферов, доля Seq Scan по большим таблицам, самые дорогие запросы по суммарному времени (`pg_stat_statements`).
 
-**Связано:** [T-026 индексы](#indexes) · [T-108 N+1 и пулы](11-performance-and-cost.md#pooling) · [T-011 пагинация](01-network-and-api.md#pagination)
+**Связано:** [T-026 индексы](#indexes) · [T-111 N+1 и пулы](11-performance-and-cost.md#pooling) · [T-011 пагинация](01-network-and-api.md#pagination)
 
 **Источники:** видео [#27](https://www.youtube.com/watch?v=BHwzDmr6d7s) · [PostgreSQL — Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html) · [Use The Index, Luke](https://use-the-index-luke.com/)
 
@@ -195,7 +195,7 @@
 **Практические следствия.**
 - Транзакция должна быть **короткой**: долгая держит блокировки и раздувает версии MVCC.
 - Не выполнять внутри транзакции сетевые вызовы к другим сервисам — время удержания становится неконтролируемым.
-- Границы транзакции = границы атомарности. Всё, что не поместилось внутрь, требует распределённого решения ([T-058](06-distributed-systems.md#distributed-transactions)).
+- Границы транзакции = границы атомарности. Всё, что не поместилось внутрь, требует распределённого решения ([T-061](06-distributed-systems.md#distributed-transactions)).
 
 **Альтернативы**
 
@@ -210,7 +210,7 @@
 
 **Что мерить.** Длительность транзакций (p99), число откатов и дедлоков, возраст самой старой открытой транзакции, задержка fsync журнала.
 
-**Связано:** [T-029 уровни изоляции](#isolation) · [T-058 распределённые транзакции](06-distributed-systems.md#distributed-transactions) · [T-030 репликация](#replication)
+**Связано:** [T-029 уровни изоляции](#isolation) · [T-061 распределённые транзакции](06-distributed-systems.md#distributed-transactions) · [T-030 репликация](#replication)
 
 **Источники:** видео [#60](https://www.youtube.com/watch?v=GAe5oB742dw) · [Kleppmann, DDIA, гл. 7](https://dataintensive.net/) · [PostgreSQL — Reliability and the Write-Ahead Log](https://www.postgresql.org/docs/current/wal.html)
 
@@ -250,7 +250,7 @@
 
 **Что мерить.** Число дедлоков и ошибок сериализации, доля успешных повторов, длительность и возраст транзакций, рост «мусорных» версий.
 
-**Связано:** [T-028 ACID](#acid) · [T-057 распределённые блокировки](06-distributed-systems.md#distributed-locks) · [T-120 бронирование](12-case-studies.md#booking)
+**Связано:** [T-028 ACID](#acid) · [T-060 распределённые блокировки](06-distributed-systems.md#distributed-locks) · [T-123 бронирование](12-case-studies.md#booking)
 
 **Источники:** [PostgreSQL — Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html) · [Kleppmann, DDIA, гл. 7](https://dataintensive.net/) · [A Critique of ANSI SQL Isolation Levels (Berenson et al.)](https://www.microsoft.com/en-us/research/publication/a-critique-of-ansi-sql-isolation-levels/) · [Jepsen — Consistency models](https://jepsen.io/consistency)
 
@@ -267,15 +267,15 @@
 **Проблема.** Одна копия данных означает: отказ узла = недоступность, а вся читающая нагрузка ложится на один сервер. Копии решают обе задачи и создают третью — расхождение между копиями.
 
 **Как работает.**
-- **Один лидер** (стандарт для реляционных БД). Запись только в лидера, реплики применяют его журнал. Простая модель, строгий порядок записи. Failover — выбор нового лидера ([T-056](06-distributed-systems.md#consensus)).
+- **Один лидер** (стандарт для реляционных БД). Запись только в лидера, реплики применяют его журнал. Простая модель, строгий порядок записи. Failover — выбор нового лидера ([T-059](06-distributed-systems.md#consensus)).
 - **Синхронная репликация**: лидер подтверждает клиенту после записи на реплику. Нет потери данных, но задержка растёт, а отказ реплики блокирует запись. Компромисс — кворумная запись на одну из нескольких реплик.
 - **Асинхронная**: подтверждение сразу, реплики догоняют. Быстро, но при отказе лидера последние транзакции теряются (RPO > 0).
-- **Несколько лидеров** — запись в разных регионах; требует разрешения конфликтов ([T-060](06-distributed-systems.md#conflicts)).
-- **Без лидера** — кворумы ([T-055](06-distributed-systems.md#quorum)).
+- **Несколько лидеров** — запись в разных регионах; требует разрешения конфликтов ([T-063](06-distributed-systems.md#conflicts)).
+- **Без лидера** — кворумы ([T-058](06-distributed-systems.md#quorum)).
 
-**Лаг репликации — главный практический эффект.** Пользователь сохранил профиль, следующий запрос попал на отстающую реплику, изменения «исчезли». Лечится гарантиями сессии ([T-054](06-distributed-systems.md#consistency-models)): читать с лидера в течение нескольких секунд после записи, либо передавать номер версии и ждать, пока реплика догонит.
+**Лаг репликации — главный практический эффект.** Пользователь сохранил профиль, следующий запрос попал на отстающую реплику, изменения «исчезли». Лечится гарантиями сессии ([T-057](06-distributed-systems.md#consistency-models)): читать с лидера в течение нескольких секунд после записи, либо передавать номер версии и ждать, пока реплика догонит.
 
-**Когда применять.** Реплики чтения — когда нагрузка читающая и запросы допускают отставание. **Когда нет:** реплики не масштабируют запись (каждая применяет весь поток изменений) и не защищают от логической ошибки ([T-078](08-reliability.md#backup-dr)).
+**Когда применять.** Реплики чтения — когда нагрузка читающая и запросы допускают отставание. **Когда нет:** реплики не масштабируют запись (каждая применяет весь поток изменений) и не защищают от логической ошибки ([T-081](08-reliability.md#backup-dr)).
 
 **Альтернативы**
 
@@ -290,7 +290,7 @@
 
 **Что мерить.** Лаг репликации в секундах и в байтах, доля чтений с лидера, время failover, число откатов транзакций при переключении.
 
-**Связано:** [T-031 шардирование](#sharding) · [T-054 модели согласованности](06-distributed-systems.md#consistency-models) · [T-077 multi-region](08-reliability.md#multi-region) · [T-078 бэкапы](08-reliability.md#backup-dr)
+**Связано:** [T-031 шардирование](#sharding) · [T-057 модели согласованности](06-distributed-systems.md#consistency-models) · [T-080 multi-region](08-reliability.md#multi-region) · [T-081 бэкапы](08-reliability.md#backup-dr)
 
 **Источники:** видео [#68](https://www.youtube.com/watch?v=_1IKwnbscQU) · [Kleppmann, DDIA, гл. 5](https://dataintensive.net/) · [PostgreSQL — High Availability, Load Balancing, and Replication](https://www.postgresql.org/docs/current/high-availability.html)
 
@@ -315,7 +315,7 @@
 
 **Выбор ключа — главное решение.** Хороший ключ: даёт равномерное распределение; присутствует в большинстве запросов (иначе они уходят во все шарды); группирует данные, которые читаются вместе (все заказы пользователя — в одном шарде). Типичный удачный выбор — идентификатор арендатора или пользователя.
 
-**Что становится дорогим после шардирования.** Соединения между шардами. Транзакции, затрагивающие несколько шардов ([T-058](06-distributed-systems.md#distributed-transactions)). Глобально уникальные ограничения. Вторичные индексы: локальный индекс требует обхода всех шардов при поиске, глобальный — отдельной структуры со своей согласованностью. Агрегация по всем данным. Ребалансировка при добавлении узлов.
+**Что становится дорогим после шардирования.** Соединения между шардами. Транзакции, затрагивающие несколько шардов ([T-061](06-distributed-systems.md#distributed-transactions)). Глобально уникальные ограничения. Вторичные индексы: локальный индекс требует обхода всех шардов при поиске, глобальный — отдельной структуры со своей согласованностью. Агрегация по всем данным. Ребалансировка при добавлении узлов.
 
 **Когда применять.** Когда исчерпаны вертикальный рост, кэш, реплики и асинхронность ([W5](../00-workflow.md#w5)) — и объём или запись действительно не помещаются. **Когда нет:** до этого момента; ранний шардинг — самая частая преждевременная оптимизация в дизайне данных.
 
@@ -332,7 +332,7 @@
 
 **Что мерить.** Распределение нагрузки и объёма по шардам (перекос), доля scatter-gather запросов, задержка кросс-шардовых операций, прогресс и влияние ребалансировки.
 
-**Связано:** [T-032 consistent hashing](#consistent-hashing) · [T-059 уникальные ID](06-distributed-systems.md#unique-ids) · [T-058 распределённые транзакции](06-distributed-systems.md#distributed-transactions) · [T-037 мультитенантность](#multitenancy)
+**Связано:** [T-032 consistent hashing](#consistent-hashing) · [T-062 уникальные ID](06-distributed-systems.md#unique-ids) · [T-061 распределённые транзакции](06-distributed-systems.md#distributed-transactions) · [T-037 мультитенантность](#multitenancy)
 
 **Источники:** видео [#68](https://www.youtube.com/watch?v=_1IKwnbscQU) · [Kleppmann, DDIA, гл. 6](https://dataintensive.net/) · [Vitess — Sharding](https://vitess.io/docs/user-guides/configuration-advanced/sharding/) · [How Discord Stores Trillions of Messages](https://discord.com/blog/how-discord-stores-trillions-of-messages)
 
@@ -370,7 +370,7 @@
 
 **Что мерить.** Перекос распределения ключей по узлам, доля ключей, сменивших владельца при изменении состава, всплеск промахов кэша после ребалансировки.
 
-**Связано:** [T-031 шардирование](#sharding) · [T-043 Redis](04-caching.md#redis) · [T-055 кворумы](06-distributed-systems.md#quorum)
+**Связано:** [T-031 шардирование](#sharding) · [T-043 Redis](04-caching.md#redis) · [T-058 кворумы](06-distributed-systems.md#quorum)
 
 **Источники:** [Karger et al. — Consistent Hashing and Random Trees (1997)](https://dl.acm.org/doi/10.1145/258533.258660) · [Dynamo paper (SOSP 2007)](https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf) · [Google — Maglev (NSDI 2016)](https://research.google/pubs/pub44824/)
 
@@ -409,7 +409,7 @@
 
 **Что мерить.** Доля незавершённых загрузок, объём «осиротевших» объектов, стоимость по классам хранения, доля отдачи через CDN против прямых обращений.
 
-**Связано:** [T-020 CDN](02-traffic-and-edge.md#cdn) · [T-038 retention](#retention) · [T-119 загрузка видео](12-case-studies.md#video)
+**Связано:** [T-020 CDN](02-traffic-and-edge.md#cdn) · [T-038 retention](#retention) · [T-122 загрузка видео](12-case-studies.md#video)
 
 **Источники:** [AWS S3 — Presigned URLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html) · [AWS S3 — Multipart upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html) · [AWS S3 — Consistency model](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html#ConsistencyModel)
 
@@ -448,7 +448,7 @@
 
 **Что мерить.** Отставание индексации, доля запросов без результатов, задержка поиска по перцентилям, метрики качества (CTR по позициям, доля переформулировок запроса).
 
-**Связано:** [T-035 OLTP/OLAP](#oltp-olap) · [T-047 CDC](05-async-and-messaging.md#outbox) · [T-118 автодополнение](12-case-studies.md#autocomplete)
+**Связано:** [T-035 OLTP/OLAP](#oltp-olap) · [T-050 CDC](05-async-and-messaging.md#outbox) · [T-121 автодополнение](12-case-studies.md#autocomplete)
 
 **Источники:** видео [#76](https://www.youtube.com/watch?v=TByRaraQqW4) · [Elasticsearch — Inverted index](https://www.elastic.co/guide/en/elasticsearch/reference/current/documents-indices.html) · [PostgreSQL — Full Text Search](https://www.postgresql.org/docs/current/textsearch.html) · [Introduction to Information Retrieval (Manning et al.)](https://nlp.stanford.edu/IR-book/)
 
@@ -470,7 +470,7 @@
 - **Data warehouse** — структурированное аналитическое хранилище со схемой (Snowflake, BigQuery, Redshift, ClickHouse). Схема при записи, высокое качество данных.
 - **Data lake** — сырые файлы в объектном хранилище (обычно Parquet). Схема при чтении, дёшево, но легко превращается в «болото» без каталога и контроля качества.
 - **Lakehouse** — табличный формат поверх файлов озера (Iceberg, Delta Lake, Hudi), дающий транзакции, эволюцию схемы и путешествие во времени. Совмещает дешёвое хранение с гарантиями склада.
-- **Доставка данных**: batch ETL/ELT по расписанию или потоковый CDC ([T-047](05-async-and-messaging.md#outbox)) для near-real-time.
+- **Доставка данных**: batch ETL/ELT по расписанию или потоковый CDC ([T-050](05-async-and-messaging.md#outbox)) для near-real-time.
 
 **Когда применять.** Разделять контуры, как только аналитика начинает влиять на боевую нагрузку или требовать данных из нескольких систем. **Когда нет:** пока отчётов мало и они лёгкие, отдельная реплика проще и дешевле полноценного склада.
 
@@ -487,7 +487,7 @@
 
 **Что мерить.** Свежесть витрин (лаг от источника), успешность и длительность пайплайнов, сверка контрольных сумм и количеств строк, стоимость запросов.
 
-**Связано:** [T-051 data pipeline](05-async-and-messaging.md#pipeline) · [T-047 CDC](05-async-and-messaging.md#outbox) · [T-024 выбор хранилища](#storage-choice)
+**Связано:** [T-054 data pipeline](05-async-and-messaging.md#pipeline) · [T-050 CDC](05-async-and-messaging.md#outbox) · [T-024 выбор хранилища](#storage-choice)
 
 **Источники:** видео [#101](https://www.youtube.com/watch?v=taSmwcqdkQk), [#66](https://www.youtube.com/watch?v=kGT4PcTEPP8) · [Kleppmann, DDIA, гл. 3, раздел про аналитику](https://dataintensive.net/) · [Apache Iceberg — Table format spec](https://iceberg.apache.org/spec/) · [Databricks — Lakehouse (CIDR 2021)](https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf)
 
@@ -507,7 +507,7 @@
 1. **Expand.** Добавить новое, ничего не ломая: новая колонка (nullable, без обязательного значения), новая таблица, новый индекс — **конкурентно**, без долгой блокировки.
 2. **Двойная запись.** Новая версия кода пишет и в старое, и в новое место; читает пока из старого.
 3. **Backfill.** Перенести исторические данные **партиями** с паузами, отслеживая нагрузку и лаг репликации. Backfill должен быть возобновляемым и идемпотентным.
-4. **Переключение чтения** на новое место — желательно под фича-флагом, чтобы откат был мгновенным ([T-074](08-reliability.md#degradation)).
+4. **Переключение чтения** на новое место — желательно под фича-флагом, чтобы откат был мгновенным ([T-077](08-reliability.md#degradation)).
 5. **Contract.** Убрать двойную запись и удалить старое — отдельным релизом, через недели, когда откат уже точно не понадобится.
 
 Переименование колонки выполняется как «добавить новую → скопировать → переключить → удалить старую», а не одной командой.
@@ -529,7 +529,7 @@
 
 **Что мерить.** Длительность блокировок при DDL, прогресс и скорость backfill, лаг репликации во время миграции, расхождение между старым и новым представлением данных.
 
-**Связано:** [T-013 версионирование API](01-network-and-api.md#versioning) · [T-091 стратегии деплоя](10-delivery-and-ops.md#deploy) · [T-074 фича-флаги](08-reliability.md#degradation)
+**Связано:** [T-013 версионирование API](01-network-and-api.md#versioning) · [T-094 стратегии деплоя](10-delivery-and-ops.md#deploy) · [T-077 фича-флаги](08-reliability.md#degradation)
 
 **Источники:** [Martin Fowler — Evolutionary Database Design](https://martinfowler.com/articles/evodb.html) · [PostgreSQL — ALTER TABLE](https://www.postgresql.org/docs/current/sql-altertable.html) · [gh-ost — online schema migration for MySQL](https://github.com/github/gh-ost)
 
@@ -566,7 +566,7 @@
 
 **Что мерить.** Распределение объёма и нагрузки по арендаторам, число запросов без фильтра по арендатору (должно быть нулевым), задержка по крупнейшим арендаторам отдельно от медианы, успешность миграций по всем экземплярам.
 
-**Связано:** [T-031 шардирование](#sharding) · [T-083 авторизация](09-security.md#authorization) · [T-021 rate limiting](02-traffic-and-edge.md#rate-limiting) · [T-038 retention](#retention)
+**Связано:** [T-031 шардирование](#sharding) · [T-086 авторизация](09-security.md#authorization) · [T-021 rate limiting](02-traffic-and-edge.md#rate-limiting) · [T-038 retention](#retention)
 
 **Источники:** [AWS SaaS Lens — Well-Architected](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/saas-lens.html) · [PostgreSQL — Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html) · [Microsoft — Multi-tenant SaaS database tenancy patterns](https://learn.microsoft.com/en-us/azure/azure-sql/database/saas-tenancy-app-design-patterns)
 
@@ -606,6 +606,6 @@
 
 **Что мерить.** Объём по классам данных и его рост, возраст самых старых записей относительно политики, время выполнения запроса на удаление, доля мест из карты распространения, где удаление подтверждено.
 
-**Связано:** [T-033 object storage](#object-storage) · [T-078 бэкапы](08-reliability.md#backup-dr) · [T-089 аудит](09-security.md#audit) · [T-037 мультитенантность](#multitenancy)
+**Связано:** [T-033 object storage](#object-storage) · [T-081 бэкапы](08-reliability.md#backup-dr) · [T-092 аудит](09-security.md#audit) · [T-037 мультитенантность](#multitenancy)
 
 **Источники:** [GDPR, ст. 17 — право на удаление](https://gdpr-info.eu/art-17-gdpr/) · [PostgreSQL — Table Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html) · [AWS S3 — Lifecycle configuration](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html)

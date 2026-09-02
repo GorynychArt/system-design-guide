@@ -78,7 +78,7 @@
 
 **Что мерить.** Hit ratio, доля устаревших ответов (сравнение выборкой), задержка записи с кэшем и без, объём и возраст неподтверждённых записей при write-behind.
 
-**Связано:** [T-041 инвалидация](#cache-invalidation) · [T-042 патологии](#cache-pathologies) · [T-047 outbox](05-async-and-messaging.md#outbox)
+**Связано:** [T-041 инвалидация](#cache-invalidation) · [T-042 патологии](#cache-pathologies) · [T-050 outbox](05-async-and-messaging.md#outbox)
 
 **Источники:** видео [#6](https://www.youtube.com/watch?v=dGAgxozNWFE) · [AWS — Caching patterns](https://docs.aws.amazon.com/whitepapers/latest/database-caching-strategies-using-redis/caching-patterns.html) · [Scaling Memcache at Facebook (NSDI 2013)](https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf)
 
@@ -98,7 +98,7 @@
 
 *По времени (TTL).* Ключ живёт заданный срок. Просто, устойчиво к любым сбоям, не требует координации — и именно поэтому применяется чаще всего. Цена: данные устаревают на величину TTL, а массовое одновременное истечение вызывает всплеск ([T-042](#cache-pathologies)). Практика: короткий TTL для изменчивых данных плюс небольшой случайный разброс срока жизни.
 
-*По событию.* При изменении данных публикуется событие, потребитель удаляет или обновляет ключи. Свежесть выше, но появляется зависимость от доставки: потерянное событие означает бессрочно устаревший кэш, поэтому TTL всё равно оставляют как страховку. Надёжный источник событий — журнал изменений БД (CDC, [T-047](05-async-and-messaging.md#outbox)), а не вызов из кода приложения, который может не выполниться при откате транзакции.
+*По событию.* При изменении данных публикуется событие, потребитель удаляет или обновляет ключи. Свежесть выше, но появляется зависимость от доставки: потерянное событие означает бессрочно устаревший кэш, поэтому TTL всё равно оставляют как страховку. Надёжный источник событий — журнал изменений БД (CDC, [T-050](05-async-and-messaging.md#outbox)), а не вызов из кода приложения, который может не выполниться при откате транзакции.
 
 *По версии ключа.* Ключ включает версию сущности или метку изменения: `user:42:v17`. Обновление данных меняет версию, и новый запрос просто не находит старый ключ — **инвалидация не нужна вовсе**, гонок нет. Старые ключи вытесняются сами. Цена: нужно где-то дёшево читать текущую версию (обычно она уже есть в строке БД или в отдельном счётчике).
 
@@ -108,7 +108,7 @@
 
 **Что мерить.** Возраст отдаваемых данных, доля расхождений при выборочной сверке с БД, всплески промахов после инвалидации, отставание конвейера событий.
 
-**Связано:** [T-040 стратегии](#cache-strategies) · [T-042 патологии](#cache-pathologies) · [T-047 CDC и outbox](05-async-and-messaging.md#outbox) · [T-054 модели согласованности](06-distributed-systems.md#consistency-models)
+**Связано:** [T-040 стратегии](#cache-strategies) · [T-042 патологии](#cache-pathologies) · [T-050 CDC и outbox](05-async-and-messaging.md#outbox) · [T-057 модели согласованности](06-distributed-systems.md#consistency-models)
 
 **Источники:** видео [#57](https://www.youtube.com/watch?v=wh98s0XhMmQ) · [Scaling Memcache at Facebook (NSDI 2013)](https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf) · [Redis — Client-side caching](https://redis.io/docs/latest/develop/reference/client-side-caching/)
 
@@ -141,13 +141,13 @@
 
 *Negative caching.* Запросы за несуществующими данными не кэшируются и каждый раз доходят до БД — обычный вектор перегрузки, в том числе намеренной. Лечится кэшированием самого факта отсутствия с коротким TTL и фильтром Блума перед хранилищем.
 
-*Холодный старт.* После перезапуска кэш пуст, и полный трафик приходит на БД. Лечится прогревом ключевых данных перед вводом в ротацию ([T-075](08-reliability.md#health-checks)) и постепенным вводом трафика.
+*Холодный старт.* После перезапуска кэш пуст, и полный трафик приходит на БД. Лечится прогревом ключевых данных перед вводом в ротацию ([T-078](08-reliability.md#health-checks)) и постепенным вводом трафика.
 
 **Trade-offs и режимы отказа.** Блокировка на пересчёт превращает популярный ключ в точку сериализации. Отдача устаревших данных при сбое (stale-if-error) повышает доступность ценой корректности — решение принимается по данным, а не по умолчанию. Локальные копии горячих ключей возвращают проблему N разных состояний ([T-039](#cache-levels)).
 
 **Что мерить.** Hit ratio и его провалы, распределение обращений по ключам (топ-N), число одновременных пересчётов одного ключа, нагрузка на БД в момент падения hit ratio, доля ответов, отданных устаревшими.
 
-**Связано:** [T-041 инвалидация](#cache-invalidation) · [T-072 таймауты и ретраи](08-reliability.md#timeouts-retries) · [T-021 rate limiting](02-traffic-and-edge.md#rate-limiting) · [T-032 consistent hashing](03-storage-and-data.md#consistent-hashing)
+**Связано:** [T-041 инвалидация](#cache-invalidation) · [T-075 таймауты и ретраи](08-reliability.md#timeouts-retries) · [T-021 rate limiting](02-traffic-and-edge.md#rate-limiting) · [T-032 consistent hashing](03-storage-and-data.md#consistent-hashing)
 
 **Источники:** видео [#57](https://www.youtube.com/watch?v=wh98s0XhMmQ) · [Optimal Probabilistic Cache Stampede Prevention (VLDB 2015)](https://cseweb.ucsd.edu/~avattani/papers/cache_stampede.pdf) · [Google SRE Book, гл. 22 «Addressing Cascading Failures»](https://sre.google/sre-book/addressing-cascading-failures/) · [RFC 5861 — stale-while-revalidate](https://www.rfc-editor.org/rfc/rfc5861.html)
 
@@ -170,7 +170,7 @@
 - **Политики вытеснения** при исчерпании памяти: `allkeys-lru`, `volatile-ttl`, `noeviction` и другие. Для кэша обычно LRU/LFU по всем ключам; для очередей и данных, которые нельзя терять, — `noeviction` и мониторинг.
 - **Масштабирование**: реплики для чтения; Cluster шардирует ключи по 16 384 слотам; failover через Sentinel или Cluster.
 
-**Типовые сценарии** (видео [#10](https://www.youtube.com/watch?v=a4yX7RUgTxI)): кэш; сессии; счётчики и rate limiting ([T-021](02-traffic-and-edge.md#rate-limiting)); рейтинги на sorted set; очереди и Streams; аренда и блокировки — с оговорками из [T-057](06-distributed-systems.md#distributed-locks); pub/sub для уведомлений внутри системы.
+**Типовые сценарии** (видео [#10](https://www.youtube.com/watch?v=a4yX7RUgTxI)): кэш; сессии; счётчики и rate limiting ([T-021](02-traffic-and-edge.md#rate-limiting)); рейтинги на sorted set; очереди и Streams; аренда и блокировки — с оговорками из [T-060](06-distributed-systems.md#distributed-locks); pub/sub для уведомлений внутри системы.
 
 **Когда применять.** Когда нужны скорость и атомарные операции над структурами. **Когда нет:** как единственное хранилище важных данных; для больших объёмов холодных данных (память дорога); для сложных запросов и аналитики.
 
@@ -187,6 +187,6 @@
 
 **Что мерить.** Задержка команд (p99 и медленные команды через slowlog), hit ratio, использование памяти и фрагментация, число вытеснений, лаг репликации, число подключений.
 
-**Связано:** [T-039 уровни кэша](#cache-levels) · [T-042 патологии](#cache-pathologies) · [T-021 rate limiting](02-traffic-and-edge.md#rate-limiting) · [T-057 распределённые блокировки](06-distributed-systems.md#distributed-locks)
+**Связано:** [T-039 уровни кэша](#cache-levels) · [T-042 патологии](#cache-pathologies) · [T-021 rate limiting](02-traffic-and-edge.md#rate-limiting) · [T-060 распределённые блокировки](06-distributed-systems.md#distributed-locks)
 
 **Источники:** видео [#10](https://www.youtube.com/watch?v=a4yX7RUgTxI), [#25](https://www.youtube.com/watch?v=5TRFpFBccQM), [#100](https://www.youtube.com/watch?v=z_NbVtbgBJw) · [Redis — Documentation](https://redis.io/docs/latest/) · [Redis — Key eviction](https://redis.io/docs/latest/develop/reference/eviction/) · [Redis — Persistence](https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/)
