@@ -104,8 +104,7 @@ topics/                карточки топиков, сгруппирован
 | `01-roadmap.md` | готов |
 | `93-playlist-map.md` | готов |
 | `94-gaps.md` | готов |
-| `topics/01`–`11` | готовы (138 карточек из 151) |
-| `topics/12` кейсы | в работе |
+| `topics/01`–`12` | готовы — все 151 карточка |
 | `96-backlog.md` | готов |
 | `90-cheatsheets.md`, `91-antipatterns.md`, `92-glossary.md`, `95-sources.md` | запланированы |
 
