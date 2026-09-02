@@ -103,8 +103,8 @@ topics/                карточки топиков, сгруппирован
 | `01-roadmap.md` | готов |
 | `93-playlist-map.md` | готов |
 | `94-gaps.md` | готов |
-| `topics/03-storage-and-data.md`, `topics/04-caching.md`, `topics/06-distributed-systems.md`, `topics/08-reliability.md` | готовы (38 карточек из 124) |
-| остальные `topics/*` | в работе |
+| `topics/01`, `03`, `04`, `05`, `06`, `08` | готовы (62 карточки из 124) |
+| `topics/02`, `07`, `09`, `10`, `11`, `12` | в работе |
 | `90-cheatsheets.md`, `91-antipatterns.md`, `92-glossary.md`, `95-sources.md` | запланированы |
 
 ## О источниках
