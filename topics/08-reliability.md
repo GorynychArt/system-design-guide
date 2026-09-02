@@ -4,13 +4,13 @@
 
 Отправная точка: отказ — не гипотеза, а расписание. Сеть теряет пакеты, диски умирают, зависимость отвечает за 30 секунд вместо 30 миллисекунд, зона доступности пропадает. Дизайн, который «работает, если всё работает», не спроектирован.
 
-Навигация: [T-075](#timeouts-retries) · [T-076](#circuit-breaker) · [T-077](#degradation) · [T-078](#health-checks) · [T-079](#fault-tolerance-overview) · [T-080](#multi-region) · [T-081](#backup-dr) · [T-082](#chaos)
+Навигация: [T-090](#timeouts-retries) · [T-091](#circuit-breaker) · [T-093](#degradation) · [T-094](#health-checks) · [T-095](#fault-tolerance-overview) · [T-097](#multi-region) · [T-098](#backup-dr) · [T-099](#chaos)
 
 ---
 
 <a id="timeouts-retries"></a>
 
-## T-075 · Таймауты, ретраи, exponential backoff, jitter
+## T-090 · Таймауты, ретраи, exponential backoff, jitter
 
 ➕ добавлено · шаг [W7](../00-workflow.md#w7)
 
@@ -23,7 +23,7 @@
 - **Экспоненциальная задержка**: `delay = base × 2^attempt`, ограниченная потолком.
 - **Джиттер** — случайный разброс. Full jitter: `delay = random(0, min(cap, base × 2^attempt))`. Именно он разводит клиентов во времени; без него экспонента лишь укрупняет пики.
 - **Бюджет повторов**: ограничение вида «не более 10 % запросов — повторы» на уровне клиента. Останавливает лавину, когда ошибочны все запросы, а не единицы.
-- **Повторять только безопасное.** Повтор допустим, если операция идемпотентна ([T-012](01-network-and-api.md#idempotency)) или ошибка заведомо произошла до применения эффекта.
+- **Повторять только безопасное.** Повтор допустим, если операция идемпотентна ([T-016](01-network-and-api.md#idempotency)) или ошибка заведомо произошла до применения эффекта.
 - **Не повторять на каждом уровне.** Три уровня по три попытки дают 27 запросов. Повторы делает один слой — обычно ближайший к клиенту.
 
 **Когда применять.** Всегда для сетевых вызовов. **Когда нет:** повторы бессмысленны при ошибках 4xx (кроме 429), при исчерпании квоты и при неидемпотентных операциях без ключа идемпотентности.
@@ -41,7 +41,7 @@
 
 **Что мерить.** Доля повторов от общего числа запросов (рост = ранний признак деградации), доля запросов, отсечённых таймаутом, p99 внешних вызовов отдельно от собственного времени, насыщенность пулов соединений и потоков.
 
-**Связано:** [T-076 circuit breaker](#circuit-breaker) · [T-012 идемпотентность](01-network-and-api.md#idempotency) · [T-052 backpressure](05-async-and-messaging.md#backpressure) · [T-107 tail latency](11-performance-and-cost.md#percentiles)
+**Связано:** [T-091 circuit breaker](#circuit-breaker) · [T-016 идемпотентность](01-network-and-api.md#idempotency) · [T-063 backpressure](05-async-and-messaging.md#backpressure) · [T-129 tail latency](11-performance-and-cost.md#percentiles)
 
 **Источники:** [AWS Builders' Library — Timeouts, retries, and backoff with jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/) · [AWS Architecture Blog — Exponential Backoff And Jitter](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/) · [Google SRE Book, гл. 22 «Addressing Cascading Failures»](https://sre.google/sre-book/addressing-cascading-failures/) · Michael Nygard, «Release It!», паттерн Timeouts
 
@@ -49,7 +49,7 @@
 
 <a id="circuit-breaker"></a>
 
-## T-076 · Circuit breaker и bulkhead
+## T-091 · Circuit breaker и bulkhead
 
 ➕ добавлено · шаг [W7](../00-workflow.md#w7)
 
@@ -83,7 +83,7 @@
 
 **Что мерить.** Состояние каждого breaker как метрика (время в open), доля отклонённых локально запросов, отдельная задержка по каждой зависимости, насыщенность пулов bulkhead.
 
-**Связано:** [T-075 таймауты и ретраи](#timeouts-retries) · [T-077 деградация](#degradation) · [T-021 rate limiting](02-traffic-and-edge.md#rate-limiting)
+**Связано:** [T-090 таймауты и ретраи](#timeouts-retries) · [T-093 деградация](#degradation) · [T-027 rate limiting](02-traffic-and-edge.md#rate-limiting)
 
 **Источники:** [Martin Fowler — CircuitBreaker](https://martinfowler.com/bliki/CircuitBreaker.html) · [Azure Architecture — Circuit Breaker pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker) · [Azure Architecture — Bulkhead pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/bulkhead) · Michael Nygard, «Release It!», паттерны Circuit Breaker и Bulkhead
 
@@ -91,7 +91,7 @@
 
 <a id="degradation"></a>
 
-## T-077 · Graceful degradation, фича-флаги, kill switch
+## T-093 · Graceful degradation, фича-флаги, kill switch
 
 ➕ добавлено · шаг [W7](../00-workflow.md#w7)
 
@@ -120,7 +120,7 @@
 
 **Что мерить.** Доля запросов, обслуженных в деградированном режиме; время между решением и фактическим отключением; количество активных флагов и их возраст.
 
-**Связано:** [T-076 circuit breaker](#circuit-breaker) · [T-094 стратегии деплоя](10-delivery-and-ops.md#deploy) · [T-042 патологии кэша](04-caching.md#cache-pathologies)
+**Связано:** [T-091 circuit breaker](#circuit-breaker) · [T-113 стратегии деплоя](10-delivery-and-ops.md#deploy) · [T-053 патологии кэша](04-caching.md#cache-pathologies)
 
 **Источники:** [Google SRE Book, гл. 22 — Graceful Degradation](https://sre.google/sre-book/addressing-cascading-failures/) · [Martin Fowler — Feature Toggles](https://martinfowler.com/articles/feature-toggles.html) · [AWS Well-Architected — Reliability Pillar](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html)
 
@@ -128,7 +128,7 @@
 
 <a id="health-checks"></a>
 
-## T-078 · Health checks: liveness vs readiness
+## T-094 · Health checks: liveness vs readiness
 
 ➕ добавлено · шаг [W9](../00-workflow.md#w9)
 
@@ -156,7 +156,7 @@
 
 **Что мерить.** Частота перезапусков по liveness, время от старта до readiness, доля экземпляров вне ротации, корреляция «перезапуски ↔ рост нагрузки».
 
-**Связано:** [T-096 Kubernetes](10-delivery-and-ops.md#kubernetes) · [T-017 балансировка](02-traffic-and-edge.md#load-balancing) · [T-098 observability](10-delivery-and-ops.md#observability)
+**Связано:** [T-116 Kubernetes](10-delivery-and-ops.md#kubernetes) · [T-022 балансировка](02-traffic-and-edge.md#load-balancing) · [T-118 observability](10-delivery-and-ops.md#observability)
 
 **Источники:** [Kubernetes — Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) · [Google SRE Book, гл. 22](https://sre.google/sre-book/addressing-cascading-failures/) · [AWS Builders' Library — Implementing health checks](https://aws.amazon.com/builders-library/implementing-health-checks/)
 
@@ -164,7 +164,7 @@
 
 <a id="fault-tolerance-overview"></a>
 
-## T-079 · Проектирование отказоустойчивости: обзор
+## T-095 · Проектирование отказоустойчивости: обзор
 
 🎬 [#90 — 8 Most Important Tips for Designing Fault-Tolerant System](https://www.youtube.com/watch?v=3Lis4w4_bBc) · шаг [W7](../00-workflow.md#w7)
 
@@ -176,7 +176,7 @@
 1. **Из SLO выводится избыточность.** 99.9 % (43 мин/мес) достигается резервированием внутри региона; 99.99 % (4 мин/мес) требует автоматического переключения и, как правило, нескольких зон; выше — нескольких регионов.
 2. **Устранение единых точек отказа.** Каждый компонент в схеме W4 проверяется вопросом «что будет, если он исчезнет». Единственный экземпляр, единственная зона, единственный внешний провайдер — все SPOF.
 3. **Изоляция отказов.** Границы: пулы (bulkhead), зоны, шарды, ячейки (cell-based architecture). Цель — чтобы отказ затрагивал долю пользователей, а не всех.
-4. **Механики уровня вызова.** Таймауты, ретраи, breaker, деградация ([T-075](#timeouts-retries)–[T-077](#degradation)).
+4. **Механики уровня вызова.** Таймауты, ретраи, breaker, деградация ([T-090](#timeouts-retries)–[T-093](#degradation)).
 5. **Восстановление.** Автоматическое (failover, автоскейлинг, перезапуск) и ручное (runbook). Оба должны быть проверены.
 6. **Матрица отказов** как артефакт: компонент × последствие × реакция × обнаружение (шаблон — в [W7](../00-workflow.md#w7)).
 
@@ -188,14 +188,14 @@
 |---|---|---|
 | Избыточность N+1 в одной зоне | Умеренные требования | Не спасает от отказа зоны |
 | Multi-AZ active-active | Стандарт для 99.95–99.99 % | ×2–3 инфраструктуры |
-| Multi-region | Требование выше 99.99 % или регуляторика | Дорого и сложно; см. [T-080](#multi-region) |
+| Multi-region | Требование выше 99.99 % или регуляторика | Дорого и сложно; см. [T-097](#multi-region) |
 | Деградация вместо избыточности | Функция терпит упрощённый режим | Хуже UX, зато дёшево |
 
 **Trade-offs и режимы отказа.** Избыточность стоит денег и усложняет согласованность: две активные копии данных — это уже распределённая система со всеми вопросами блока [B06](06-distributed-systems.md). Автоматика восстановления сама становится источником отказов (ложное переключение, флаппинг). Надёжность, которую не проверяли, — предположение, а не свойство.
 
 **Что мерить.** Достижение SLO и остаток error budget, MTTR (среднее время восстановления), долю инцидентов с автоматическим восстановлением, число обнаруженных SPOF.
 
-**Связано:** [T-080 multi-region](#multi-region) · [T-081 бэкапы и DR](#backup-dr) · [T-099 SLO](10-delivery-and-ops.md#slo) · [T-082 chaos engineering](#chaos)
+**Связано:** [T-097 multi-region](#multi-region) · [T-098 бэкапы и DR](#backup-dr) · [T-120 SLO](10-delivery-and-ops.md#slo) · [T-099 chaos engineering](#chaos)
 
 **Источники:** видео [#90](https://www.youtube.com/watch?v=3Lis4w4_bBc) · [AWS Well-Architected — Reliability Pillar](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html) · [AWS Builders' Library — Static stability using Availability Zones](https://aws.amazon.com/builders-library/static-stability-using-availability-zones/) · Michael Nygard, «Release It!»
 
@@ -203,7 +203,7 @@
 
 <a id="multi-region"></a>
 
-## T-080 · Multi-AZ, multi-region, failover
+## T-097 · Multi-AZ, multi-region, failover
 
 ➕ добавлено · шаг [W7](../00-workflow.md#w7)
 
@@ -217,7 +217,7 @@
 - **Multi-region active-active.** Оба региона принимают запись. Требует разрешения конфликтов: либо разделение по ключу (пользователь «принадлежит» региону), либо CRDT/LWW, либо консенсус с географическим кворумом — и тогда задержка записи включает межрегиональный round-trip.
 - **Правило разделения.** Проще всего масштабируется схема, где данные шардированы по региону и межрегиональные операции — редкое исключение.
 
-**Когда применять.** Multi-AZ — почти всегда. Multi-region — когда этого требует SLO, регуляторика (хранение данных в юрисдикции) или задержка для географически распределённых пользователей. **Когда нет:** если RTO в несколько часов приемлем, дешевле бэкап и восстановление ([T-081](#backup-dr)).
+**Когда применять.** Multi-AZ — почти всегда. Multi-region — когда этого требует SLO, регуляторика (хранение данных в юрисдикции) или задержка для географически распределённых пользователей. **Когда нет:** если RTO в несколько часов приемлем, дешевле бэкап и восстановление ([T-098](#backup-dr)).
 
 **Альтернативы**
 
@@ -232,7 +232,7 @@
 
 **Что мерить.** Фактические RPO/RTO по результатам учений, лаг репликации между регионами, доля трафика по регионам, время сходимости DNS при переключении.
 
-**Связано:** [T-030 репликация](03-storage-and-data.md#replication) · [T-063 разрешение конфликтов](06-distributed-systems.md#conflicts) · [T-023 глобальная маршрутизация](02-traffic-and-edge.md#global-routing) · [T-081 RPO/RTO](#backup-dr)
+**Связано:** [T-039 репликация](03-storage-and-data.md#replication) · [T-075 разрешение конфликтов](06-distributed-systems.md#conflicts) · [T-030 глобальная маршрутизация](02-traffic-and-edge.md#global-routing) · [T-098 RPO/RTO](#backup-dr)
 
 **Источники:** [AWS — Disaster Recovery workloads: strategies](https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html) · [Google Cloud — DR planning guide](https://cloud.google.com/architecture/dr-scenarios-planning-guide) · Kleppmann, «Designing Data-Intensive Applications», гл. 5
 
@@ -240,7 +240,7 @@
 
 <a id="backup-dr"></a>
 
-## T-081 · Бэкапы, DR, RPO и RTO
+## T-098 · Бэкапы, DR, RPO и RTO
 
 ➕ добавлено · шаг [W7](../00-workflow.md#w7)
 
@@ -270,7 +270,7 @@
 
 **Что мерить.** Возраст последнего успешного бэкапа, дата и результат последнего **проверенного восстановления**, фактическое время восстановления против заявленного RTO, объём и стоимость хранения.
 
-**Связано:** [T-080 multi-region](#multi-region) · [T-036 миграции](03-storage-and-data.md#migrations) · [T-038 retention](03-storage-and-data.md#retention) · [T-089 шифрование и секреты](09-security.md#encryption)
+**Связано:** [T-097 multi-region](#multi-region) · [T-047 миграции](03-storage-and-data.md#migrations) · [T-049 retention](03-storage-and-data.md#retention) · [T-107 шифрование и секреты](09-security.md#encryption)
 
 **Источники:** [AWS — Disaster recovery options in the cloud](https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html) · [PostgreSQL — Continuous Archiving and PITR](https://www.postgresql.org/docs/current/continuous-archiving.html) · [Google SRE Book, гл. 26 «Data Integrity»](https://sre.google/sre-book/data-integrity/)
 
@@ -278,7 +278,7 @@
 
 <a id="chaos"></a>
 
-## T-082 · Chaos engineering и game days
+## T-099 · Chaos engineering и game days
 
 ➕ добавлено · шаг [W7](../00-workflow.md#w7)
 
@@ -308,6 +308,6 @@
 
 **Что мерить.** Число проведённых экспериментов и доля подтверждённых гипотез, найденные расхождения, MTTR в учениях против MTTR в реальных инцидентах, покрытие сценариев отказа из матрицы [W7](../00-workflow.md#w7).
 
-**Связано:** [T-079 обзор отказоустойчивости](#fault-tolerance-overview) · [T-100 постмортемы](10-delivery-and-ops.md#alerting) · [T-101 тестирование](10-delivery-and-ops.md#testing)
+**Связано:** [T-095 обзор отказоустойчивости](#fault-tolerance-overview) · [T-121 постмортемы](10-delivery-and-ops.md#alerting) · [T-123 тестирование](10-delivery-and-ops.md#testing)
 
 **Источники:** [Principles of Chaos Engineering](https://principlesofchaos.org/) · [Netflix Tech Blog — Chaos Engineering Upgraded](https://netflixtechblog.com/chaos-engineering-upgraded-878d341f15fa) · [AWS Well-Architected — Reliability Pillar, тестирование устойчивости](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html)
