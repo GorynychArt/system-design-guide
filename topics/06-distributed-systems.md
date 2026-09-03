@@ -346,7 +346,7 @@
 
 **Что мерить.** Коллизии (должны отсутствовать), отклонение часов между узлами, фрагментация индекса и скорость вставки, задержка выдачи ID при централизованной схеме.
 
-**Связано:** [T-040 шардирование](03-storage-and-data.md#sharding) · [T-035 индексы](03-storage-and-data.md#indexes) · [T-016 идемпотентность](01-network-and-api.md#idempotency) · [T-075 время и версии](#conflicts)
+**Связано:** [T-040 шардирование](03-storage-and-data.md#sharding) · [T-035 индексы](03-storage-and-data.md#indexes) · [T-016 идемпотентность](01-network-and-api.md#idempotency) · [T-075 время и версии](#conflicts) · [T-139 кейс: сокращатель ссылок](../topics/12-case-studies.md#url-shortener)
 
 **Источники:** [RFC 9562 — Universally Unique IDentifiers (UUIDv7)](https://www.rfc-editor.org/rfc/rfc9562.html) · [Twitter Snowflake](https://github.com/twitter-archive/snowflake) · [ULID specification](https://github.com/ulid/spec)
 

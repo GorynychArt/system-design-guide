@@ -45,6 +45,8 @@
 | Символ UTF-8 (латиница / кириллица) | 1 / 2 байта |
 | UUID | 16 байт (36 символов в текстовой записи) |
 
+**Карточки:** [T-128 числа задержек](topics/11-performance-and-cost.md#latency-numbers) · [T-129 перцентили](topics/11-performance-and-cost.md#percentiles) · [T-001 как работает интернет](topics/01-network-and-api.md#internet) · [T-130 Big-O и структуры данных](topics/11-performance-and-cost.md#big-o)
+
 <a id="formulas"></a>
 
 ## Формулы оценки
@@ -76,6 +78,8 @@
 | 99.999 % | 26 секунд | 5.3 минуты | Несколько регионов, active-active |
 
 Цепочка последовательных зависимостей перемножается: пять сервисов по 99.9 % дают 99.5 %, если нет деградации ([T-077](topics/07-architecture-styles.md#monolith-microservices)).
+
+**Карточки:** [T-095 обзор отказоустойчивости](topics/08-reliability.md#fault-tolerance-overview) · [T-097 multi-region](topics/08-reliability.md#multi-region) · [T-096 ячеистая архитектура](topics/08-reliability.md#cells) · [T-120 SLO и бюджет ошибок](topics/10-delivery-and-ops.md#slo)
 
 <a id="db-choice"></a>
 
@@ -113,6 +117,8 @@
 | WebSocket | Двусторонний обмен в реальном времени | Состояние на сервере, масштабирование |
 | Webhook | Уведомление внешней системы | Зависимость от чужой доступности |
 | Обмен сообщениями | Развязка сервисов во времени | Отложенная согласованность |
+
+**Карточки:** [T-008 стили API](topics/01-network-and-api.md#api-styles) · [T-012 realtime-транспорт](topics/01-network-and-api.md#realtime) · [T-010 gRPC](topics/01-network-and-api.md#grpc) · [T-011 GraphQL](topics/01-network-and-api.md#graphql) · [T-064 webhooks](topics/05-async-and-messaging.md#webhooks)
 
 <a id="queue-choice"></a>
 
@@ -244,6 +250,8 @@
 | 503 | Временно недоступен | Да, по `Retry-After` |
 
 **Формула задержки:** `delay = random(0, min(cap, base × 2^attempt))` — экспонента с полным джиттером. Плюс бюджет повторов (не более ~10 % трафика) и повторы только на одном уровне цепочки.
+
+**Карточки:** [T-090 таймауты и ретраи](topics/08-reliability.md#timeouts-retries) · [T-005 коды состояния](topics/01-network-and-api.md#http-status) · [T-027 rate limiting](topics/02-traffic-and-edge.md#rate-limiting) · [T-092 load shedding](topics/08-reliability.md#load-shedding)
 
 <a id="metrics"></a>
 

@@ -41,7 +41,7 @@
 
 **Что мерить.** Распределение запросов и задержки по бэкендам (перекос — первый признак проблемы), число экземпляров вне ротации, доля ошибок соединения, время вывода узла из ротации.
 
-**Связано:** [T-023 proxy](#proxy) · [T-024 API Gateway](#api-gateway) · [T-094 health checks](08-reliability.md#health-checks) · [T-029 service discovery](#discovery)
+**Связано:** [T-023 proxy](#proxy) · [T-024 API Gateway](#api-gateway) · [T-094 health checks](08-reliability.md#health-checks) · [T-029 service discovery](#discovery) · [T-002 модель OSI](../topics/01-network-and-api.md#osi)
 
 **Источники:** видео [#40](https://www.youtube.com/watch?v=dBmxNsS3BGE), [#87](https://www.youtube.com/watch?v=LQuuoHTyYz8) · [Envoy — Load balancing](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/overview) · [NGINX — HTTP Load Balancing](https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/) · [Google SRE Book, гл. 19–20](https://sre.google/sre-book/load-balancing-frontend/)
 
@@ -91,7 +91,7 @@
 | Обратный прокси | Транспортные заботы: TLS, кэш, сжатие, буферизация | Идентичность клиента |
 | API Gateway | Аутентификация, авторизация на входе, лимиты, маршрутизация по API, версии, агрегация, ключи | Бизнес-логику |
 
-**Что уместно вынести в шлюз.** Проверку подлинности токена (но не бизнес-правила доступа — они остаются в сервисе, знающем предметную область); ограничение частоты ([T-027](#rate-limiting)); выдачу и учёт ключей API; маршрутизацию по версии и по доле трафика; присвоение идентификатора запроса и начало трассировки ([T-117](10-delivery-and-ops.md#observability)); преобразование протоколов на границе, например HTTP наружу и gRPC внутрь.
+**Что уместно вынести в шлюз.** Проверку подлинности токена (но не бизнес-правила доступа — они остаются в сервисе, знающем предметную область); ограничение частоты ([T-027](#rate-limiting)); выдачу и учёт ключей API; маршрутизацию по версии и по доле трафика; присвоение идентификатора запроса и начало трассировки ([T-118](10-delivery-and-ops.md#observability)); преобразование протоколов на границе, например HTTP наружу и gRPC внутрь.
 
 **Чего не стоит.** Бизнес-логики и агрегации, специфичной для одного клиента: последнее — работа BFF ([T-086](07-architecture-styles.md#mesh)), отдельного сервиса, а не общего шлюза. Шлюз, в который переехала логика, становится общим узким местом, изменения в котором блокируют все команды сразу.
 
@@ -197,7 +197,7 @@
 
 **Что мерить.** Доля `429` в разрезе клиентов и эндпоинтов, распределение потребления квоты (кто у потолка), число клиентов, повторяющих без учёта `Retry-After`, задержка проверки лимита.
 
-**Связано:** [T-092 load shedding](08-reliability.md#load-shedding) · [T-028 защита периметра](#perimeter) · [T-054 Redis](04-caching.md#redis) · [T-146 кейс: rate limiter](12-case-studies.md#rate-limiter)
+**Связано:** [T-092 load shedding](08-reliability.md#load-shedding) · [T-028 защита периметра](#perimeter) · [T-054 Redis](04-caching.md#redis) · [T-142 кейс: rate limiter](12-case-studies.md#rate-limiter)
 
 **Источники:** [Cloudflare — What is rate limiting?](https://www.cloudflare.com/learning/bots/what-is-rate-limiting/) · [Stripe — Rate limiters](https://stripe.com/blog/rate-limiters) · [RFC 6585 — 429 Too Many Requests](https://www.rfc-editor.org/rfc/rfc6585.html#section-4) · [Google SRE Book, гл. 21](https://sre.google/sre-book/handling-overload/)
 

@@ -715,7 +715,7 @@
 
 **Что мерить.** Распределение объёма и нагрузки по арендаторам, число запросов без фильтра по арендатору (должно быть нулевым), задержка по крупнейшим арендаторам отдельно от медианы, успешность миграций по всем экземплярам.
 
-**Связано:** [T-040 шардирование](#sharding) · [T-103 авторизация](09-security.md#authorization) · [T-027 rate limiting](02-traffic-and-edge.md#rate-limiting) · [T-049 retention](#retention)
+**Связано:** [T-040 шардирование](#sharding) · [T-103 авторизация](09-security.md#authorization) · [T-027 rate limiting](02-traffic-and-edge.md#rate-limiting) · [T-049 retention](#retention) · [T-150 кейс: многотенантный SaaS](../topics/12-case-studies.md#saas)
 
 **Источники:** [AWS SaaS Lens — Well-Architected](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/saas-lens.html) · [PostgreSQL — Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html) · [Microsoft — Multi-tenant SaaS database tenancy patterns](https://learn.microsoft.com/en-us/azure/azure-sql/database/saas-tenancy-app-design-patterns)
 
