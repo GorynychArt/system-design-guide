@@ -105,8 +105,9 @@ topics/                карточки топиков, сгруппирован
 | `93-playlist-map.md` | готов |
 | `94-gaps.md` | готов |
 | `topics/01`–`12` | готовы — все 151 карточка |
-| `96-backlog.md` | готов |
-| `90-cheatsheets.md`, `91-antipatterns.md`, `92-glossary.md`, `95-sources.md` | запланированы |
+| `90-cheatsheets.md`, `91-antipatterns.md`, `92-glossary.md`, `95-sources.md`, `96-backlog.md` | готовы |
+
+**Документ завершён:** 151 карточка в 12 блоках, сквозной workflow, четыре справочника и три служебных документа — около 75 000 слов.
 
 ## О источниках
 

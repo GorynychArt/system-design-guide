@@ -1,0 +1,462 @@
+# Библиография
+
+Все внешние источники, на которые ссылается документ. Первая часть — опорные работы, к которым стоит обращаться систематически; вторая — полный указатель по блокам, собранный автоматически из карточек.
+
+Видео плейлиста здесь не перечисляются: их полный список с привязкой к темам — в [`93-playlist-map.md`](93-playlist-map.md).
+
+---
+
+## Опорные работы
+
+### Книги
+
+- **Martin Kleppmann. Designing Data-Intensive Applications** — [dataintensive.net](https://dataintensive.net/). Самая цитируемая книга в этом документе. Хранилища, репликация, шардирование, транзакции, согласованность, потоковая обработка. Если читать одну книгу по теме — эту.
+- **Michael Nygard. Release It!** — [pragprog.com](https://pragprog.com/titles/mnee2/release-it-second-edition/). Устойчивость: таймауты, circuit breaker, bulkhead, режимы отказа. Источник большинства паттернов блока B08.
+- **Sam Newman. Building Microservices** (и **Monolith to Microservices**) — [samnewman.io](https://samnewman.io/books/). Границы сервисов, миграция монолита, интеграция.
+- **Eric Evans. Domain-Driven Design** — [domainlanguage.com](https://www.domainlanguage.com/ddd/). Ограниченные контексты и язык предметной области; основа блока B07.
+- **Brendan Gregg. Systems Performance** — [brendangregg.com](https://www.brendangregg.com/systems-performance-2nd-edition-book.html). Методики USE, профилирование, диагностика на уровне системы.
+- **Alex Xu. System Design Interview, vol. 1–2** — сборник задач; полезен как каталог кейсов, а не как источник истины.
+- **Adam Shostack. Threat Modeling** — [shostack.org](https://shostack.org/books/threat-modeling-book). Систематический разбор угроз.
+- **Hohpe, Woolf. Enterprise Integration Patterns** — [enterpriseintegrationpatterns.com](https://www.enterpriseintegrationpatterns.com/patterns/messaging/). Словарь моделей обмена сообщениями.
+
+### Наборы материалов
+
+- **Google SRE Book и SRE Workbook** — [sre.google](https://sre.google/books/). Целевые уровни, бюджет ошибок, перегрузка, каскадные отказы, целостность данных, дежурства и постмортемы. Второй по цитируемости источник документа.
+- **AWS Well-Architected Framework** — [docs.aws.amazon.com](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html). Пять «столпов»: надёжность, производительность, стоимость, безопасность, операции.
+- **AWS Builders' Library** — [aws.amazon.com/builders-library](https://aws.amazon.com/builders-library/). Короткие инженерные статьи: таймауты и джиттер, проверки здоровья, сброс нагрузки, статическая стабильность, перемешанное шардирование.
+- **OWASP Cheat Sheet Series** и **OWASP API Security Top 10** — [cheatsheetseries.owasp.org](https://cheatsheetseries.owasp.org/), [owasp.org/API-Security](https://owasp.org/API-Security/editions/2023/en/0x11-t10/). Практические рекомендации по безопасности.
+- **Martin Fowler — bliki и статьи** — [martinfowler.com](https://martinfowler.com/). CQRS, event sourcing, strangler fig, feature toggles, эволюционный дизайн БД.
+- **microservices.io (Chris Richardson)** — [microservices.io](https://microservices.io/patterns/). Каталог паттернов: saga, outbox, API gateway, декомпозиция.
+- **Azure Architecture — Cloud Design Patterns** — [learn.microsoft.com](https://learn.microsoft.com/en-us/azure/architecture/patterns/). Альтернативный каталог с примерами реализации.
+
+### Статьи-первоисточники
+
+- **Dynamo: Amazon's Highly Available Key-value Store** (SOSP 2007) — [allthingsdistributed.com](https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf). Согласованное хэширование, кворумы, векторные часы.
+- **In Search of an Understandable Consensus Algorithm (Raft)** — [raft.github.io](https://raft.github.io/raft.pdf).
+- **Leslie Lamport. Time, Clocks, and the Ordering of Events** — [lamport.azurewebsites.net](https://lamport.azurewebsites.net/pubs/time-clocks.pdf).
+- **Gilbert, Lynch. Brewer's Conjecture (CAP)** — [dl.acm.org](https://dl.acm.org/doi/10.1145/564585.564601); **Daniel Abadi. PACELC** — [cs.umd.edu](https://www.cs.umd.edu/~abadi/papers/abadi-pacelc.pdf).
+- **Dean, Barroso. The Tail at Scale** (CACM 2013) — [cacm.acm.org](https://cacm.acm.org/research/the-tail-at-scale/).
+- **Spanner: Google's Globally-Distributed Database** (OSDI 2012) — [research.google](https://research.google/pubs/pub39966/).
+- **Scaling Memcache at Facebook** (NSDI 2013) — [usenix.org](https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf).
+- **SWIM: Scalable Weakly-consistent Membership Protocol** (DSN 2002) — [cs.cornell.edu](https://www.cs.cornell.edu/projects/Quicksilver/public_pdfs/SWIM.pdf).
+- **Pat Helland. Life beyond Distributed Transactions** (CIDR 2007) — [cidrdb.org](https://www.cidrdb.org/cidr2007/papers/cidr07p15.pdf).
+- **Gil Tene. How NOT to Measure Latency** — [infoq.com](https://www.infoq.com/presentations/latency-response-time/).
+
+### Спецификации, к которым стоит обращаться напрямую
+
+RFC 9110 (семантика HTTP), 9111 (кэширование), 9113 / 9114 (HTTP/2, HTTP/3), 8446 (TLS 1.3), 6455 (WebSocket), 7519 и 8725 (JWT), 6749 и 9700 (OAuth 2.0), 9457 (формат ошибок), 9562 (UUIDv7). Все — на [rfc-editor.org](https://www.rfc-editor.org/).
+
+---
+
+## Указатель по блокам
+
+Полный список внешних ссылок из карточек, сгруппированный по блокам. Собран автоматически.
+
+### B01 · Сеть, протоколы, API
+
+- [Apache Avro — Specification](https://avro.apache.org/docs/current/specification/)
+- [AWS Builders' Library — Making retries safe with idempotent APIs](https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/)
+- [Cloudflare — What is DNS?](https://www.cloudflare.com/learning/dns/what-is-dns/)
+- [Cloudflare — What is the OSI model?](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/)
+- [Confluent Schema Registry — Compatibility](https://docs.confluent.io/platform/current/schema-registry/fundamentals/avro.html)
+- [Google AIP-151 — Long-running operations](https://google.aip.dev/151)
+- [Google AIP-231 — Batch methods](https://google.aip.dev/231)
+- [Google API Design Guide](https://cloud.google.com/apis/design)
+- [Google API Design Guide — List Pagination](https://cloud.google.com/apis/design/design_patterns#list_pagination)
+- [Google API Design Guide — Versioning](https://cloud.google.com/apis/design/versioning)
+- [GraphQL — Specification и Best Practices](https://graphql.org/learn/best-practices/)
+- [gRPC — Deadlines](https://grpc.io/blog/deadlines/)
+- [gRPC — Documentation](https://grpc.io/docs/)
+- [High Performance Browser Networking (Ilya Grigorik)](https://hpbn.co/)
+- [JSON Lines](https://jsonlines.org/)
+- [Martin Fowler — Consumer-Driven Contracts](https://martinfowler.com/articles/consumerDrivenContracts.html)
+- [MDN — Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+- [MDN — How the web works](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
+- [MDN — HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
+- [MDN — SameSite cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite)
+- [MDN — Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events)
+- [Microsoft — REST API guidelines: long running operations](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#long-running-operations--jobs)
+- [Mozilla — Server Side TLS recommendations](https://wiki.mozilla.org/Security/Server_Side_TLS)
+- [Netflix — эволюция API-архитектуры](https://netflixtechblog.com/how-netflix-scales-its-api-with-graphql-federation-part-1-ae3557c187e2)
+- [OpenAPI Generator](https://openapi-generator.tech/)
+- [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [OWASP — CSRF Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
+- [Pact — Consumer-driven contract testing](https://docs.pact.io/)
+- [Protocol Buffers — Encoding](https://protobuf.dev/programming-guides/encoding/)
+- [Protocol Buffers — Language Guide](https://protobuf.dev/programming-guides/proto3/)
+- [RFC 4918 — 207 Multi-Status](https://www.rfc-editor.org/rfc/rfc4918.html#section-13)
+- [RFC 5861 — stale-while-revalidate](https://www.rfc-editor.org/rfc/rfc5861.html)
+- [RFC 6455 — WebSocket Protocol](https://www.rfc-editor.org/rfc/rfc6455.html)
+- [RFC 8446 — TLS 1.3](https://www.rfc-editor.org/rfc/rfc8446.html)
+- [RFC 8878 — Zstandard](https://www.rfc-editor.org/rfc/rfc8878.html)
+- [RFC 9110 — 202 Accepted](https://www.rfc-editor.org/rfc/rfc9110.html#name-202-accepted)
+- [RFC 9110 — Conditional Requests](https://www.rfc-editor.org/rfc/rfc9110.html#name-conditional-requests)
+- [RFC 9110 — Content Codings](https://www.rfc-editor.org/rfc/rfc9110.html#name-content-codings)
+- [RFC 9110 — HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html)
+- [RFC 9110 — Idempotent Methods](https://www.rfc-editor.org/rfc/rfc9110.html#name-idempotent-methods)
+- [RFC 9111 — HTTP Caching](https://www.rfc-editor.org/rfc/rfc9111.html)
+- [RFC 9113 — HTTP/2](https://www.rfc-editor.org/rfc/rfc9113.html)
+- [RFC 9114 — HTTP/3](https://www.rfc-editor.org/rfc/rfc9114.html)
+- [RFC 9457 — Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc9457.html)
+- [RFC 9745 — The Deprecation HTTP Header Field](https://www.rfc-editor.org/rfc/rfc9745.html)
+- [Roy Fielding — Architectural Styles (гл. 5)](https://ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
+- [Stripe — API upgrades и версии](https://docs.stripe.com/upgrades)
+- [Stripe — Idempotent requests](https://docs.stripe.com/api/idempotent_requests)
+- [Stripe — Libraries](https://docs.stripe.com/libraries)
+- [Use The Index, Luke — Paging Through Results](https://use-the-index-luke.com/no-offset)
+- [WHATWG HTML — Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)
+- [WHATWG — Fetch Standard, CORS protocol](https://fetch.spec.whatwg.org/#http-cors-protocol)
+
+### B02 · Приём трафика
+
+- [AWS — Global Accelerator и Route 53 routing policies](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html)
+- [Cloudflare — What is a CDN?](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
+- [Cloudflare — What is a DDoS attack?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)
+- [Cloudflare — What is a reverse proxy?](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)
+- [Cloudflare — What is Anycast?](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/)
+- [Cloudflare — What is rate limiting?](https://www.cloudflare.com/learning/bots/what-is-rate-limiting/)
+- [Envoy — Load balancing](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/overview)
+- [Fastly — Cache control tutorial](https://developer.fastly.com/learning/concepts/cache-freshness/)
+- [Google SRE Book, гл. 19–20](https://sre.google/sre-book/load-balancing-frontend/)
+- [Google SRE Book, гл. 21](https://sre.google/sre-book/handling-overload/)
+- [HashiCorp Consul — Service discovery](https://developer.hashicorp.com/consul/docs/concepts/service-discovery)
+- [Istio — Traffic management](https://istio.io/latest/docs/concepts/traffic-management/)
+- [Kong — What is an API gateway](https://konghq.com/learning-center/api-gateway)
+- [Kubernetes — Gateway API](https://gateway-api.sigs.k8s.io/)
+- [Kubernetes — Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [Kubernetes — Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+- [MDN — HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
+- [microservices.io — API Gateway](https://microservices.io/patterns/apigateway.html)
+- [microservices.io — Service registry](https://microservices.io/patterns/service-registry.html)
+- [NGINX — HTTP Load Balancing](https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/)
+- [NGINX — Reverse proxy](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
+- [OWASP — Automated Threats to Web Applications](https://owasp.org/www-project-automated-threats-to-web-applications/)
+- [OWASP — Web Application Firewall](https://owasp.org/www-community/Web_Application_Firewall)
+- [RFC 6585 — 429 Too Many Requests](https://www.rfc-editor.org/rfc/rfc6585.html#section-4)
+- [Stripe — Rate limiters](https://stripe.com/blog/rate-limiters)
+
+### B03 · Хранилища и данные
+
+- [A Critique of ANSI SQL Isolation Levels (Berenson et al.)](https://www.microsoft.com/en-us/research/publication/a-critique-of-ansi-sql-isolation-levels/)
+- [Apache Iceberg — Table format spec](https://iceberg.apache.org/spec/)
+- [AWS S3 — Consistency model](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html#ConsistencyModel)
+- [AWS S3 — Lifecycle configuration](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html)
+- [AWS S3 — Multipart upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
+- [AWS S3 — Presigned URLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html)
+- [AWS SaaS Lens — Well-Architected](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/saas-lens.html)
+- [AWS — Purpose-built databases](https://docs.aws.amazon.com/whitepapers/latest/aws-overview/database.html)
+- [Databricks — Lakehouse (CIDR 2021)](https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf)
+- [Dynamo paper (SOSP 2007)](https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf)
+- [DynamoDB — Best practices for designing and using partition keys](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html)
+- [Elasticsearch — Inverted index](https://www.elastic.co/guide/en/elasticsearch/reference/current/documents-indices.html)
+- [GDPR, ст. 17 — право на удаление](https://gdpr-info.eu/art-17-gdpr/)
+- [gh-ost — online schema migration for MySQL](https://github.com/github/gh-ost)
+- [Google S2 Geometry](https://s2geometry.io/)
+- [Google SRE Book, гл. 26 «Data Integrity»](https://sre.google/sre-book/data-integrity/)
+- [Google — Maglev (NSDI 2016)](https://research.google/pubs/pub44824/)
+- [Gorilla: A Fast, Scalable, In-Memory Time Series Database (VLDB 2015)](https://www.vldb.org/pvldb/vol8/p1816-teller.pdf)
+- [How Discord Stores Trillions of Messages](https://discord.com/blog/how-discord-stores-trillions-of-messages)
+- [IANA Time Zone Database](https://www.iana.org/time-zones)
+- [Introduction to Information Retrieval (Manning et al.)](https://nlp.stanford.edu/IR-book/)
+- [Jepsen — Consistency models](https://jepsen.io/consistency)
+- [Karger et al. — Consistent Hashing and Random Trees (1997)](https://dl.acm.org/doi/10.1145/258533.258660)
+- [Kleppmann, DDIA, гл. 2–3](https://dataintensive.net/)
+- [Malkov & Yashunin — Efficient and robust ANN search using HNSW](https://arxiv.org/abs/1603.09320)
+- [Martin Fowler — Aggregate](https://martinfowler.com/bliki/DDD_Aggregate.html)
+- [Martin Fowler — Evolutionary Database Design](https://martinfowler.com/articles/evodb.html)
+- [Martin Fowler — Money pattern](https://martinfowler.com/eaaCatalog/money.html)
+- [Microsoft — Multi-tenant SaaS database tenancy patterns](https://learn.microsoft.com/en-us/azure/azure-sql/database/saas-tenancy-app-design-patterns)
+- [Neo4j — Graph database concepts](https://neo4j.com/docs/getting-started/appendix/graphdb-concepts/)
+- [pgvector](https://github.com/pgvector/pgvector)
+- [PostGIS — Spatial indexing](https://postgis.net/workshops/postgis-intro/indexing.html)
+- [PostgreSQL — ALTER TABLE](https://www.postgresql.org/docs/current/sql-altertable.html)
+- [PostgreSQL — Data checksums](https://www.postgresql.org/docs/current/checksums.html)
+- [PostgreSQL — Date/Time Types](https://www.postgresql.org/docs/current/datatype-datetime.html)
+- [PostgreSQL — Full Text Search](https://www.postgresql.org/docs/current/textsearch.html)
+- [PostgreSQL — High Availability, Load Balancing, and Replication](https://www.postgresql.org/docs/current/high-availability.html)
+- [PostgreSQL — Indexes](https://www.postgresql.org/docs/current/indexes.html)
+- [PostgreSQL — Reliability and the Write-Ahead Log](https://www.postgresql.org/docs/current/wal.html)
+- [PostgreSQL — Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+- [PostgreSQL — Table Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html)
+- [PostgreSQL — Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html)
+- [PostgreSQL — Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html)
+- [Prometheus — Storage](https://prometheus.io/docs/prometheus/latest/storage/)
+- [Redis — Geospatial indexes](https://redis.io/docs/latest/develop/data-types/geospatial/)
+- [RFC 3339 — Date and Time on the Internet](https://www.rfc-editor.org/rfc/rfc3339.html)
+- [Uber H3 — Hexagonal hierarchical spatial index](https://www.uber.com/en-DE/blog/h3/)
+- [Unicode UAX #15 — Normalization Forms](https://unicode.org/reports/tr15/)
+- [Use The Index, Luke](https://use-the-index-luke.com/)
+- [Vitess — Sharding](https://vitess.io/docs/user-guides/configuration-advanced/sharding/)
+
+### B04 · Кэширование
+
+- [AWS — Caching Best Practices](https://aws.amazon.com/caching/best-practices/)
+- [AWS — Caching patterns](https://docs.aws.amazon.com/whitepapers/latest/database-caching-strategies-using-redis/caching-patterns.html)
+- [Google SRE Book, гл. 22 «Addressing Cascading Failures»](https://sre.google/sre-book/addressing-cascading-failures/)
+- [MDN — HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
+- [Optimal Probabilistic Cache Stampede Prevention (VLDB 2015)](https://cseweb.ucsd.edu/~avattani/papers/cache_stampede.pdf)
+- [Redis — Client-side caching](https://redis.io/docs/latest/develop/reference/client-side-caching/)
+- [Redis — Documentation](https://redis.io/docs/latest/)
+- [Redis — Key eviction](https://redis.io/docs/latest/develop/reference/eviction/)
+- [Redis — Persistence](https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/)
+- [RFC 5861 — stale-while-revalidate](https://www.rfc-editor.org/rfc/rfc5861.html)
+- [Scaling Memcache at Facebook (NSDI 2013)](https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf)
+
+### B05 · Асинхронность и сообщения
+
+- [Apache Flink — Event time and watermarks](https://nightlies.apache.org/flink/flink-docs-stable/docs/concepts/time/)
+- [Apache Pulsar — Concepts and Architecture](https://pulsar.apache.org/docs/concepts-overview/)
+- [AWS SQS — Dead-letter queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html)
+- [AWS SQS — Standard и FIFO очереди](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-types.html)
+- [Azure Architecture — Retry pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/retry)
+- [Confluent — Error handling patterns for Apache Kafka](https://www.confluent.io/blog/error-handling-patterns-in-kafka/)
+- [Confluent — Transactions and exactly-once](https://www.confluent.io/blog/transactions-apache-kafka/)
+- [Debezium — Documentation](https://debezium.io/documentation/reference/stable/index.html)
+- [GitHub — Securing webhooks](https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries)
+- [Google SRE Book, гл. 21 «Handling Overload»](https://sre.google/sre-book/handling-overload/)
+- [Hohpe & Woolf — Enterprise Integration Patterns](https://www.enterpriseintegrationpatterns.com/patterns/messaging/)
+- [Kafka — Design](https://kafka.apache.org/documentation/#design)
+- [Kafka — Message delivery semantics](https://kafka.apache.org/documentation/#semantics)
+- [Kafka — Replication и ISR](https://kafka.apache.org/documentation/#replication)
+- [Kleppmann, DDIA, гл. 11](https://dataintensive.net/)
+- [Martin Fowler — What do you mean by "Event-Driven"?](https://martinfowler.com/articles/201701-event-driven.html)
+- [microservices.io — Communication style](https://microservices.io/patterns/communication-style/messaging.html)
+- [microservices.io — Transactional outbox](https://microservices.io/patterns/data/transactional-outbox.html)
+- [NATS — JetStream](https://docs.nats.io/nats-concepts/jetstream)
+- [Netflix — Performance Under Load (adaptive concurrency limits)](https://netflixtechblog.medium.com/performance-under-load-3e6fa9a60581)
+- [PostgreSQL — SELECT FOR UPDATE SKIP LOCKED](https://www.postgresql.org/docs/current/sql-select.html#SQL-FOR-UPDATE-SHARE)
+- [RabbitMQ — AMQP 0-9-1 Model Explained](https://www.rabbitmq.com/tutorials/amqp-concepts)
+- [RabbitMQ — Consumer Prefetch](https://www.rabbitmq.com/docs/consumer-prefetch)
+- [RabbitMQ — Quorum Queues](https://www.rabbitmq.com/docs/quorum-queues)
+- [RabbitMQ — Tutorials и модель обменников](https://www.rabbitmq.com/tutorials)
+- [Reactive Streams — Specification](https://www.reactive-streams.org/)
+- [Redis — Streams](https://redis.io/docs/latest/develop/data-types/streams/)
+- [Standard Webhooks](https://www.standardwebhooks.com/)
+- [Stripe — Webhooks](https://docs.stripe.com/webhooks)
+- [The Dataflow Model (VLDB 2015)](https://research.google/pubs/pub43864/)
+
+### B06 · Распределённые системы
+
+- [Apache Cassandra — Consistency levels](https://cassandra.apache.org/doc/latest/cassandra/architecture/dynamo.html)
+- [AWS Well-Architected — Performance Efficiency Pillar](https://docs.aws.amazon.com/wellarchitected/latest/performance-efficiency-pillar/welcome.html)
+- [Azure Architecture — Cloud Design Patterns](https://learn.microsoft.com/en-us/azure/architecture/patterns/)
+- [Daniel Abadi — Consistency Tradeoffs in Modern Distributed Database System Design (PACELC)](https://www.cs.umd.edu/~abadi/papers/abadi-pacelc.pdf)
+- [Dynamo: Amazon's Highly Available Key-value Store (SOSP 2007)](https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf)
+- [Eric Brewer — CAP Twelve Years Later](https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed/)
+- [etcd — Distributed locks / lease](https://etcd.io/docs/latest/tutorials/how-to-create-locks/)
+- [etcd — Learning: Data model and Raft](https://etcd.io/docs/latest/learning/)
+- [Garcia-Molina & Salem — Sagas (1987)](https://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf)
+- [Gilbert & Lynch — Brewer's Conjecture (2002)](https://dl.acm.org/doi/10.1145/564585.564601)
+- [HashiCorp Serf — Gossip protocol](https://developer.hashicorp.com/serf/docs/internals/gossip)
+- [Hayashibara et al. — The φ Accrual Failure Detector](https://citeseerx.ist.psu.edu/document?doi=c9f26fe1e1e4be91f6c6a7db1b6da5daaefe9d4a)
+- [Highly Available Transactions: Virtues and Limitations (Bailis et al.)](https://www.vldb.org/pvldb/vol7/p181-bailis.pdf)
+- [In Search of an Understandable Consensus Algorithm (Raft), Ongaro & Ousterhout](https://raft.github.io/raft.pdf)
+- [Jepsen — Consistency Models](https://jepsen.io/consistency)
+- [Lamport — Time, Clocks, and the Ordering of Events (1978)](https://lamport.azurewebsites.net/pubs/time-clocks.pdf)
+- [Leslie Lamport — Paxos Made Simple](https://lamport.azurewebsites.net/pubs/paxos-simple.pdf)
+- [Martin Kleppmann — How to do distributed locking](https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html)
+- [microservices.io — Pattern language](https://microservices.io/patterns/)
+- [microservices.io — Saga pattern](https://microservices.io/patterns/data/saga.html)
+- [Pat Helland — Life beyond Distributed Transactions (CIDR 2007)](https://www.cidrdb.org/cidr2007/papers/cidr07p15.pdf)
+- [raft.github.io — визуализация](https://raft.github.io/)
+- [Redis — Distributed Locks](https://redis.io/docs/latest/develop/use-cases/patterns/distributed-locks/)
+- [RFC 9562 — Universally Unique IDentifiers (UUIDv7)](https://www.rfc-editor.org/rfc/rfc9562.html)
+- [Shapiro et al. — Conflict-free Replicated Data Types](https://inria.hal.science/inria-00609399/document)
+- [Spanner: Google's Globally-Distributed Database (OSDI 2012)](https://research.google/pubs/pub39966/)
+- [SWIM: Scalable Weakly-consistent Infection-style Process Group Membership Protocol (DSN 2002)](https://www.cs.cornell.edu/projects/Quicksilver/public_pdfs/SWIM.pdf)
+- [Twitter Snowflake](https://github.com/twitter-archive/snowflake)
+- [ULID specification](https://github.com/ulid/spec)
+- [Кleppmann, DDIA, гл. 1](https://dataintensive.net/)
+
+### B07 · Архитектурные стили
+
+- [Alistair Cockburn — Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/)
+- [AWS Lambda — Best practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
+- [AWS Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html)
+- [Bernd Ruecker — Practical Process Automation](https://processautomationbook.com/)
+- [Camunda — BPMN и оркестрация микросервисов](https://camunda.com/bpmn/)
+- [CNCF — Cloud Native Definition](https://github.com/cncf/toc/blob/main/DEFINITION.md)
+- [Eric Evans — Domain-Driven Design](https://www.domainlanguage.com/ddd/)
+- [Google SRE Book, гл. 24 «Distributed Periodic Scheduling with Cron»](https://sre.google/sre-book/distributed-periodic-scheduling/)
+- [Greg Young — CQRS Documents](https://cqrs.files.wordpress.com/2010/11/cqrs_documents.pdf)
+- [Greg Young — Versioning in an Event Sourced System](https://leanpub.com/esversioning)
+- [Istio — What is a service mesh?](https://istio.io/latest/about/service-mesh/)
+- [Kubernetes — CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)
+- [Martin Fowler — BoundedContext](https://martinfowler.com/bliki/BoundedContext.html)
+- [Martin Fowler — CQRS](https://martinfowler.com/bliki/CQRS.html)
+- [Martin Fowler — Domain Model и Transaction Script](https://martinfowler.com/eaaCatalog/domainModel.html)
+- [Martin Fowler — Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html)
+- [Martin Fowler — MonolithFirst](https://martinfowler.com/bliki/MonolithFirst.html)
+- [Martin Fowler — ParallelRun](https://martinfowler.com/bliki/ParallelChange.html)
+- [Martin Fowler — Serverless Architectures](https://martinfowler.com/articles/serverless.html)
+- [Martin Fowler — StranglerFigApplication](https://martinfowler.com/bliki/StranglerFigApplication.html)
+- [Martin Fowler — What do you mean by "Event-Driven"?](https://martinfowler.com/articles/201701-event-driven.html)
+- [MDN — Progressive web apps](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
+- [microservices.io — Decompose by subdomain](https://microservices.io/patterns/decomposition/decompose-by-subdomain.html)
+- [microservices.io — Microservice architecture](https://microservices.io/patterns/microservices.html)
+- [microservices.io — Saga: choreography и orchestration](https://microservices.io/patterns/data/saga.html)
+- [microservices.io — Sidecar](https://microservices.io/patterns/deployment/sidecar.html)
+- [Microsoft — CQRS pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs)
+- [Microsoft — Event Sourcing pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing)
+- [Prime Video Tech Blog — Scaling up the audio/video monitoring service](https://www.primevideotech.com/video-streaming/scaling-up-the-prime-video-audio-video-monitoring-service-and-reducing-costs-by-90)
+- [Robert C. Martin — The Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [Sam Newman — Backends For Frontends](https://samnewman.io/patterns/architectural/bff/)
+- [Sam Newman — Building Microservices](https://samnewman.io/books/building_microservices_2nd_edition/)
+- [Sam Newman — Monolith to Microservices](https://samnewman.io/books/monolith-to-microservices/)
+- [Sidekiq — Best practices](https://github.com/sidekiq/sidekiq/wiki/Best-Practices)
+- [Temporal — Documentation](https://docs.temporal.io/)
+- [The Twelve-Factor App](https://12factor.net/)
+- [Vaughn Vernon — Effective Aggregate Design](https://kalele.io/blog-posts/effective-aggregate-design/)
+- [Vaughn Vernon — Implementing Domain-Driven Design](https://kalele.io/books/)
+- [web.dev — Offline cookbook](https://web.dev/articles/offline-cookbook)
+
+### B08 · Надёжность
+
+- [AWS Architecture Blog — Exponential Backoff And Jitter](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/)
+- [AWS Builders' Library — Implementing health checks](https://aws.amazon.com/builders-library/implementing-health-checks/)
+- [AWS Builders' Library — Static stability using Availability Zones](https://aws.amazon.com/builders-library/static-stability-using-availability-zones/)
+- [AWS Builders' Library — Timeouts, retries, and backoff with jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)
+- [AWS Builders' Library — Using load shedding to avoid overload](https://aws.amazon.com/builders-library/using-load-shedding-to-avoid-overload/)
+- [AWS Builders' Library — Workload isolation using shuffle-sharding](https://aws.amazon.com/builders-library/workload-isolation-using-shuffle-sharding/)
+- [AWS Well-Architected — Reducing the scope of impact with cell-based architecture](https://docs.aws.amazon.com/wellarchitected/latest/reducing-scope-of-impact-with-cell-based-architecture/reducing-scope-of-impact-with-cell-based-architecture.html)
+- [AWS Well-Architected — Reliability Pillar](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html)
+- [AWS — Disaster Recovery workloads: strategies](https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html)
+- [Azure Architecture — Bulkhead pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/bulkhead)
+- [Azure Architecture — Circuit Breaker pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker)
+- [Fail at Scale (ACM Queue, Facebook)](https://queue.acm.org/detail.cfm?id=2839461)
+- [Google Cloud — DR planning guide](https://cloud.google.com/architecture/dr-scenarios-planning-guide)
+- [Google SRE Book, гл. 21 «Handling Overload»](https://sre.google/sre-book/handling-overload/)
+- [Google SRE Book, гл. 22 «Addressing Cascading Failures»](https://sre.google/sre-book/addressing-cascading-failures/)
+- [Google SRE Book, гл. 26 «Data Integrity»](https://sre.google/sre-book/data-integrity/)
+- [Kubernetes — Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+- [Martin Fowler — CircuitBreaker](https://martinfowler.com/bliki/CircuitBreaker.html)
+- [Martin Fowler — Feature Toggles](https://martinfowler.com/articles/feature-toggles.html)
+- [Netflix Tech Blog — Chaos Engineering Upgraded](https://netflixtechblog.com/chaos-engineering-upgraded-878d341f15fa)
+- [Netflix — Performance Under Load](https://netflixtechblog.medium.com/performance-under-load-3e6fa9a60581)
+- [PostgreSQL — Continuous Archiving and PITR](https://www.postgresql.org/docs/current/continuous-archiving.html)
+- [Principles of Chaos Engineering](https://principlesofchaos.org/)
+
+### B09 · Безопасность
+
+- [Adam Shostack — Threat Modeling: Designing for Security](https://shostack.org/books/threat-modeling-book)
+- [CISA/NTIA — Software Bill of Materials](https://www.cisa.gov/sbom)
+- [Google BeyondCorp](https://cloud.google.com/beyondcorp)
+- [Google SRE Book, гл. 26 «Data Integrity»](https://sre.google/sre-book/data-integrity/)
+- [Google Zanzibar: Consistent, Global Authorization System](https://research.google/pubs/pub48190/)
+- [Microsoft — STRIDE и SDL Threat Modeling](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats)
+- [NIST SP 800-207 — Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
+- [NIST SP 800-57 — Key Management](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final)
+- [NIST SP 800-63B — Digital Identity Guidelines](https://pages.nist.gov/800-63-3/sp800-63b.html)
+- [NIST SP 800-92 — Guide to Computer Security Log Management](https://csrc.nist.gov/pubs/sp/800/92/final)
+- [NIST — Attribute Based Access Control](https://csrc.nist.gov/projects/attribute-based-access-control)
+- [OpenID Connect Core](https://openid.net/specs/openid-connect-core-1_0.html)
+- [OWASP API Security Top 10 (2023)](https://owasp.org/API-Security/editions/2023/en/0x11-t10/)
+- [OWASP API Security Top 10 — Broken Object Level Authorization](https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/)
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+- [OWASP — Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
+- [OWASP — Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)
+- [OWASP — Cross Site Scripting Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)
+- [OWASP — Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)
+- [OWASP — Dependency-Check и Top 10 CI/CD Security Risks](https://owasp.org/www-project-top-10-ci-cd-security-risks/)
+- [OWASP — JWT Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html)
+- [OWASP — Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
+- [OWASP — Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+- [OWASP — REST Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html)
+- [OWASP — Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
+- [OWASP — Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+- [OWASP — SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
+- [OWASP — SSRF Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
+- [OWASP — Threat Modeling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html)
+- [RFC 6749 — OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749.html)
+- [RFC 7519 — JSON Web Token](https://www.rfc-editor.org/rfc/rfc7519.html)
+- [RFC 8725 — JWT Best Current Practices](https://www.rfc-editor.org/rfc/rfc8725.html)
+- [RFC 9106 — Argon2](https://www.rfc-editor.org/rfc/rfc9106.html)
+- [RFC 9700 — OAuth 2.0 Security Best Current Practice](https://www.rfc-editor.org/rfc/rfc9700.html)
+- [Sigstore](https://www.sigstore.dev/)
+- [SLSA — Supply-chain Levels for Software Artifacts](https://slsa.dev/)
+- [SPIFFE — Secure Production Identity Framework](https://spiffe.io/docs/latest/spiffe-about/overview/)
+
+### B10 · Доставка и эксплуатация
+
+- [Accelerate / DORA metrics](https://dora.dev/guides/dora-metrics-four-keys/)
+- [Alex Hidalgo — Implementing Service Level Objectives](https://www.oreilly.com/library/view/implementing-service-level/9781492076803/)
+- [Android — Staged rollouts](https://support.google.com/googleplay/android-developer/answer/6346149)
+- [Apple — Phased release for automatic updates](https://developer.apple.com/help/app-store-connect/update-your-app/release-a-version-update-in-phases/)
+- [AWS — Auto Scaling best practices](https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-target-tracking.html)
+- [Bazel](https://bazel.build/)
+- [Brendan Gregg — USE Method](https://www.brendangregg.com/usemethod.html)
+- [Docker — Best practices for building images](https://docs.docker.com/build/building/best-practices/)
+- [Google SRE Book — Introduction](https://sre.google/sre-book/introduction/)
+- [Google SRE Book, гл. 11 «Being On-Call»](https://sre.google/sre-book/being-on-call/)
+- [Google SRE Book, гл. 12 «Effective Troubleshooting»](https://sre.google/sre-book/effective-troubleshooting/)
+- [Google SRE Book, гл. 18 «Software Engineering in SRE» и гл. 11 про планирование ёмкости](https://sre.google/sre-book/table-of-contents/)
+- [Google SRE Book, гл. 4 «Service Level Objectives»](https://sre.google/sre-book/service-level-objectives/)
+- [Google SRE Book, гл. 6 «Monitoring Distributed Systems»](https://sre.google/sre-book/monitoring-distributed-systems/)
+- [Google SRE Book, гл. 6 и 15 «Postmortem Culture»](https://sre.google/sre-book/postmortem-culture/)
+- [Google SRE Book, гл. 8 «Release Engineering»](https://sre.google/sre-book/release-engineering/)
+- [Google SRE Workbook — Alerting on SLOs](https://sre.google/workbook/alerting-on-slos/)
+- [Google SRE Workbook — Canarying Releases](https://sre.google/workbook/canarying-releases/)
+- [Google SRE Workbook — Implementing SLOs](https://sre.google/workbook/implementing-slos/)
+- [Google SRE Workbook — Monitoring](https://sre.google/workbook/monitoring/)
+- [Google — Testing on the Toilet: тестовые данные](https://testing.googleblog.com/)
+- [Google — Why Google Stores Billions of Lines of Code in a Single Repository (CACM 2016)](https://cacm.acm.org/research/why-google-stores-billions-of-lines-of-code-in-a-single-repository/)
+- [HashiCorp — Terraform: infrastructure as code](https://developer.hashicorp.com/terraform/intro)
+- [Jez Humble — Continuous Delivery](https://continuousdelivery.com/)
+- [Kubernetes — Concepts](https://kubernetes.io/docs/concepts/)
+- [Kubernetes — Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
+- [Kubernetes — Managing resources for containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+- [Linux — namespaces и cgroups](https://man7.org/linux/man-pages/man7/namespaces.7.html)
+- [Martin Fowler — BlueGreenDeployment](https://martinfowler.com/bliki/BlueGreenDeployment.html)
+- [Martin Fowler — CanaryRelease](https://martinfowler.com/bliki/CanaryRelease.html)
+- [Martin Fowler — Continuous Integration](https://martinfowler.com/articles/continuousIntegration.html)
+- [Martin Fowler — Test Data](https://martinfowler.com/bliki/TestDouble.html)
+- [Martin Fowler — Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html)
+- [OpenTelemetry — Documentation](https://opentelemetry.io/docs/)
+- [OpenTelemetry — Sampling](https://opentelemetry.io/docs/concepts/sampling/)
+- [Pact — Consumer-driven contracts](https://docs.pact.io/)
+- [Prometheus — Naming and cardinality](https://prometheus.io/docs/practices/naming/)
+- [Team Topologies](https://teamtopologies.com/)
+- [Testcontainers](https://testcontainers.com/)
+- [The Twelve-Factor App — Config](https://12factor.net/config)
+- [Tom Wilkie — RED method](https://grafana.com/blog/2018/08/02/the-red-method-how-to-instrument-your-services/)
+
+### B11 · Производительность и стоимость
+
+- [AWS Well-Architected — Cost Optimization Pillar](https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html)
+- [Brendan Gregg — Flame Graphs](https://www.brendangregg.com/flamegraphs.html)
+- [Brendan Gregg — Linux Performance Tools](https://www.brendangregg.com/linuxperf.html)
+- [Brendan Gregg — Systems Performance](https://www.brendangregg.com/systems-performance-2nd-edition-book.html)
+- [Brendan Gregg — USE Method](https://www.brendangregg.com/usemethod.html)
+- [Dean & Barroso — The Tail at Scale (CACM 2013)](https://cacm.acm.org/research/the-tail-at-scale/)
+- [FinOps Foundation — Framework](https://www.finops.org/framework/)
+- [Gil Tene — How NOT to Measure Latency](https://www.infoq.com/presentations/latency-response-time/)
+- [Go — Guide to the Go Garbage Collector](https://tip.golang.org/doc/gc-guide)
+- [Google SRE Book, гл. 21 «Handling Overload»](https://sre.google/sre-book/handling-overload/)
+- [Google SRE Workbook — Canarying и нагрузочные проверки](https://sre.google/workbook/canarying-releases/)
+- [Google-Wide Profiling (IEEE Micro 2010)](https://research.google/pubs/pub36575/)
+- [GraphQL — DataLoader](https://github.com/graphql/dataloader)
+- [High Performance Browser Networking](https://hpbn.co/)
+- [HikariCP — About Pool Sizing](https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing)
+- [Java — HotSpot Garbage Collection Tuning Guide](https://docs.oracle.com/en/java/javase/21/gctuning/)
+- [Jeff Dean — Designs, Lessons and Advice from Building Large Distributed Systems](https://static.googleusercontent.com/media/research.google.com/en//people/jeff/stanford-295-talk.pdf)
+- [k6 — Load testing guides](https://grafana.com/docs/k6/latest/testing-guides/)
+- [Kleppmann, DDIA, гл. 1](https://dataintensive.net/)
+- [Latency Numbers Every Programmer Should Know (интерактивно)](https://colin-scott.github.io/personal_website/research/interactive_latency.html)
+- [Neil Gunther — Universal Scalability Law](https://www.vamsitalkstech.com/wp-content/uploads/2016/12/USLscalability.pdf)
+- [PgBouncer — Documentation](https://www.pgbouncer.org/usage.html)
+- [Prime Video Tech Blog](https://www.primevideotech.com/video-streaming/scaling-up-the-prime-video-audio-video-monitoring-service-and-reducing-costs-by-90)
+- [Rob Pike — Concurrency is not Parallelism](https://go.dev/blog/waza-talk)
+
+### B12 · Кейсы
+
+- [Alex Xu — System Design Interview, vol. 1](https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF)
+- [Alex Xu — System Design Interview, vol. 2](https://www.amazon.com/System-Design-Interview-Insiders-Guide/dp/1736049119)
+- [How Discord Stores Trillions of Messages](https://discord.com/blog/how-discord-stores-trillions-of-messages)
+- [Netflix Tech Blog](https://netflixtechblog.com/)
+- [Prime Video Tech Blog](https://www.primevideotech.com/video-streaming/scaling-up-the-prime-video-audio-video-monitoring-service-and-reducing-costs-by-90)
+- [RFC 9110 — Redirection 3xx](https://www.rfc-editor.org/rfc/rfc9110.html#name-redirection-3xx)
+- [Twitter Engineering — Timelines at Scale](https://www.infoq.com/presentations/Twitter-Timeline-Scalability/)
+
+---
+
+Всего внешних источников: **369** (без повторов внутри блока). Источники шага проектирования — в [`00-workflow.md`](00-workflow.md), видео — в [`93-playlist-map.md`](93-playlist-map.md).
