@@ -54,7 +54,7 @@ flowchart TD
 
 **Готово, когда.** Каждое NFR имеет число и способ измерения; требования приоритезированы; есть список исключений.
 
-Связано: `topics/10-delivery-and-ops.md#slo` · Источники: [Google SRE Book, гл. 4 «Service Level Objectives»](https://sre.google/sre-book/service-level-objectives/), [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html).
+Связано: [T-120 SLI, SLO и бюджет ошибок](topics/10-delivery-and-ops.md#slo) · [T-110 threat modeling](topics/09-security.md#threat-modeling) · [T-049 retention и приватность](topics/03-storage-and-data.md#retention) · [T-138 стоимость как требование](topics/11-performance-and-cost.md#cost) · [T-087 офлайн и ненадёжная сеть](topics/07-architecture-styles.md#client-patterns) · Источники: [Google SRE Book, гл. 4 «Service Level Objectives»](https://sre.google/sre-book/service-level-objectives/), [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html).
 
 ---
 
@@ -79,7 +79,7 @@ flowchart TD
 
 **Готово, когда.** Видно узкое место: что упрётся первым — CPU, диск, сеть или деньги.
 
-Связано: `topics/11-performance-and-cost.md#latency-numbers` · Источники: [Latency Numbers Every Programmer Should Know](https://colin-scott.github.io/personal_website/research/interactive_latency.html), [Gil Tene, How NOT to Measure Latency](https://www.infoq.com/presentations/latency-response-time/).
+Связано: [T-128 числа задержек](topics/11-performance-and-cost.md#latency-numbers) · [T-129 перцентили и хвост](topics/11-performance-and-cost.md#percentiles) · [T-134 закон Литтла и насыщение](topics/11-performance-and-cost.md#queueing) · [T-122 ёмкость и автомасштабирование](topics/10-delivery-and-ops.md#capacity) · [T-135 нагрузочное тестирование](topics/11-performance-and-cost.md#load-testing) · [T-138 unit-экономика](topics/11-performance-and-cost.md#cost) · Источники: [Latency Numbers Every Programmer Should Know](https://colin-scott.github.io/personal_website/research/interactive_latency.html), [Gil Tene, How NOT to Measure Latency](https://www.infoq.com/presentations/latency-response-time/).
 
 ---
 
@@ -103,7 +103,7 @@ flowchart TD
 
 **Готово, когда.** По контракту можно написать и клиент, и заглушку сервера, не задавая вопросов.
 
-Связано: `topics/01-network-and-api.md` · Источники: [Stripe API — Idempotent Requests](https://docs.stripe.com/api/idempotent_requests), [Google API Design Guide](https://cloud.google.com/apis/design), [RFC 9110 — HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html).
+Связано: [T-008 стили API](topics/01-network-and-api.md#api-styles) · [T-055 модели взаимодействия](topics/05-async-and-messaging.md#interaction-models) · [T-012 realtime-транспорт](topics/01-network-and-api.md#realtime) · [T-013 асинхронные операции](topics/01-network-and-api.md#async-operations) · [T-016 идемпотентность](topics/01-network-and-api.md#idempotency) · [T-017 версионирование](topics/01-network-and-api.md#versioning) · [T-018 контракты и схемы](topics/01-network-and-api.md#contracts) · весь блок [B01 · Сеть, протоколы, API](topics/01-network-and-api.md) · Источники: [Stripe API — Idempotent Requests](https://docs.stripe.com/api/idempotent_requests), [Google API Design Guide](https://cloud.google.com/apis/design), [RFC 9110 — HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html).
 
 ---
 
@@ -128,7 +128,7 @@ flowchart TD
 
 **Готово, когда.** Для каждого критичного запроса понятно, какой индекс его закрывает и сколько данных он трогает.
 
-Связано: `topics/03-storage-and-data.md` · Источники: [Kleppmann, «Designing Data-Intensive Applications», гл. 2–3](https://dataintensive.net/), [Amazon DynamoDB — Best Practices for Design](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html).
+Связано: [T-031 выбор хранилища](topics/03-storage-and-data.md#storage-choice) · [T-033 моделирование от паттернов доступа](topics/03-storage-and-data.md#data-modeling) · [T-035 индексы](topics/03-storage-and-data.md#indexes) · [T-034 типы данных: деньги и время](topics/03-storage-and-data.md#data-types) · [T-032 специализированные хранилища](topics/03-storage-and-data.md#specialized-stores) · [T-045 OLTP и OLAP](topics/03-storage-and-data.md#oltp-olap) · [T-074 генерация уникальных ID](topics/06-distributed-systems.md#unique-ids) · весь блок [B03 · Хранилища и данные](topics/03-storage-and-data.md) · Источники: [Kleppmann, «Designing Data-Intensive Applications», гл. 2–3](https://dataintensive.net/), [Amazon DynamoDB — Best Practices for Design](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html).
 
 ---
 
@@ -150,7 +150,7 @@ flowchart TD
 
 **Готово, когда.** По схеме можно проследить путь ключевого запроса и назвать хранилище истины для каждой сущности.
 
-Связано: `topics/07-architecture-styles.md` · Источники: [C4 model](https://c4model.com/), [arc42](https://arc42.org/).
+Связано: [T-021 устройство веб-приложения](topics/01-network-and-api.md#web-app) · [T-076 карта паттернов](topics/06-distributed-systems.md#patterns) · [T-077 монолит и микросервисы](topics/07-architecture-styles.md#monolith-microservices) · [T-078 границы контекстов](topics/07-architecture-styles.md#boundaries) · [T-079 внутренняя архитектура сервиса](topics/07-architecture-styles.md#internal-architecture) · [T-080 хореография и оркестрация](topics/07-architecture-styles.md#event-driven) · [T-056 очередь против лога](topics/05-async-and-messaging.md#queue-vs-log) · [T-024 API Gateway](topics/02-traffic-and-edge.md#api-gateway) · весь блок [B07 · Архитектурные стили](topics/07-architecture-styles.md) · Источники: [C4 model](https://c4model.com/), [arc42](https://arc42.org/).
 
 ---
 
@@ -173,7 +173,7 @@ flowchart TD
 
 **Готово, когда.** Для каждого узкого места есть следующий шаг и известен признак, по которому его пора делать.
 
-Связано: `topics/06-distributed-systems.md#scaling`, `topics/04-caching.md`, `topics/03-storage-and-data.md#sharding`.
+Связано: [T-066 вертикально против горизонтально](topics/06-distributed-systems.md#scaling) · [T-050 уровни кэша](topics/04-caching.md#cache-levels) · [T-039 репликация](topics/03-storage-and-data.md#replication) · [T-040 шардирование](topics/03-storage-and-data.md#sharding) · [T-022 балансировка нагрузки](topics/02-traffic-and-edge.md#load-balancing) · [T-133 пулы соединений и N+1](topics/11-performance-and-cost.md#pooling) · [T-132 оптимизация API](topics/11-performance-and-cost.md#api-performance)
 
 ---
 
@@ -194,7 +194,7 @@ flowchart TD
 
 **Готово, когда.** Для каждой критичной операции описано поведение при: повторе, частичном отказе, параллельном выполнении.
 
-Связано: `topics/06-distributed-systems.md`, `topics/05-async-and-messaging.md#outbox` · Источники: [Kleppmann, DDIA, гл. 7 и 9](https://dataintensive.net/), [microservices.io — Saga](https://microservices.io/patterns/data/saga.html), [PostgreSQL — Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html).
+Связано: [T-037 ACID и транзакции](topics/03-storage-and-data.md#acid) · [T-038 уровни изоляции](topics/03-storage-and-data.md#isolation) · [T-068 модели согласованности](topics/06-distributed-systems.md#consistency-models) · [T-073 распределённые транзакции и saga](topics/06-distributed-systems.md#distributed-transactions) · [T-061 transactional outbox](topics/05-async-and-messaging.md#outbox) · [T-060 гарантии доставки](topics/05-async-and-messaging.md#delivery-guarantees) · [T-016 идемпотентность](topics/01-network-and-api.md#idempotency) · весь блок [B06 · Распределённые системы](topics/06-distributed-systems.md) · Источники: [Kleppmann, DDIA, гл. 7 и 9](https://dataintensive.net/), [microservices.io — Saga](https://microservices.io/patterns/data/saga.html), [PostgreSQL — Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html).
 
 ---
 
@@ -220,7 +220,7 @@ flowchart TD
 
 **Готово, когда.** Матрица отказов заполнена, у каждой строки есть реакция и способ обнаружения; известны RPO/RTO.
 
-Связано: `topics/08-reliability.md` · Источники: [Nygard, «Release It!»](https://pragprog.com/titles/mnee2/release-it-second-edition/), [AWS Builders' Library — Timeouts, retries and backoff with jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/).
+Связано: [T-095 обзор отказоустойчивости](topics/08-reliability.md#fault-tolerance-overview) · [T-090 таймауты и ретраи](topics/08-reliability.md#timeouts-retries) · [T-091 circuit breaker и bulkhead](topics/08-reliability.md#circuit-breaker) · [T-092 load shedding](topics/08-reliability.md#load-shedding) · [T-093 деградация и фича-флаги](topics/08-reliability.md#degradation) · [T-096 ячеистая архитектура](topics/08-reliability.md#cells) · [T-098 бэкапы, RPO и RTO](topics/08-reliability.md#backup-dr) · [T-071 обнаружение отказов](topics/06-distributed-systems.md#failure-detection) · весь блок [B08 · Надёжность](topics/08-reliability.md) · Источники: [Nygard, «Release It!»](https://pragprog.com/titles/mnee2/release-it-second-edition/), [AWS Builders' Library — Timeouts, retries and backoff with jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/).
 
 ---
 
@@ -244,7 +244,7 @@ flowchart TD
 
 **Готово, когда.** Для каждой роли и каждого ресурса ясно, кто имеет доступ и где это проверяется.
 
-Связано: `topics/09-security.md` · Источники: [OWASP API Security Top 10](https://owasp.org/API-Security/editions/2023/en/0x11-t10/), [RFC 9700 — OAuth 2.0 Security Best Current Practice](https://www.rfc-editor.org/rfc/rfc9700.html), [NIST SP 800-207 — Zero Trust](https://csrc.nist.gov/pubs/sp/800/207/final).
+Связано: [T-100 аутентификация](topics/09-security.md#authentication) · [T-103 авторизация](topics/09-security.md#authorization) · [T-105 безопасность API](topics/09-security.md#api-security) · [T-106 типовые атаки](topics/09-security.md#attacks) · [T-107 шифрование и секреты](topics/09-security.md#encryption) · [T-108 транспортная безопасность](topics/09-security.md#transport-security) · [T-027 rate limiting](topics/02-traffic-and-edge.md#rate-limiting) · [T-110 threat modeling](topics/09-security.md#threat-modeling) · весь блок [B09 · Безопасность](topics/09-security.md) · Источники: [OWASP API Security Top 10](https://owasp.org/API-Security/editions/2023/en/0x11-t10/), [RFC 9700 — OAuth 2.0 Security Best Current Practice](https://www.rfc-editor.org/rfc/rfc9700.html), [NIST SP 800-207 — Zero Trust](https://csrc.nist.gov/pubs/sp/800/207/final).
 
 ---
 
@@ -266,7 +266,7 @@ flowchart TD
 
 **Готово, когда.** На вопрос «пользователю плохо — где именно?» отвечает дашборд, а не догадка.
 
-Связано: `topics/10-delivery-and-ops.md` · Источники: [Google SRE Book](https://sre.google/sre-book/table-of-contents/), [OpenTelemetry docs](https://opentelemetry.io/docs/), [Brendan Gregg — USE Method](https://www.brendangregg.com/usemethod.html).
+Связано: [T-118 observability](topics/10-delivery-and-ops.md#observability) · [T-120 SLI, SLO, бюджет ошибок](topics/10-delivery-and-ops.md#slo) · [T-121 алертинг и дежурства](topics/10-delivery-and-ops.md#alerting) · [T-113 стратегии деплоя](topics/10-delivery-and-ops.md#deploy) · [T-047 миграции без простоя](topics/03-storage-and-data.md#migrations) · [T-123 тестирование](topics/10-delivery-and-ops.md#testing) · [T-114 окружения и тестовые данные](topics/10-delivery-and-ops.md#envs) · [T-124 отладка в проде](topics/10-delivery-and-ops.md#debugging) · весь блок [B10 · Доставка и эксплуатация](topics/10-delivery-and-ops.md) · Источники: [Google SRE Book](https://sre.google/sre-book/table-of-contents/), [OpenTelemetry docs](https://opentelemetry.io/docs/), [Brendan Gregg — USE Method](https://www.brendangregg.com/usemethod.html).
 
 ---
 
@@ -291,7 +291,7 @@ flowchart TD
 
 **Типовые ошибки.** Сравнение только по производительности. Игнорирование операционной стоимости нового компонента. Отсутствие оценки «сколько это будет стоить в деньгах».
 
-Связано: `topics/11-performance-and-cost.md` · Источники: [AWS Well-Architected — Cost Optimization Pillar](https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html), видео плейлиста [#92](https://www.youtube.com/watch?v=1nENigGr-a0), [#93](https://www.youtube.com/watch?v=2g1G8Jr88xU).
+Связано: [T-138 стоимость и TCO](topics/11-performance-and-cost.md#cost) · [T-119 стоимость наблюдаемости](topics/10-delivery-and-ops.md#observability-cost) · [T-085 serverless: когда выгоден](topics/07-architecture-styles.md#serverless) · [T-116 Kubernetes: чего стоит](topics/10-delivery-and-ops.md#kubernetes) · [T-077 монолит против микросервисов](topics/07-architecture-styles.md#monolith-microservices) · [T-151 разборы реальных архитектур](topics/12-case-studies.md#real-architectures) · Источники: [AWS Well-Architected — Cost Optimization Pillar](https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html), видео плейлиста [#92](https://www.youtube.com/watch?v=1nENigGr-a0), [#93](https://www.youtube.com/watch?v=2g1G8Jr88xU).
 
 ---
 
@@ -364,5 +364,7 @@ flowchart TD
 ## Последствия
 Что становится дороже, что теряем, при каких условиях решение пересматриваем.
 ```
+
+Связано: [T-095 обзор отказоустойчивости](topics/08-reliability.md#fault-tolerance-overview) · [T-046 целостность и сверка данных](topics/03-storage-and-data.md#data-integrity) · [T-110 threat modeling](topics/09-security.md#threat-modeling) · [T-120 SLO и бюджет ошибок](topics/10-delivery-and-ops.md#slo) · [T-138 стоимость](topics/11-performance-and-cost.md#cost) · [анти-паттерны](91-antipatterns.md) как второй чек-лист · [числа и матрицы выбора](90-cheatsheets.md)
 
 Источники: [Michael Nygard — Documenting Architecture Decisions](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions), видео плейлиста [#98 — System Design Interview: Biggest Mistakes to Avoid](https://www.youtube.com/watch?v=OvufRkoD-D0).
