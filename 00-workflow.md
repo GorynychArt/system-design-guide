@@ -152,7 +152,10 @@ flowchart TD
 
 **Готово, когда.** По схеме можно проследить путь ключевого запроса и назвать хранилище истины для каждой сущности.
 
-**Решения этого шага.** [D-02 · Границы сервисов](decisions/D-02-service-boundaries.md) — вопросы к истории изменений, оси, дисквалификаторы, типовые формы разреза. Варианты здесь не берутся готовыми: документ сначала помогает их построить.
+**Решения этого шага.** Два, по стадии проекта — метод у них разный, а не только числа:
+
+- [D-05 · Границы на старте](decisions/D-05-initial-boundaries.md) — системы ещё нет, факты предсказываются по требованиям и языку. Вопрос: какие границы **заложить**.
+- [D-02 · Границы сервисов в работающей системе](decisions/D-02-service-boundaries.md) — есть история изменений, факты измеряются. Вопрос: где **резать**.
 
 Связано: [T-021 устройство веб-приложения](topics/01-network-and-api.md#web-app) · [T-076 карта паттернов](topics/06-distributed-systems.md#patterns) · [T-077 монолит и микросервисы](topics/07-architecture-styles.md#monolith-microservices) · [T-078 границы контекстов](topics/07-architecture-styles.md#boundaries) · [T-079 внутренняя архитектура сервиса](topics/07-architecture-styles.md#internal-architecture) · [T-080 хореография и оркестрация](topics/07-architecture-styles.md#event-driven) · [T-056 очередь против лога](topics/05-async-and-messaging.md#queue-vs-log) · [T-024 API Gateway](topics/02-traffic-and-edge.md#api-gateway) · весь блок [B07 · Архитектурные стили](topics/07-architecture-styles.md) · Источники: [C4 model](https://c4model.com/), [arc42](https://arc42.org/).
 
