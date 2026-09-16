@@ -177,6 +177,8 @@ flowchart TD
 
 **Готово, когда.** Для каждого узкого места есть следующий шаг и известен признак, по которому его пора делать.
 
+**Решения этого шага.** [D-03 · Стратегия кэширования](decisions/D-03-caching-strategy.md) — короткая форма: умолчание и условия отклонения вместо сравнения вариантов, потому что решение обратимо, а ошибка стоит дней.
+
 Связано: [T-066 вертикально против горизонтально](topics/06-distributed-systems.md#scaling) · [T-050 уровни кэша](topics/04-caching.md#cache-levels) · [T-039 репликация](topics/03-storage-and-data.md#replication) · [T-040 шардирование](topics/03-storage-and-data.md#sharding) · [T-022 балансировка нагрузки](topics/02-traffic-and-edge.md#load-balancing) · [T-133 пулы соединений и N+1](topics/11-performance-and-cost.md#pooling) · [T-132 оптимизация API](topics/11-performance-and-cost.md#api-performance)
 
 ---
