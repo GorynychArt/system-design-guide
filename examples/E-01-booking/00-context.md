@@ -18,7 +18,7 @@
 | 2 | Выбор хранилища | [D-01](../../decisions/D-01-storage-choice.md) → [ADR-0001](ADR-0001-storage.md) | ✅ |
 | 3 | Границы сервисов | [D-02](../../decisions/D-02-service-boundaries.md) → [ADR-0002](ADR-0002-boundaries.md) | ✅ |
 | 4 | Связь в процессе «резерв → оплата» | [D-04](../../decisions/D-04-workflow-coupling.md) → [ADR-0003](ADR-0003-workflow-coupling.md) | ✅ |
-| 5 | Стратегия кэширования схемы зала | [D-03](../../decisions/D-03-caching-strategy.md) → короткая запись | ○ |
+| 5 | Стратегия кэширования схемы зала | [D-03](../../decisions/D-03-caching-strategy.md) → [ADR-0004](ADR-0004-cache-seatmap.md) | ✅ |
 | 6 | Ревизия прогона: что вскрылось, правки в шаблоны | — | ○ |
 
 Порядок — по шагам workflow (W3 → W4 → W6 → W5), а не по номерам документов. Если порядок окажется неверным, это находка шестого этапа, а не повод менять его сейчас.
