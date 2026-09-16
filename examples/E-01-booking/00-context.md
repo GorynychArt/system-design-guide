@@ -17,7 +17,7 @@
 | 1 | Вход: рамки, числа, инварианты | W0, W1 | ✅ этот файл |
 | 2 | Выбор хранилища | [D-01](../../decisions/D-01-storage-choice.md) → [ADR-0001](ADR-0001-storage.md) | ✅ |
 | 3 | Границы сервисов | [D-02](../../decisions/D-02-service-boundaries.md) → [ADR-0002](ADR-0002-boundaries.md) | ✅ |
-| 4 | Связь в процессе «резерв → оплата» | [D-04](../../decisions/D-04-workflow-coupling.md) → ADR-0003 | ○ |
+| 4 | Связь в процессе «резерв → оплата» | [D-04](../../decisions/D-04-workflow-coupling.md) → [ADR-0003](ADR-0003-workflow-coupling.md) | ✅ |
 | 5 | Стратегия кэширования схемы зала | [D-03](../../decisions/D-03-caching-strategy.md) → короткая запись | ○ |
 | 6 | Ревизия прогона: что вскрылось, правки в шаблоны | — | ○ |
 
