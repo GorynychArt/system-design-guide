@@ -131,5 +131,5 @@ PostgreSQL отвергнут по единственной оси, зато р�
 
 ## Связанные ADR
 
-Зависимые: [ADR-0002](ADR-0002-boundaries.md) (границы), [ADR-0003](ADR-0003-fanout-coupling.md) (раздача поста), `ADR-0004` (кэш и чтение).
+Зависимые: [ADR-0002](ADR-0002-boundaries.md) (границы), [ADR-0003](ADR-0003-fanout-coupling.md) (раздача поста), [ADR-0004](ADR-0004-read-path-cache.md) (кэш и чтение).
 Отвергнутые варианты и условия пересмотра — в [`constraints.md`](constraints.md).
