@@ -200,6 +200,8 @@ flowchart TD
 
 **Готово, когда.** Для каждой критичной операции описано поведение при: повторе, частичном отказе, параллельном выполнении.
 
+**Решения этого шага.** [D-04 · Связь сервисов в рабочем процессе](decisions/D-04-workflow-coupling.md) — три двоичных вопроса задают ячейку из восьми; принимается для каждого процесса, пересекающего границы сервисов, отдельно.
+
 Связано: [T-037 ACID и транзакции](topics/03-storage-and-data.md#acid) · [T-038 уровни изоляции](topics/03-storage-and-data.md#isolation) · [T-068 модели согласованности](topics/06-distributed-systems.md#consistency-models) · [T-073 распределённые транзакции и saga](topics/06-distributed-systems.md#distributed-transactions) · [T-061 transactional outbox](topics/05-async-and-messaging.md#outbox) · [T-060 гарантии доставки](topics/05-async-and-messaging.md#delivery-guarantees) · [T-016 идемпотентность](topics/01-network-and-api.md#idempotency) · весь блок [B06 · Распределённые системы](topics/06-distributed-systems.md) · Источники: [Kleppmann, DDIA, гл. 7 и 9](https://dataintensive.net/), [microservices.io — Saga](https://microservices.io/patterns/data/saga.html), [PostgreSQL — Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html).
 
 ---
