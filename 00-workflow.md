@@ -128,6 +128,8 @@ flowchart TD
 
 **Готово, когда.** Для каждого критичного запроса понятно, какой индекс его закрывает и сколько данных он трогает.
 
+**Решения этого шага.** [D-01 · Выбор хранилища](decisions/D-01-storage-choice.md) — вопросы, оси, дисквалификаторы, рыночный слой. Шаг говорит, *что* решить; документ решения — *как* выбрать и что приложить к ADR.
+
 Связано: [T-031 выбор хранилища](topics/03-storage-and-data.md#storage-choice) · [T-033 моделирование от паттернов доступа](topics/03-storage-and-data.md#data-modeling) · [T-035 индексы](topics/03-storage-and-data.md#indexes) · [T-034 типы данных: деньги и время](topics/03-storage-and-data.md#data-types) · [T-032 специализированные хранилища](topics/03-storage-and-data.md#specialized-stores) · [T-045 OLTP и OLAP](topics/03-storage-and-data.md#oltp-olap) · [T-074 генерация уникальных ID](topics/06-distributed-systems.md#unique-ids) · весь блок [B03 · Хранилища и данные](topics/03-storage-and-data.md) · Источники: [Kleppmann, «Designing Data-Intensive Applications», гл. 2–3](https://dataintensive.net/), [Amazon DynamoDB — Best Practices for Design](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html).
 
 ---
