@@ -38,7 +38,7 @@
 | 3 | Границы работающей системы | [D-02 v3.0](../../decisions/D-02-service-boundaries.md) → [ADR-0002](ADR-0002-boundaries.md) | ✅ |
 | 4 | Связь в процессе раздачи поста | [D-04 v2.0](../../decisions/D-04-workflow-coupling.md) → [ADR-0003](ADR-0003-fanout-coupling.md) | ✅ |
 | 5 | Кэш и стратегия чтения ленты | [D-03 v2.0](../../decisions/D-03-caching-strategy.md) → [ADR-0004](ADR-0004-read-path-cache.md) | ✅ |
-| 6 | Ревизия: подтвердились ли правки | [98-revision-plan.md](98-revision-plan.md) | ◐ план готов, развилки Б1–Б5 ждут ответов |
+| 6 | Ревизия: подтвердились ли правки | [98-revision-plan.md](98-revision-plan.md) | ◐ план готов, развилки Б1–Б6 ждут ответов |
 
 Нумерация ADR начинается заново: это другой проект, а не продолжение первого.
 

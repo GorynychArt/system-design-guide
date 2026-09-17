@@ -14,6 +14,7 @@
 - **Michael Nygard. Release It!** — [pragprog.com](https://pragprog.com/titles/mnee2/release-it-second-edition/). Устойчивость: таймауты, circuit breaker, bulkhead, режимы отказа. Источник большинства паттернов блока B08.
 - **Sam Newman. Building Microservices** (и **Monolith to Microservices**) — [samnewman.io](https://samnewman.io/books/). Границы сервисов, миграция монолита, интеграция.
 - **Eric Evans. Domain-Driven Design** — [domainlanguage.com](https://www.domainlanguage.com/ddd/). Ограниченные контексты и язык предметной области; основа блока B07.
+- **Neal Ford, Mark Richards. Software Architecture: The Hard Parts** — [oreilly.com](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/). Статическая и динамическая связанность, силы дезинтеграции и интеграции данных и сервисов, восемь моделей саги. Источник документов решений `D-02` и `D-04`.
 - **Brendan Gregg. Systems Performance** — [brendangregg.com](https://www.brendangregg.com/systems-performance-2nd-edition-book.html). Методики USE, профилирование, диагностика на уровне системы.
 - **Alex Xu. System Design Interview, vol. 1–2** — сборник задач; полезен как каталог кейсов, а не как источник истины.
 - **Adam Shostack. Threat Modeling** — [shostack.org](https://shostack.org/books/threat-modeling-book). Систематический разбор угроз.
