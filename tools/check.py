@@ -1,30 +1,25 @@
 #!/usr/bin/env python3
 # Проверка целостности памятки. Запуск из корня репозитория: python3 tools/check.py
 # -*- coding: utf-8 -*-
-"""Проверка целостности документа: якоря, диапазоны ID по блокам, соответствие подписи ссылки её цели."""
+"""Проверка целостности документа: якоря, коды карточек по темам, соответствие подписи ссылки её цели."""
 import re, os, glob, sys
 
 ROOT = os.environ.get('GUIDE_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 files = {os.path.relpath(p, ROOT).replace('\\', '/'): open(p, encoding='utf-8').read()
          for p in glob.glob(ROOT + '/**/*.md', recursive=True)}
 
-# 1. диапазоны ID по блокам из реестра
-reg = files['01-roadmap.md']
-BLOCK_FILE = {"B01": "01-network-and-api", "B02": "02-traffic-and-edge", "B03": "03-storage-and-data",
-              "B04": "04-caching", "B05": "05-async-and-messaging", "B06": "06-distributed-systems",
-              "B07": "07-architecture-styles", "B08": "08-reliability", "B09": "09-security",
-              "B10": "10-delivery-and-ops", "B11": "11-performance-and-cost", "B12": "12-case-studies"}
-ranges = {}
-for m in re.finditer(r'^### (B\d\d) · .+?\n\n`topics/([\w-]+)\.md`(.*?)(?=^### |\Z)', reg, flags=re.M | re.S):
-    blk, fn, body = m.group(1), m.group(2), m.group(3)
-    ids = re.findall(r'^\| (T-\d{3}) \|', body, flags=re.M)
-    if ids:
-        ranges['topics/%s.md' % fn] = (ids[0], ids[-1], blk)
+# 1. код карточки определяется файлом, в котором она лежит (вместо прежних сквозных диапазонов)
+PREFIX = {"01-network-and-api": "NET", "02-traffic-and-edge": "EDGE", "03-storage-and-data": "DATA",
+          "04-caching": "CACHE", "05-async-and-messaging": "MSG", "06-distributed-systems": "DIST",
+          "07-architecture-styles": "ARCH", "08-reliability": "REL", "09-security": "SEC",
+          "10-delivery-and-ops": "OPS", "11-performance-and-cost": "PERF", "12-case-studies": "CASE"}
+CODE = r'(?:' + '|'.join(sorted(PREFIX.values(), key=len, reverse=True)) + r')-\d{2}'
+ranges = {'topics/%s.md' % fn: pre for fn, pre in PREFIX.items()}
 
-# 2. карта якорь -> ID карточки (по написанным файлам)
+# 2. карта якорь -> код карточки (по написанным файлам)
 anchor_owner = {}
 for f, c in files.items():
-    for m in re.finditer(r'<a id="([^"]+)"></a>\s*\n\s*\n## (T-\d{3})', c):
+    for m in re.finditer(r'<a id="([^"]+)"></a>\s*\n\s*\n## (' + CODE + r')', c):
         anchor_owner[(f, m.group(1))] = m.group(2)
 anchors = {f: set(re.findall(r'<a id="([^"]+)"></a>', c)) for f, c in files.items()}
 
@@ -35,7 +30,7 @@ for f, c in files.items():
         label, tgt = m.group(1), m.group(2)
         path, _, anc = tgt.partition('#')
         rel = os.path.normpath(os.path.join(d, path)).replace('\\', '/') if path else f
-        lm = re.match(r'(T-\d{3})', label.strip())
+        lm = re.match(r'(' + CODE + r')', label.strip())
         # ссылка, уходящая за пределы дерева документа
         if path and (rel.startswith('..') or rel.startswith('/')):
             bad_anchor.append((f, tgt + '  ← выходит за пределы документа'))
@@ -43,27 +38,28 @@ for f, c in files.items():
         # ссылка на несуществующий пока файл: проверяем только диапазон ID
         if path and rel not in files:
             if lm and rel in ranges:
-                lo, hi, blk = ranges[rel]
-                if not (lo <= lm.group(1) <= hi):
-                    bad_range.append((f, label[:28], tgt, '%s ожидает %s..%s' % (blk, lo, hi)))
+                pre = ranges[rel]
+                if not lm.group(1).startswith(pre + '-'):
+                    bad_range.append((f, label[:28], tgt, 'файл ожидает код %s-NN' % pre))
             continue
         if anc and rel in anchors and anc not in anchors[rel]:
             bad_anchor.append((f, tgt))
             continue
         if lm and rel in ranges:
-            lo, hi, blk = ranges[rel]
-            if not (lo <= lm.group(1) <= hi):
-                bad_range.append((f, label[:28], tgt, '%s ожидает %s..%s' % (blk, lo, hi)))
+            pre = ranges[rel]
+            if not lm.group(1).startswith(pre + '-'):
+                bad_range.append((f, label[:28], tgt, 'файл ожидает код %s-NN' % pre))
                 continue
         if lm and (rel, anc) in anchor_owner and anchor_owner[(rel, anc)] != lm.group(1):
             bad_label.append((f, label[:28], tgt, 'цель — ' + anchor_owner[(rel, anc)]))
 
 # 3. ID карточек против реестра, монотонность
-reg_ids = dict(re.findall(r'^\| (T-\d{3}) \| [✅○] \| (.+?) \| ', reg, flags=re.M))
+reg = files['01-roadmap.md']
+reg_ids = dict(re.findall(r'^\| (' + CODE + r') \| [✅○] \| (.+?) \| ', reg, flags=re.M))
 cards = []
 for f in sorted(files):
     if f.startswith('topics/'):
-        ids = re.findall(r'^## (T-\d{3})', files[f], flags=re.M)
+        ids = re.findall(r'^## (' + CODE + r')', files[f], flags=re.M)
         if ids != sorted(ids):
             print('НЕ ПО ПОРЯДКУ:', f)
         cards += ids
@@ -72,7 +68,7 @@ print('карточек:', len(cards), '| вне реестра:', [i for i in c
       '| дубликаты:', len(cards) - len(set(cards)))
 print('битых якорей:', len(bad_anchor))
 for b in bad_anchor[:10]: print('   ', b)
-print('ID вне диапазона блока:', len(bad_range))
+print('код карточки не совпадает с темой файла:', len(bad_range))
 for b in bad_range[:10]: print('   ', b)
 print('подпись не совпадает с целью:', len(bad_label))
 for b in bad_label[:10]: print('   ', b)

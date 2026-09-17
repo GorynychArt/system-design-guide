@@ -12,7 +12,7 @@
 
 ## Числа и порядки
 
-**Задержки** ([T-128](topics/11-performance-and-cost.md#latency-numbers))
+**Задержки** ([PERF-01](topics/11-performance-and-cost.md#latency-numbers))
 
 | Операция | Порядок |
 |---|---|
@@ -45,7 +45,7 @@
 | Символ UTF-8 (латиница / кириллица) | 1 / 2 байта |
 | UUID | 16 байт (36 символов в текстовой записи) |
 
-**Карточки:** [T-128 числа задержек](topics/11-performance-and-cost.md#latency-numbers) · [T-129 перцентили](topics/11-performance-and-cost.md#percentiles) · [T-001 как работает интернет](topics/01-network-and-api.md#internet) · [T-130 Big-O и структуры данных](topics/11-performance-and-cost.md#big-o)
+**Карточки:** [PERF-01 числа задержек](topics/11-performance-and-cost.md#latency-numbers) · [PERF-02 перцентили](topics/11-performance-and-cost.md#percentiles) · [NET-01 как работает интернет](topics/01-network-and-api.md#internet) · [PERF-03 Big-O и структуры данных](topics/11-performance-and-cost.md#big-o)
 
 <a id="formulas"></a>
 
@@ -63,7 +63,7 @@
 время ожидания   ∝ ρ / (1 − ρ)                       (ρ — загрузка; при 0.9 — ×9)
 ```
 
-**Правила.** Считать в порядках. Умножать на количество: дешёвая операция × 1000 дороже одной дорогой. Параллельные участки складываются максимумом, последовательные — суммой. Целевая загрузка ресурса — 60–70 %, не 100 % ([T-134](topics/11-performance-and-cost.md#queueing)).
+**Правила.** Считать в порядках. Умножать на количество: дешёвая операция × 1000 дороже одной дорогой. Параллельные участки складываются максимумом, последовательные — суммой. Целевая загрузка ресурса — 60–70 %, не 100 % ([PERF-07](topics/11-performance-and-cost.md#queueing)).
 
 <a id="availability"></a>
 
@@ -77,15 +77,15 @@
 | 99.99 % | 4.3 минуты | 53 минуты | Автоматическое переключение, multi-AZ |
 | 99.999 % | 26 секунд | 5.3 минуты | Несколько регионов, active-active |
 
-Цепочка последовательных зависимостей перемножается: пять сервисов по 99.9 % дают 99.5 %, если нет деградации ([T-077](topics/07-architecture-styles.md#monolith-microservices)).
+Цепочка последовательных зависимостей перемножается: пять сервисов по 99.9 % дают 99.5 %, если нет деградации ([ARCH-01](topics/07-architecture-styles.md#monolith-microservices)).
 
-**Карточки:** [T-095 обзор отказоустойчивости](topics/08-reliability.md#fault-tolerance-overview) · [T-097 multi-region](topics/08-reliability.md#multi-region) · [T-096 ячеистая архитектура](topics/08-reliability.md#cells) · [T-120 SLO и бюджет ошибок](topics/10-delivery-and-ops.md#slo)
+**Карточки:** [REL-06 обзор отказоустойчивости](topics/08-reliability.md#fault-tolerance-overview) · [REL-08 multi-region](topics/08-reliability.md#multi-region) · [REL-07 ячеистая архитектура](topics/08-reliability.md#cells) · [OPS-09 SLO и бюджет ошибок](topics/10-delivery-and-ops.md#slo)
 
 <a id="db-choice"></a>
 
 ## Выбор хранилища
 
-Подробно — [T-031](topics/03-storage-and-data.md#storage-choice), [T-032](topics/03-storage-and-data.md#specialized-stores).
+Подробно — [DATA-01](topics/03-storage-and-data.md#storage-choice), [DATA-02](topics/03-storage-and-data.md#specialized-stores).
 
 | Профиль | Класс | Примеры |
 |---|---|---|
@@ -106,7 +106,7 @@
 
 ## Выбор стиля API
 
-Подробно — [T-008](topics/01-network-and-api.md#api-styles).
+Подробно — [NET-08](topics/01-network-and-api.md#api-styles).
 
 | Стиль | Когда | Слабое место |
 |---|---|---|
@@ -118,13 +118,13 @@
 | Webhook | Уведомление внешней системы | Зависимость от чужой доступности |
 | Обмен сообщениями | Развязка сервисов во времени | Отложенная согласованность |
 
-**Карточки:** [T-008 стили API](topics/01-network-and-api.md#api-styles) · [T-012 realtime-транспорт](topics/01-network-and-api.md#realtime) · [T-010 gRPC](topics/01-network-and-api.md#grpc) · [T-011 GraphQL](topics/01-network-and-api.md#graphql) · [T-064 webhooks](topics/05-async-and-messaging.md#webhooks)
+**Карточки:** [NET-08 стили API](topics/01-network-and-api.md#api-styles) · [NET-12 realtime-транспорт](topics/01-network-and-api.md#realtime) · [NET-10 gRPC](topics/01-network-and-api.md#grpc) · [NET-11 GraphQL](topics/01-network-and-api.md#graphql) · [MSG-10 webhooks](topics/05-async-and-messaging.md#webhooks)
 
 <a id="queue-choice"></a>
 
 ## Очередь или лог
 
-Подробно — [T-056](topics/05-async-and-messaging.md#queue-vs-log), [T-059](topics/05-async-and-messaging.md#broker-map).
+Подробно — [MSG-02](topics/05-async-and-messaging.md#queue-vs-log), [MSG-05](topics/05-async-and-messaging.md#broker-map).
 
 | Признак задачи | Очередь (RabbitMQ, SQS) | Лог (Kafka, Pulsar) |
 |---|---|---|
@@ -142,7 +142,7 @@
 
 ## Стратегии кэша
 
-Подробно — [T-051](topics/04-caching.md#cache-strategies), [T-052](topics/04-caching.md#cache-invalidation).
+Подробно — [CACHE-02](topics/04-caching.md#cache-strategies), [CACHE-03](topics/04-caching.md#cache-invalidation).
 
 | Стратегия | Чтение | Запись | При падении кэша |
 |---|---|---|---|
@@ -158,7 +158,7 @@
 
 ## Уровни изоляции и аномалии
 
-Подробно — [T-038](topics/03-storage-and-data.md#isolation).
+Подробно — [DATA-08](topics/03-storage-and-data.md#isolation).
 
 | Аномалия | Что происходит | Предотвращается с |
 |---|---|---|
@@ -176,7 +176,7 @@
 
 ## Модели согласованности
 
-Подробно — [T-068](topics/06-distributed-systems.md#consistency-models).
+Подробно — [DIST-03](topics/06-distributed-systems.md#consistency-models).
 
 | Модель | Что гарантирует | Цена | Типичное применение |
 |---|---|---|---|
@@ -192,7 +192,7 @@
 
 ## Гарантии доставки
 
-Подробно — [T-060](topics/05-async-and-messaging.md#delivery-guarantees).
+Подробно — [MSG-06](topics/05-async-and-messaging.md#delivery-guarantees).
 
 | Гарантия | Как достигается | Потери | Дубликаты |
 |---|---|---|---|
@@ -206,7 +206,7 @@
 
 ## Стратегии деплоя
 
-Подробно — [T-113](topics/10-delivery-and-ops.md#deploy).
+Подробно — [OPS-02](topics/10-delivery-and-ops.md#deploy).
 
 | Стратегия | Ресурсы | Скорость отката | Раннее обнаружение |
 |---|---|---|---|
@@ -215,13 +215,13 @@
 | Canary | ×1 + запас | Быстро | **Да** |
 | Фича-флаг | ×1 | Мгновенно | Да |
 
-Схема обязана быть совместима в обе стороны: во время выкатки работают обе версии ([T-047](topics/03-storage-and-data.md#migrations)).
+Схема обязана быть совместима в обе стороны: во время выкатки работают обе версии ([DATA-17](topics/03-storage-and-data.md#migrations)).
 
 <a id="dr"></a>
 
 ## Аварийное восстановление
 
-Подробно — [T-098](topics/08-reliability.md#backup-dr), [T-097](topics/08-reliability.md#multi-region).
+Подробно — [REL-09](topics/08-reliability.md#backup-dr), [REL-08](topics/08-reliability.md#multi-region).
 
 | Стратегия | RPO | RTO | Стоимость |
 |---|---|---|---|
@@ -236,7 +236,7 @@
 
 ## Коды ответа и повторы
 
-Подробно — [T-005](topics/01-network-and-api.md#http-status), [T-090](topics/08-reliability.md#timeouts-retries).
+Подробно — [NET-05](topics/01-network-and-api.md#http-status), [REL-01](topics/08-reliability.md#timeouts-retries).
 
 | Код | Смысл | Повторять |
 |---|---|---|
@@ -251,7 +251,7 @@
 
 **Формула задержки:** `delay = random(0, min(cap, base × 2^attempt))` — экспонента с полным джиттером. Плюс бюджет повторов (не более ~10 % трафика) и повторы только на одном уровне цепочки.
 
-**Карточки:** [T-090 таймауты и ретраи](topics/08-reliability.md#timeouts-retries) · [T-005 коды состояния](topics/01-network-and-api.md#http-status) · [T-027 rate limiting](topics/02-traffic-and-edge.md#rate-limiting) · [T-092 load shedding](topics/08-reliability.md#load-shedding)
+**Карточки:** [REL-01 таймауты и ретраи](topics/08-reliability.md#timeouts-retries) · [NET-05 коды состояния](topics/01-network-and-api.md#http-status) · [EDGE-06 rate limiting](topics/02-traffic-and-edge.md#rate-limiting) · [REL-03 load shedding](topics/08-reliability.md#load-shedding)
 
 <a id="metrics"></a>
 
@@ -267,7 +267,7 @@
 | Доставка | Частота выкаток, время до прода, доля откатов, время восстановления |
 | Деньги | Стоимость на 1000 запросов, на пользователя, на ГБ хранения |
 
-Перцентили, а не средние. Гистограммы, а не готовые перцентили — их нельзя усреднять между узлами ([T-129](topics/11-performance-and-cost.md#percentiles)).
+Перцентили, а не средние. Гистограммы, а не готовые перцентили — их нельзя усреднять между узлами ([PERF-02](topics/11-performance-and-cost.md#percentiles)).
 
 ---
 
