@@ -547,6 +547,8 @@
 
 **Что мерить.** Доля трафика по версиям и по клиентам, число клиентов на устаревших версиях, срок жизни версии, число несовместимых изменений за квартал.
 
+**Политика — отдельное решение.** Эта карточка отвечает на вопрос «как», а не «что обещано и кому». Срок жизни поля, охват обещания и цена знания о потребителях решаются в [D-11](../decisions/D-11-interface-compatibility.md): данные говорят, что номер версии совместимости не свидетельствует — в минорных релизах ломают почти столько же, сколько в мажорных.
+
 **Связано:** [NET-18 контракты](#contracts) · [DATA-17 миграции схемы](03-storage-and-data.md#migrations) · [OPS-12 контрактные тесты](10-delivery-and-ops.md#testing) · [OPS-16 релиз мобильных приложений](../topics/10-delivery-and-ops.md#mobile-release)
 
 **Источники:** [Google API Design Guide — Versioning](https://cloud.google.com/apis/design/versioning) · [Stripe — API upgrades и версии](https://docs.stripe.com/upgrades) · [RFC 9745 — The Deprecation HTTP Header Field](https://www.rfc-editor.org/rfc/rfc9745.html)
@@ -576,7 +578,7 @@
 
 **Что мерить.** Доля эндпоинтов, покрытых схемой; число несовместимых изменений, пойманных в CI; расхождения между схемой и фактическими ответами (проверяется выборочной валидацией трафика).
 
-**Связано:** [NET-17 версионирование](#versioning) · [NET-10 gRPC](#grpc) · [OPS-12 тестирование](10-delivery-and-ops.md#testing) · [MSG-06 эволюция событий](05-async-and-messaging.md#delivery-guarantees) · [NET-20 API против SDK](#api-vs-sdk)
+**Связано:** [NET-17 версионирование](#versioning) · [NET-10 gRPC](#grpc) · [OPS-12 тестирование](10-delivery-and-ops.md#testing) · [MSG-06 эволюция событий](05-async-and-messaging.md#delivery-guarantees) · [NET-20 API против SDK](#api-vs-sdk) · [D-11 обещание совместимости](../decisions/D-11-interface-compatibility.md)
 
 **Источники:** [OpenAPI Specification](https://spec.openapis.org/oas/latest.html) · [Confluent Schema Registry — Compatibility](https://docs.confluent.io/platform/current/schema-registry/fundamentals/avro.html) · [Pact — Consumer-driven contract testing](https://docs.pact.io/) · [Martin Fowler — Consumer-Driven Contracts](https://martinfowler.com/articles/consumerDrivenContracts.html)
 
