@@ -549,9 +549,9 @@
 
 **Политика — отдельное решение.** Эта карточка отвечает на вопрос «как», а не «что обещано и кому». Срок жизни поля, охват обещания и цена знания о потребителях решаются в [D-11](../decisions/D-11-interface-compatibility.md) — там же лежат данные о том, чего стоит номер версии как обещание, с оговоркой об их возрасте.
 
-**Связано:** [NET-18 контракты](#contracts) · [DATA-17 миграции схемы](03-storage-and-data.md#migrations) · [OPS-12 контрактные тесты](10-delivery-and-ops.md#testing) · [OPS-16 релиз мобильных приложений](../topics/10-delivery-and-ops.md#mobile-release)
+**Связано:** [NET-18 контракты](#contracts) · [D-11 обещание совместимости](../decisions/D-11-interface-compatibility.md) · [DATA-17 миграции схемы](03-storage-and-data.md#migrations) · [OPS-12 контрактные тесты](10-delivery-and-ops.md#testing) · [OPS-16 релиз мобильных приложений](../topics/10-delivery-and-ops.md#mobile-release)
 
-**Источники:** [Google API Design Guide — Versioning](https://cloud.google.com/apis/design/versioning) · [Stripe — API upgrades и версии](https://docs.stripe.com/upgrades) · [RFC 9745 — The Deprecation HTTP Header Field](https://www.rfc-editor.org/rfc/rfc9745.html)
+**Источники:** [Google AIP-185 — API Versioning](https://google.aip.dev/185) · [Stripe — API upgrades и версии](https://docs.stripe.com/upgrades) · [RFC 9745 — The Deprecation HTTP Response Header Field](https://www.rfc-editor.org/rfc/rfc9745.html) · [RFC 8594 — The Sunset HTTP Header Field](https://www.rfc-editor.org/rfc/rfc8594.html)
 
 ---
 

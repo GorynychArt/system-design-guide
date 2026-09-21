@@ -644,7 +644,7 @@
 
 **Что мерить.** Доля расхождений на прогон, время от возникновения до обнаружения, число нарушенных инвариантов по типам, возраст самой старой незавершённой распределённой операции, доля автоматически исправленных расхождений против ручных.
 
-**Связано:** [DATA-17 миграции](#migrations) · [MSG-07 outbox и CDC](05-async-and-messaging.md#outbox) · [DIST-08 распределённые транзакции](06-distributed-systems.md#distributed-transactions) · [REL-09 бэкапы и DR](08-reliability.md#backup-dr)
+**Связано:** [D-10 цели уровня обслуживания](../decisions/D-10-service-level-objectives.md) · [DATA-17 миграции](#migrations) · [MSG-07 outbox и CDC](05-async-and-messaging.md#outbox) · [DIST-08 распределённые транзакции](06-distributed-systems.md#distributed-transactions) · [REL-09 бэкапы и DR](08-reliability.md#backup-dr)
 
 **Источники:** седьмой случай и его следствия — разбор прогона [E-03 · ADR-0005](../examples/E-03-pickup/ADR-0005-objectives.md), где внешним арбитром была ручная инвентаризация · [Google SRE Book, гл. 26 «Data Integrity»](https://sre.google/sre-book/data-integrity/) · [Kleppmann, DDIA, гл. 12 — аудит и сквозная проверка](https://dataintensive.net/) · [PostgreSQL — Data checksums](https://www.postgresql.org/docs/current/checksums.html)
 

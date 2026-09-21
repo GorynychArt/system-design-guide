@@ -64,7 +64,7 @@ RFC 9110 (семантика HTTP), 9111 (кэширование), 9113 / 9114 (
 - [Google AIP-231 — Batch methods](https://google.aip.dev/231)
 - [Google API Design Guide](https://cloud.google.com/apis/design)
 - [Google API Design Guide — List Pagination](https://cloud.google.com/apis/design/design_patterns#list_pagination)
-- [Google API Design Guide — Versioning](https://cloud.google.com/apis/design/versioning)
+- [Google AIP-185 — API Versioning](https://google.aip.dev/185)
 - [GraphQL — Specification и Best Practices](https://graphql.org/learn/best-practices/)
 - [gRPC — Deadlines](https://grpc.io/blog/deadlines/)
 - [gRPC — Documentation](https://grpc.io/docs/)
