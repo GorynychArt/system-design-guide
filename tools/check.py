@@ -23,6 +23,16 @@ for f, c in files.items():
         anchor_owner[(f, m.group(1))] = m.group(2)
 anchors = {f: set(re.findall(r'<a id="([^"]+)"></a>', c)) for f, c in files.items()}
 
+# 2a. якорь, определённый в файле дважды: ссылка ведёт на первое вхождение, второе — невидимая копия
+dup_anchor = []
+for f, c in files.items():
+    seen = {}
+    for a in re.findall(r'<a id="([^"]+)"></a>', c):
+        seen[a] = seen.get(a, 0) + 1
+    for a, n in sorted(seen.items()):
+        if n > 1:
+            dup_anchor.append((f, '%s — определён %d раза' % (a, n)))
+
 bad_anchor, bad_range, bad_label = [], [], []
 for f, c in files.items():
     d = os.path.dirname(f)
@@ -158,7 +168,27 @@ for f, c in sorted(dec.items()):
     if len(run) > 1 and not all(run):
         bad_head.append((f, 'шапка из %d полей не списком — склеится в абзац' % len(run)))
 
+# 9. факты, объявленные прозой в README, против того, что на диске
+bad_declared = []
+rd = files.get('README.md', '')
+if rd:
+    m = re.search(r'мастер-шаблон v(\d+\.\d+)', rd)
+    if not m:
+        bad_declared.append(('README.md', 'не объявлена версия мастер-шаблона'))
+    elif master and m.group(1) != master:
+        bad_declared.append(('README.md', 'объявлен мастер-шаблон v%s, на диске v%s' % (m.group(1), master)))
+    dnums = sorted(int(re.search(r'D-(\d+)', k).group(1))
+                   for k in files if re.match(r'decisions/D-\d+', k))
+    m = re.search(r'D-01-…\s*…\s*D-(\d+)-…', rd)
+    if m and dnums and int(m.group(1)) != dnums[-1]:
+        bad_declared.append(('README.md', 'список файлов обрывается на D-%s, на диске до D-%02d'
+                             % (m.group(1), dnums[-1])))
+
+print('дубликатов якорей:', len(dup_anchor))
+for b in dup_anchor[:10]: print('   ', b)
+print('объявленное в README не совпадает с диском:', len(bad_declared))
+for b in bad_declared[:10]: print('   ', b)
 print('шапок с полями подряд не списком:', len(bad_head))
 for b in bad_head[:10]: print('   ', b)
 
-sys.exit(1 if (bad_anchor or bad_range or bad_label or bad_ver or bad_adr or bad_head) else 0)
+sys.exit(1 if (bad_anchor or dup_anchor or bad_range or bad_label or bad_ver or bad_adr or bad_head or bad_declared) else 0)
