@@ -112,6 +112,7 @@ RFC 9110 (семантика HTTP), 9111 (кэширование), 9113 / 9114 (
 
 - [AWS — Global Accelerator и Route 53 routing policies](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html)
 - [Cloudflare — What is a CDN?](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
+- [GitHub — отчёт о доступности за август 2026](https://github.blog/news-insights/company-news/github-availability-report-august-2026/)
 - [Cloudflare — What is a DDoS attack?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)
 - [Cloudflare — What is a reverse proxy?](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)
 - [Cloudflare — What is Anycast?](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/)

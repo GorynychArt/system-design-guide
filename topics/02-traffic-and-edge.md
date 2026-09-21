@@ -175,7 +175,7 @@
 
 **Проблема.** Один клиент с ошибкой в цикле повторов способен занять всю ёмкость сервиса. Публичный API без лимитов — приглашение к выгрузке всей базы. При этом ограничение должно быть предсказуемым: клиент обязан понимать, сколько ему можно и что делать при отказе.
 
-**Усиливающий потребитель чаще оказывается своим же сервисом, а не внешним интегратором.** В [отчёте GitHub о доступности за август 2026](https://github.blog/news-insights/company-news/github-availability-report-august-2026/) три инцидента из пяти гасились ограничением входящей нагрузки, и в двух усиление шло от внутренних клиентов — бегунов, повторявших отозванные задания, и собственного шлюза. Лимит только по внешнему периметру этого класса не ловит.
+**Усиливающий потребитель бывает своим же сервисом, а не только внешним интегратором.** В [отчёте GitHub о доступности за август 2026](https://github.blog/news-insights/company-news/github-availability-report-august-2026/) три инцидента из пяти гасились ограничением входящей нагрузки, и в двух усиление шло изнутри: бегуны, повторявшие уже отозванные задания, и ошибка повторов у клиента, бившая по внутренней точке аутентификации. Лимит только по внешнему периметру этого класса не ловит. **Частоту отсюда брать нельзя** — пять инцидентов одного провайдера за месяц не выборка, а разборы публикует тот, кто умеет расследовать; отсюда берутся механизм и словарь, а не «чаще».
 
 **Алгоритмы**
 
@@ -201,7 +201,7 @@
 
 **Связано:** [REL-03 load shedding](08-reliability.md#load-shedding) · [EDGE-07 защита периметра](#perimeter) · [CACHE-05 Redis](04-caching.md#redis) · [CASE-04 кейс: rate limiter](12-case-studies.md#rate-limiter)
 
-**Источники:** [Cloudflare — What is rate limiting?](https://www.cloudflare.com/learning/bots/what-is-rate-limiting/) · [Stripe — Rate limiters](https://stripe.com/blog/rate-limiters) · [RFC 6585 — 429 Too Many Requests](https://www.rfc-editor.org/rfc/rfc6585.html#section-4) · [Google SRE Book, гл. 21](https://sre.google/sre-book/handling-overload/)
+**Источники:** [GitHub — отчёт о доступности за август 2026](https://github.blog/news-insights/company-news/github-availability-report-august-2026/) · [Cloudflare — What is rate limiting?](https://www.cloudflare.com/learning/bots/what-is-rate-limiting/) · [Stripe — Rate limiters](https://stripe.com/blog/rate-limiters) · [RFC 6585 — 429 Too Many Requests](https://www.rfc-editor.org/rfc/rfc6585.html#section-4) · [Google SRE Book, гл. 21](https://sre.google/sre-book/handling-overload/)
 
 ---
 
