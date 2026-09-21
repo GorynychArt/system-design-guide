@@ -4,7 +4,7 @@
 - **Известно также как:** выбор БД, SQL или NoSQL, persistence choice, database selection
 - **Этап:** [W3 · Данные: модель и хранилище](../00-workflow.md#w3)
 - **Профиль:** дорого изменить · высокое влияние → полная форма
-- **Не решает:** пиковую нагрузку на чтение — это [W5](../00-workflow.md#w5) и [D-03](D-03-caching-strategy.md); форму данных внутри сервиса; аналитический контур; **надо ли вообще заводить второе хранилище** — это [D-07](D-07-data-decomposition.md)
+- **Не решает:** пиковую нагрузку на чтение — это [W5](../00-workflow.md#w5) и [D-03](D-03-caching-strategy.md); форму данных внутри сервиса — это карточка [DATA-03](../topics/03-storage-and-data.md#data-modeling); аналитический контур — [DATA-15](../topics/03-storage-and-data.md#oltp-olap); **надо ли вообще заводить второе хранилище** — это [D-07](D-07-data-decomposition.md); что отдавать, когда выбранное хранилище недоступно, — [D-06](D-06-degradation.md); как переехать в него, не останавливаясь, — [D-08](D-08-data-migration.md)
 - **Не путать с:** [D-03](D-03-caching-strategy.md) — там выбирают, чем снять чтения, а не где лежит истина
 - **Карточки:** [DATA-01 выбор хранилища](../topics/03-storage-and-data.md#storage-choice) · [DATA-02 специализированные хранилища](../topics/03-storage-and-data.md#specialized-stores) · [DATA-03 моделирование от паттернов доступа](../topics/03-storage-and-data.md#data-modeling) · [DATA-05 индексы](../topics/03-storage-and-data.md#indexes) · [DATA-15 OLTP и OLAP](../topics/03-storage-and-data.md#oltp-olap)
 

@@ -4,7 +4,7 @@
 - **Известно также как:** кэш, caching strategy, cache policy, «поставить редис»
 - **Этап:** [W5 · План масштабирования](../00-workflow.md#w5) · инвалидация проверяется на [W6](../00-workflow.md#w6), поведение при отказе кэша — на [W7](../00-workflow.md#w7)
 - **Профиль:** дёшево изменить · высокое влияние на экономику → **короткая форма**
-- **Не решает:** поведение системы при полном отказе кэша — это [D-06](D-06-degradation.md); выбор продукта под кэш — [D-01](D-01-storage-choice.md)
+- **Не решает:** поведение системы при полном отказе кэша — это [D-06](D-06-degradation.md); выбор продукта под кэш — [D-01](D-01-storage-choice.md); где проходят границы, между которыми встаёт кэш, — [D-02](D-02-service-boundaries.md)
 - **Не путать с:** [D-01](D-01-storage-choice.md) — там выбирают, где лежит истина, а не чем снять чтения
 - **Карточки:** [CACHE-01 уровни кэша](../topics/04-caching.md#cache-levels) · [CACHE-02 стратегии чтения и записи](../topics/04-caching.md#cache-strategies) · [CACHE-03 инвалидация](../topics/04-caching.md#cache-invalidation) · [CACHE-04 патологии](../topics/04-caching.md#cache-pathologies) · [REL-04 деградация](../topics/08-reliability.md#degradation)
 

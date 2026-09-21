@@ -184,6 +184,28 @@ if rd:
         bad_declared.append(('README.md', 'список файлов обрывается на D-%s, на диске до D-%02d'
                              % (m.group(1), dnums[-1])))
 
+# 10. взаимность указателей между шапками документов решений
+bad_mutual, _hdr = [], {}
+for f, c in files.items():
+    m = re.match(r'decisions/(D-\d+)', f)
+    if not m:
+        continue
+    head = []
+    for ln in c.split('\n'):
+        if ln.startswith('- **'):
+            head.append(ln)
+        elif head and not ln.startswith('- '):
+            break
+    txt = '\n'.join(l for l in head
+                    if l.startswith('- **Не решает:**') or l.startswith('- **Не путать с:**'))
+    _hdr[m.group(1)] = set(re.findall(r'D-\d+', txt)) - {m.group(1)}
+for a in sorted(_hdr):
+    for b in sorted(_hdr[a]):
+        if b in _hdr and a not in _hdr[b]:
+            bad_mutual.append(('decisions/%s' % a, 'шапка называет %s, обратной ссылки нет' % b))
+
+print('односторонних указателей между шапками:', len(bad_mutual))
+for b in bad_mutual[:10]: print('   ', b)
 print('дубликатов якорей:', len(dup_anchor))
 for b in dup_anchor[:10]: print('   ', b)
 print('объявленное в README не совпадает с диском:', len(bad_declared))
@@ -191,4 +213,4 @@ for b in bad_declared[:10]: print('   ', b)
 print('шапок с полями подряд не списком:', len(bad_head))
 for b in bad_head[:10]: print('   ', b)
 
-sys.exit(1 if (bad_anchor or dup_anchor or bad_range or bad_label or bad_ver or bad_adr or bad_head or bad_declared) else 0)
+sys.exit(1 if (bad_anchor or dup_anchor or bad_range or bad_label or bad_ver or bad_adr or bad_head or bad_declared or bad_mutual) else 0)

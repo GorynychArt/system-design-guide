@@ -4,7 +4,7 @@
 - **Известно также как:** декомпозиция, разрезание на сервисы, service boundaries, bounded context, разбиение монолита
 - **Этап:** [W4 · Верхнеуровневая архитектура](../00-workflow.md#w4) · граница данных проверяется на [W3](../00-workflow.md#w3), транзакционная — на [W6](../00-workflow.md#w6)
 - **Профиль:** дорого изменить · высокое влияние → полная форма
-- **Не решает:** как сервисы разговаривают после разреза — это [D-04](D-04-workflow-coupling.md); путь чтения под нагрузкой — [D-03](D-03-caching-strategy.md); **делятся ли сами данные** — [D-07](D-07-data-decomposition.md)
+- **Не решает:** как сервисы разговаривают после разреза — это [D-04](D-04-workflow-coupling.md); путь чтения под нагрузкой — [D-03](D-03-caching-strategy.md); **делятся ли сами данные** — [D-07](D-07-data-decomposition.md); **что обещано потребителям контракта, который создаёт разрез**, — [D-11](D-11-interface-compatibility.md)
 - **Не путать с:** [D-05 · Границы на старте](D-05-initial-boundaries.md) — там границы **закладывают** предсказанием, здесь **режут** по измерению
 - **Карточки:** [ARCH-01 монолит и микросервисы](../topics/07-architecture-styles.md#monolith-microservices) · [ARCH-02 границы и ограниченный контекст](../topics/07-architecture-styles.md#boundaries) · [ARCH-03 внутренняя архитектура сервиса](../topics/07-architecture-styles.md#internal-architecture) · [ARCH-13 strangler fig](../topics/07-architecture-styles.md#strangler) · [DIST-08 распределённые транзакции](../topics/06-distributed-systems.md#distributed-transactions) · [SEC-13 классификация данных](../topics/09-security.md#data-classification) · [OPS-17 когнитивная нагрузка](../topics/10-delivery-and-ops.md#cognitive-load)
 
