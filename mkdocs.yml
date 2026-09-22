@@ -1,0 +1,174 @@
+site_name: "System Design — рабочая памятка"
+site_description: "Метод проектных решений: рабочий процесс, документы решений, карточки и прогоны"
+site_url: https://gorynychart.github.io/sysDisRep/
+repo_url: https://github.com/GorynychArt/sysDisRep
+repo_name: GorynychArt/sysDisRep
+edit_uri: edit/master/
+copyright: "Памятка ведётся открыто: каждое правило стоит на прогоне или на источнике"
+
+docs_dir: build/docs
+site_dir: build/site
+
+theme:
+  name: material
+  language: ru
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - navigation.indexes
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.action.edit
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Тёмная тема
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue grey
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Светлая тема
+
+plugins:
+  - search:
+      lang: ru
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: "#"
+      toc_depth: 3
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/GorynychArt/sysDisRep
+
+nav:
+  - Памятка: index.md
+  - Рабочий процесс: 00-workflow.md
+  - Дорожная карта: 01-roadmap.md
+  - Карточки:
+      - topics/index.md
+      - topics/01-network-and-api.md
+      - topics/02-traffic-and-edge.md
+      - topics/03-storage-and-data.md
+      - topics/04-caching.md
+      - topics/05-async-and-messaging.md
+      - topics/06-distributed-systems.md
+      - topics/07-architecture-styles.md
+      - topics/08-reliability.md
+      - topics/09-security.md
+      - topics/10-delivery-and-ops.md
+      - topics/11-performance-and-cost.md
+      - topics/12-case-studies.md
+  - Решения:
+      - decisions/index.md
+      - Мастер-шаблон: decisions/00-template.md
+      - Шаблон ADR: decisions/01-adr-template.md
+      - Версионирование: decisions/02-versioning.md
+      - Реестр ограничений: decisions/03-constraints-registry.md
+      - decisions/D-01-storage-choice.md
+      - decisions/D-02-service-boundaries.md
+      - decisions/D-03-caching-strategy.md
+      - decisions/D-04-workflow-coupling.md
+      - decisions/D-05-initial-boundaries.md
+      - decisions/D-06-degradation.md
+      - decisions/D-07-data-decomposition.md
+      - decisions/D-08-data-migration.md
+      - decisions/D-09-rollback.md
+      - decisions/D-10-service-level-objectives.md
+      - decisions/D-11-interface-compatibility.md
+  - Прогоны:
+      - examples/index.md
+      - E-01 · бронирование:
+          - examples/E-01-booking/00-context.md
+          - examples/E-01-booking/constraints.md
+          - examples/E-01-booking/ADR-0001-storage.md
+          - examples/E-01-booking/ADR-0002-boundaries.md
+          - examples/E-01-booking/ADR-0003-workflow-coupling.md
+          - examples/E-01-booking/ADR-0004-cache-seatmap.md
+          - examples/E-01-booking/99-findings.md
+          - examples/E-01-booking/98-revision-plan.md
+      - E-02 · лента:
+          - examples/E-02-feed/00-context.md
+          - examples/E-02-feed/constraints.md
+          - examples/E-02-feed/ADR-0001-feed-storage.md
+          - examples/E-02-feed/ADR-0002-boundaries.md
+          - examples/E-02-feed/ADR-0003-fanout-coupling.md
+          - examples/E-02-feed/ADR-0004-read-path-cache.md
+          - examples/E-02-feed/99-findings.md
+          - examples/E-02-feed/98-revision-plan.md
+      - E-03 · пункт выдачи:
+          - examples/E-03-pickup/00-context.md
+          - examples/E-03-pickup/constraints.md
+          - examples/E-03-pickup/ADR-0001-boundaries.md
+          - examples/E-03-pickup/ADR-0002-data-decomposition.md
+          - examples/E-03-pickup/ADR-0003-journal-storage.md
+          - examples/E-03-pickup/ADR-0004-offline-terminal.md
+          - examples/E-03-pickup/ADR-0005-objectives.md
+          - examples/E-03-pickup/99-findings.md
+          - examples/E-03-pickup/98-revision-plan.md
+      - U-01 · передача данных:
+          - examples/U-01-handover/00-context.md
+          - examples/U-01-handover/ADR-0001-disputed-zone.md
+          - examples/U-01-handover/ADR-0002-handover.md
+          - examples/U-01-handover/99-findings.md
+      - U-02 · окно отчётности:
+          - examples/U-02-reporting/00-context.md
+          - examples/U-02-reporting/ADR-0001-compatibility.md
+          - examples/U-02-reporting/ADR-0002-data-decomposition.md
+          - examples/U-02-reporting/ADR-0003-storage.md
+          - examples/U-02-reporting/ADR-0004-initial-boundaries.md
+          - examples/U-02-reporting/ADR-0005-workflow-coupling.md
+          - examples/U-02-reporting/ADR-0006-degradation.md
+          - examples/U-02-reporting/ADR-0007-deploy-in-window.md
+          - examples/U-02-reporting/ADR-0008-objectives.md
+          - examples/U-02-reporting/99-findings.md
+          - examples/U-02-reporting/98-revision-plan.md
+  - Исследование:
+      - research/index.md
+      - research/00-plan.md
+      - research/01-pilot-degradation.md
+      - research/02-pilot-data-decomposition.md
+      - research/10-problems.md
+      - research/20-coverage.md
+      - research/30-findings.md
+      - research/40-predictions.md
+      - research/41-case-candidates.md
+      - research/42-predictions-narrow.md
+      - research/43-greenfield-candidates.md
+      - research/44-predictions-greenfield.md
+  - Справочники:
+      - 90-cheatsheets.md
+      - 91-antipatterns.md
+      - 92-glossary.md
+      - 93-playlist-map.md
+      - 94-gaps.md
+      - 95-sources.md
+      - 97-card-map.md
+  - Работа:
+      - 99-plan.md
+      - 96-backlog.md
+      - 98-revision-plan.md
