@@ -1,8 +1,8 @@
 site_name: "System Design — рабочая памятка"
 site_description: "Метод проектных решений: рабочий процесс, документы решений, карточки и прогоны"
-site_url: https://gorynychart.github.io/sysDisRep/
-repo_url: https://github.com/GorynychArt/sysDisRep
-repo_name: GorynychArt/sysDisRep
+site_url: https://gorynychart.github.io/system-design-guide/
+repo_url: https://github.com/GorynychArt/system-design-guide
+repo_name: GorynychArt/system-design-guide
 edit_uri: edit/master/
 copyright: "Памятка ведётся открыто: каждое правило стоит на прогоне или на источнике"
 
@@ -63,7 +63,7 @@ markdown_extensions:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/GorynychArt/sysDisRep
+      link: https://github.com/GorynychArt/system-design-guide
 
 nav:
   - Памятка: index.md
