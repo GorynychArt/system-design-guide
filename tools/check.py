@@ -250,6 +250,14 @@ for code in sorted(set(_doc_stage) | set(_step_stage)):
     elif a != b:
         bad_stage.append(('%s' % code, 'шапка: «%s», шаг: «%s»' % (' · '.join(a), ' · '.join(b))))
 
+# тот же словарь — в местных пометках [стадия: ...]
+for f in sorted(glob.glob(os.path.join(ROOT, 'decisions', 'D-*.md'))):  # мастер-шаблон описывает форму пометки и содержит образцы
+    rel = 'decisions/' + os.path.basename(f)
+    for mk in re.finditer(r'\[стадия: ([^\]]+)\]', io.open(f, encoding='utf-8').read()):
+        for x in mk.group(1).split(' · '):
+            if x.strip() not in STAGES:
+                bad_stage.append((rel, 'пометка называет неизвестную стадию: %s' % x.strip()))
+
 print('стадия в шапке не совпадает со строкой шага:', len(bad_stage))
 for b in bad_stage[:10]: print('   ', b)
 print('шапок с полями подряд не списком:', len(bad_head))
