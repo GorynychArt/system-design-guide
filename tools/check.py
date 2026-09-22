@@ -2,7 +2,7 @@
 # Проверка целостности памятки. Запуск из корня репозитория: python3 tools/check.py
 # -*- coding: utf-8 -*-
 """Проверка целостности документа: якоря, коды карточек по темам, соответствие подписи ссылки её цели."""
-import re, os, glob, sys
+import re, os, glob, sys, io
 
 ROOT = os.environ.get('GUIDE_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 files = {os.path.relpath(p, ROOT).replace('\\', '/'): open(p, encoding='utf-8').read()
@@ -210,7 +210,49 @@ print('дубликатов якорей:', len(dup_anchor))
 for b in dup_anchor[:10]: print('   ', b)
 print('объявленное в README не совпадает с диском:', len(bad_declared))
 for b in bad_declared[:10]: print('   ', b)
+# --- стадия: шапка документа против строки шага в рабочем процессе ---
+STAGES = ('гринфилд', 'работающая', 'под изменением')
+bad_stage = []
+_doc_stage = {}
+for f in sorted(glob.glob(os.path.join(ROOT, 'decisions', 'D-*.md'))):
+    code = re.match(r'(D-\d+)', os.path.basename(f)).group(1)
+    c = io.open(f, encoding='utf-8').read()
+    m = re.search(r'^- \*\*Стадия:\*\* (.*)$', c, re.M)
+    if not m:
+        bad_stage.append(('decisions/%s' % os.path.basename(f), 'нет поля «Стадия» в шапке'))
+        continue
+    val = m.group(1).split(' — ')[0].strip()
+    st = [x.strip() for x in val.split(' · ')]
+    unknown = [x for x in st if x not in STAGES]
+    if unknown:
+        bad_stage.append(('decisions/%s' % os.path.basename(f), 'неизвестная стадия: %s' % ', '.join(unknown)))
+        continue
+    _doc_stage[code] = st
+
+_wf = io.open(os.path.join(ROOT, '00-workflow.md'), encoding='utf-8').read()
+_step_stage = {}
+for m in re.finditer(r'^\*\*Документы шага:\*\* (.*)$', _wf, re.M):
+    body = m.group(1)
+    if body.startswith('нет'):
+        continue
+    for dm in re.finditer(r'\[(D-\d+)\]\([^)]*\)\s*`([^`]+)`', body):
+        code, val = dm.group(1), dm.group(2)
+        if code in _step_stage:
+            bad_stage.append(('00-workflow.md', '%s назван в двух шагах' % code))
+        _step_stage[code] = [x.strip() for x in val.split(' · ')]
+
+for code in sorted(set(_doc_stage) | set(_step_stage)):
+    a, b = _doc_stage.get(code), _step_stage.get(code)
+    if b is None:
+        bad_stage.append(('00-workflow.md', '%s не назван ни в одной строке «Документы шага»' % code))
+    elif a is None:
+        bad_stage.append(('00-workflow.md', '%s назван в шаге, но документа с таким кодом нет' % code))
+    elif a != b:
+        bad_stage.append(('%s' % code, 'шапка: «%s», шаг: «%s»' % (' · '.join(a), ' · '.join(b))))
+
+print('стадия в шапке не совпадает со строкой шага:', len(bad_stage))
+for b in bad_stage[:10]: print('   ', b)
 print('шапок с полями подряд не списком:', len(bad_head))
 for b in bad_head[:10]: print('   ', b)
 
-sys.exit(1 if (bad_anchor or dup_anchor or bad_range or bad_label or bad_ver or bad_adr or bad_head or bad_declared or bad_mutual) else 0)
+sys.exit(1 if (bad_anchor or dup_anchor or bad_range or bad_label or bad_ver or bad_adr or bad_head or bad_declared or bad_mutual or bad_stage) else 0)
