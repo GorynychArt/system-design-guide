@@ -20,6 +20,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOCS = os.path.join(ROOT, 'build', 'docs')
 SKIP = ('.git', 'build', '_to_delete', 'site')
 
+# Внутренняя кухня: остаётся на сайте (на неё ведут ссылки из карточек и решений),
+# но в меню её нет — см. not_in_nav в mkdocs.yml — и в поиск она не идёт.
+HIDDEN = ('examples/', 'research/', '99-plan.md', '96-backlog.md', '98-revision-plan.md')
+
 SECTIONS = {
     'topics':    ('Карточки', 'Двенадцать блоков, 155 карточек: механика, а не решения.'),
     'decisions': ('Решения', 'Документы решений: вопросы, оси, дисквалификаторы, форма записи.'),
@@ -56,6 +60,8 @@ def main():
             # ссылка на папку раздела ведёт на его страницу-оглавление
             text = re.sub(r'(\]\((?:\.\./)*)(topics|decisions|examples|research)/\)',
                           r'\1\2/index.md)', text)
+            if dst_rel.startswith(HIDDEN):
+                text = '---\nsearch:\n  exclude: true\n---\n\n' + text
             io.open(dst, 'w', encoding='utf-8').write(text)
             copied.append(dst_rel)
 
@@ -84,7 +90,10 @@ def main():
                     lines.append('- [%s](%s)' % (title_of(os.path.join(ROOT, name, fn)), fn))
         lines += ['', '> Страница собрана из файлов раздела при сборке сайта. '
                       'В репозитории её нет: там то же самое показывает список файлов папки.']
-        io.open(os.path.join(DOCS, name, 'index.md'), 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
+        body = '\n'.join(lines) + '\n'
+        if (name + '/').startswith(HIDDEN):
+            body = '---\nsearch:\n  exclude: true\n---\n\n' + body
+        io.open(os.path.join(DOCS, name, 'index.md'), 'w', encoding='utf-8').write(body)
 
     print('скопировано страниц: %d' % len(copied))
     sys.exit(subprocess.call(['mkdocs', 'build', '--strict'] + sys.argv[1:], cwd=ROOT))

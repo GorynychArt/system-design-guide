@@ -74,6 +74,15 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/GorynychArt/system-design-guide
 
+# Внутренняя кухня: прогоны, исследование и рабочие планы остаются на сайте —
+# на них ведут 152 ссылки из карточек и решений, — но в меню и в поиск не идут.
+not_in_nav: |
+  examples/**
+  research/**
+  99-plan.md
+  96-backlog.md
+  98-revision-plan.md
+
 nav:
   - Памятка: index.md
   - Рабочий процесс: 00-workflow.md
@@ -109,66 +118,6 @@ nav:
       - decisions/D-09-rollback.md
       - decisions/D-10-service-level-objectives.md
       - decisions/D-11-interface-compatibility.md
-  - Прогоны:
-      - examples/index.md
-      - E-01 · бронирование:
-          - examples/E-01-booking/00-context.md
-          - examples/E-01-booking/constraints.md
-          - examples/E-01-booking/ADR-0001-storage.md
-          - examples/E-01-booking/ADR-0002-boundaries.md
-          - examples/E-01-booking/ADR-0003-workflow-coupling.md
-          - examples/E-01-booking/ADR-0004-cache-seatmap.md
-          - examples/E-01-booking/99-findings.md
-          - examples/E-01-booking/98-revision-plan.md
-      - E-02 · лента:
-          - examples/E-02-feed/00-context.md
-          - examples/E-02-feed/constraints.md
-          - examples/E-02-feed/ADR-0001-feed-storage.md
-          - examples/E-02-feed/ADR-0002-boundaries.md
-          - examples/E-02-feed/ADR-0003-fanout-coupling.md
-          - examples/E-02-feed/ADR-0004-read-path-cache.md
-          - examples/E-02-feed/99-findings.md
-          - examples/E-02-feed/98-revision-plan.md
-      - E-03 · пункт выдачи:
-          - examples/E-03-pickup/00-context.md
-          - examples/E-03-pickup/constraints.md
-          - examples/E-03-pickup/ADR-0001-boundaries.md
-          - examples/E-03-pickup/ADR-0002-data-decomposition.md
-          - examples/E-03-pickup/ADR-0003-journal-storage.md
-          - examples/E-03-pickup/ADR-0004-offline-terminal.md
-          - examples/E-03-pickup/ADR-0005-objectives.md
-          - examples/E-03-pickup/99-findings.md
-          - examples/E-03-pickup/98-revision-plan.md
-      - U-01 · передача данных:
-          - examples/U-01-handover/00-context.md
-          - examples/U-01-handover/ADR-0001-disputed-zone.md
-          - examples/U-01-handover/ADR-0002-handover.md
-          - examples/U-01-handover/99-findings.md
-      - U-02 · окно отчётности:
-          - examples/U-02-reporting/00-context.md
-          - examples/U-02-reporting/ADR-0001-compatibility.md
-          - examples/U-02-reporting/ADR-0002-data-decomposition.md
-          - examples/U-02-reporting/ADR-0003-storage.md
-          - examples/U-02-reporting/ADR-0004-initial-boundaries.md
-          - examples/U-02-reporting/ADR-0005-workflow-coupling.md
-          - examples/U-02-reporting/ADR-0006-degradation.md
-          - examples/U-02-reporting/ADR-0007-deploy-in-window.md
-          - examples/U-02-reporting/ADR-0008-objectives.md
-          - examples/U-02-reporting/99-findings.md
-          - examples/U-02-reporting/98-revision-plan.md
-  - Исследование:
-      - research/index.md
-      - research/00-plan.md
-      - research/01-pilot-degradation.md
-      - research/02-pilot-data-decomposition.md
-      - research/10-problems.md
-      - research/20-coverage.md
-      - research/30-findings.md
-      - research/40-predictions.md
-      - research/41-case-candidates.md
-      - research/42-predictions-narrow.md
-      - research/43-greenfield-candidates.md
-      - research/44-predictions-greenfield.md
   - Справочники:
       - 90-cheatsheets.md
       - 91-antipatterns.md
@@ -177,7 +126,3 @@ nav:
       - 94-gaps.md
       - 95-sources.md
       - 97-card-map.md
-  - Работа:
-      - 99-plan.md
-      - 96-backlog.md
-      - 98-revision-plan.md
