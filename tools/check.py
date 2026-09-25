@@ -5,8 +5,12 @@
 import re, os, glob, sys, io
 
 ROOT = os.environ.get('GUIDE_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-files = {os.path.relpath(p, ROOT).replace('\\', '/'): open(p, encoding='utf-8').read()
-         for p in glob.glob(ROOT + '/**/*.md', recursive=True)}
+# build/ — временная сборка сайта, _to_delete/ — свалка git-локов: не памятка
+SKIP_DIRS = ('build/', '_to_delete/')
+files = {rel: open(p, encoding='utf-8').read()
+         for p, rel in ((p, os.path.relpath(p, ROOT).replace('\\', '/'))
+                        for p in glob.glob(ROOT + '/**/*.md', recursive=True))
+         if not rel.startswith(SKIP_DIRS)}
 
 # 1. код карточки определяется файлом, в котором она лежит (вместо прежних сквозных диапазонов)
 PREFIX = {"01-network-and-api": "NET", "02-traffic-and-edge": "EDGE", "03-storage-and-data": "DATA",
@@ -260,7 +264,31 @@ for f in sorted(glob.glob(os.path.join(ROOT, 'decisions', 'D-*.md'))):  # мас
 
 print('стадия в шапке не совпадает со строкой шага:', len(bad_stage))
 for b in bad_stage[:10]: print('   ', b)
+# --- список, начатый без пустой строки: на GitHub он список, на сайте абзац ---
+_LIST = re.compile(r'^(\s*)([-*+]\s+|\d+[.)]\s+)')
+bad_mdlist = []
+for f, c in sorted(files.items()):
+    lines = c.split('\n')
+    fenced = False
+    for i, ln in enumerate(lines):
+        if ln.lstrip().startswith('```'):
+            fenced = not fenced
+            continue
+        if fenced or i == 0:
+            continue
+        m = _LIST.match(ln)
+        if not m:
+            continue
+        prev = lines[i - 1]
+        if (prev.strip() == '' or _LIST.match(prev)
+                or (prev.startswith(('    ', '\t')) and m.group(1))
+                or prev.lstrip().startswith('>') or prev.lstrip().startswith('|')):
+            continue
+        bad_mdlist.append((f, 'строка %d: список без пустой строки перед ним' % (i + 1)))
+
+print('списков без пустой строки перед ними:', len(bad_mdlist))
+for b in bad_mdlist[:10]: print('   ', b)
 print('шапок с полями подряд не списком:', len(bad_head))
 for b in bad_head[:10]: print('   ', b)
 
-sys.exit(1 if (bad_anchor or dup_anchor or bad_range or bad_label or bad_ver or bad_adr or bad_head or bad_declared or bad_mutual or bad_stage) else 0)
+sys.exit(1 if (bad_anchor or dup_anchor or bad_range or bad_label or bad_ver or bad_adr or bad_head or bad_declared or bad_mutual or bad_stage or bad_mdlist) else 0)

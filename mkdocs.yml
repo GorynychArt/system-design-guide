@@ -54,6 +54,9 @@ markdown_extensions:
       toc_depth: 3
   - admonition
   - pymdownx.details
+  - pymdownx.tasklist:      # - [ ] и - [x] как чекбоксы, а не как текст
+      custom_checkbox: true
+  - pymdownx.tilde          # ~~зачёркивание~~
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
