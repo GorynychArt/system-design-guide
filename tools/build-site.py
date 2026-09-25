@@ -7,7 +7,9 @@
   * README.md становится index.md (главная страница), ссылки на него переписываются;
   * tools/check.py кладётся рядом, чтобы ссылки на проверку работали;
   * у разделов появляется страница-оглавление вместо ссылки на папку,
-    которая на GitHub показывает список файлов, а на сайте не значит ничего.
+    которая на GitHub показывает список файлов, а на сайте не значит ничего;
+  * рядом кладётся статика сайта из tools/site — калькулятор шага W1,
+    который в репозитории не работает и работать не может.
 
 Mermaid отдельной настройки не требует: Material сам находит блоки .mermaid
 и рисует их в цветах текущей темы.
@@ -56,6 +58,12 @@ def main():
                           r'\1\2/index.md)', text)
             io.open(dst, 'w', encoding='utf-8').write(text)
             copied.append(dst_rel)
+
+    # --- статика сайта: калькулятор шага W1 ---
+    os.makedirs(os.path.join(DOCS, 'assets'), exist_ok=True)
+    for fn in sorted(os.listdir(os.path.join(ROOT, 'tools', 'site'))):
+        shutil.copy(os.path.join(ROOT, 'tools', 'site', fn),
+                    os.path.join(DOCS, 'assets', fn))
 
     # --- проверка: на неё ссылаются четыре документа ---
     os.makedirs(os.path.join(DOCS, 'tools'), exist_ok=True)

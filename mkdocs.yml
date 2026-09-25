@@ -63,6 +63,12 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
 
+extra_javascript:
+  - assets/w1-calculator.js
+
+extra_css:
+  - assets/w1-calculator.css
+
 extra:
   social:
     - icon: fontawesome/brands/github

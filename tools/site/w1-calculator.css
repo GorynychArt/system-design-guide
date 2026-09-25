@@ -1,0 +1,49 @@
+/* Калькулятор шага W1. Цвета берутся у темы, поэтому светлая и тёмная работают обе. */
+.w1calc {
+  margin: 1.2rem 0;
+  padding: 1rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .3rem;
+  background: var(--md-code-bg-color);
+}
+.w1calc__form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: .9rem 1.2rem;
+}
+.w1calc__field { display: flex; flex-direction: column; font-size: .72rem; }
+.w1calc__label { font-weight: 700; margin-bottom: .25rem; color: var(--md-default-fg-color); }
+.w1calc__field input {
+  font: inherit;
+  font-size: .8rem;
+  padding: .3rem .45rem;
+  color: var(--md-default-fg-color);
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: .2rem;
+}
+.w1calc__field input:focus {
+  outline: none;
+  border-color: var(--md-accent-fg-color);
+}
+.w1calc__hint { margin-top: .22rem; color: var(--md-default-fg-color--light); font-size: .64rem; }
+.w1calc__out { margin-top: 1.1rem; }
+.w1calc__table { width: 100%; border-collapse: collapse; font-size: .74rem; }
+.w1calc__table th, .w1calc__table td {
+  padding: .35rem .5rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  text-align: left;
+}
+.w1calc__table th { font-weight: 700; color: var(--md-default-fg-color--light); }
+.w1calc__num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.w1calc__note, .w1calc__warn { margin-top: .7rem; font-size: .72rem; line-height: 1.5; }
+.w1calc__warn {
+  padding: .55rem .7rem;
+  border-left: 3px solid var(--md-accent-fg-color);
+  background: var(--md-default-bg-color);
+  border-radius: .2rem;
+}
+@media screen and (max-width: 44.98em) {
+  .w1calc { padding: .7rem; }
+  .w1calc__table { font-size: .68rem; }
+}
